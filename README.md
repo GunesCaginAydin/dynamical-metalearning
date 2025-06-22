@@ -1,4 +1,4 @@
-# CLASSIFY 
+# IN CONTEXT META LEARNING FOR SYSTEM IDENTIFICATION
 
 [[Paper]]() 
 [[Data]]()
@@ -29,8 +29,17 @@ Our main contribution can be grouped under 3 main branches:
 2) 	implementation of diffusion models as a competitor neural architecture
 	
 3)	implementation of isaacgym based controllers for controller modeling and sim2real tasks
-	
-# Repository organization
+
+## Logs and Plots
+
+Our findings and results are listed on our host website. The naming conventions follow from the repository organization explained in the next section-
+
+[[Datasets]]()
+[[Models]]()
+[[Logs]]()
+[[Plots]]()
+
+## Repository Organization
 
 Our approach is comprised of 2 interworking modules: data_generation, sys_identification. The former utilizes isaacgym environments for synthetic data generation while the latter performs training, finetuning and testing of the data on Franka Emika Panda and Kuka Allegro robotic manipulators. Below are the module hierarchies...
 
@@ -159,65 +168,102 @@ We decided to tackle data generation with varying datasets that have different r
 
 ### Creating a Dataset
 
+It is possible to create a new dataset from scratch using the isaacgym pipeline. A simplistic dataset with link and position randomizaiton
+could be as below. Check gen.sh for more information and detailed examples.
+
+```console
+$ pip install -e .
+```
+
 ## System Identification
+
+System identification is practices on 2 fundamentally different problems: sim2sim and sim2real. For sim2sim, we train our models using
+feedforward torques from isaacgym generated without any prior knowledge of the internal representation of isaacgym controllers. For sim2real
+we train our models using feedback torques, tracking trajectories and controller gains with novel implementations of osc, pid and joint pid
+controllers.
 
 ### sim2sim
 
+For data generation, it is important to modify gen.sh for specific needs. A most simplistic use case could be to generate data for franka emika panda
+subjected to direct feedforward joint torques, in which case the generation script is callable as:
+
+```console
+$ pip install -e .
+```
+
 ### sim2real
+For data generation, it is important to modify gen.sh for specific needs. A most simplistic use case could be to generate data for franka emika panda
+subjected to direct feedforward joint torques, in which case the generation script is callable as:
+
+```console
+$ pip install -e .
+```
 
 ### Training / Testing / Finetuning
 
 For data generation, it is important to modify gen.sh for specific needs. A most simplistic use case could be to generate data for franka emika panda
 subjected to direct feedforward joint torques, in which case the generation script is callable as:
 
-./gen.sh -> python genfranka.py xxx
+```console
+$ pip install -e .
+```
 
-For training, it is important to modify gen.sh for specific needs. A most simplistic use case could be to generate data for franka emika panda
-subjected to direct feedforward joint torques, in which case the generation script is callable as:
+```console
+$ pip install -e .
+```
 
-./gen.sh -> python genfranka.py xxx
+```console
+$ pip install -e .
+```
 
-For testing, it is important to modify gen.sh for specific needs. A most simplistic use case could be to generate data for franka emika panda
-subjected to direct feedforward joint torques, in which case the generation script is callable as:
-
-./gen.sh -> python genfranka.py xxx
-
-# Installation and requirements
+# INSTALLATION AND REQUIREMENTS
 
 ## Environments
 
+We used IsaacGym 4 (deprecated now) for data generation and varying modules for training/testing our models on machines with Nvidia RTX4070 and Nvidia A100 GPUs with Ubuntu 20.04. 
+
 ### IsaacGym
 
-Download the Isaac Gym Preview 4 release from the website (https://developer.nvidia.com/isaac-gym), then follow the installation instructions in the documentation. We highly recommend using a conda environment to simplify set up. 
+Download the Isaac Gym Preview 4 release from the website (https://developer.nvidia.com/isaac-gym), then follow the installation instructions in the documentation.
+
+```console
+$ pip install -e .
+```
 
 ### Conda Environment
 
-Please replicate the conda environment for reproduciblity
+Set the conda environment from .yaml.
+
+```console
+$ conda env create -f dep.yaml
+```
 
 ## Hardware requirements
 
 This projects requires a modern GPU. We used a combination of Nvidia RTX4070 and Nvidia A100 GPUs. However, most of the work is still possible to do on older gen Nvida 3000 GPUs.
 
-# Citing
+## Citing
 
 If you find this work useful, please consider citing it.
 
-@article {forgione2023from,
-author={Forgione, Marco and Pura, Filippo and Piga, Dario},
-journal={IEEE Control Systems Letters},
-title={From System Models to Class Models:
-An In-Context Learning Paradigm},
-year={2023},
-volume={7},
-number={},
-pages={3513-3518},
-doi={10.1109/LCSYS.2023.3335036}
+```
+@article{forgione2023from,
+  author={Forgione, Marco and Pura, Filippo and Piga, Dario},
+  journal={IEEE Control Systems Letters}, 
+  title={From System Models to Class Models:
+   An In-Context Learning Paradigm}, 
+  year={2023},
+  volume={7},
+  number={},
+  pages={3513-3518},
+  doi={10.1109/LCSYS.2023.3335036}
 }
-## 🏷️ License
+```
+## License
 
 This repository is released under the MIT license. See [LICENSE](LICENSE) for additional details.
 
-## 🙏 Acknowledgement
+## Acknowledgements
 
 * Our [`transformer_sim`]() architecture is adapted from [In-context learning for model-free system identification](https://github.com/forgi86/sysid-transformers).
 * Our [`diffuser_sim`]() architecture is adapted from [Planning with Diffusion for Flexible Behavior Synthesis](https://github.com/jannerm/diffuser).
