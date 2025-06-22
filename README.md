@@ -1,14 +1,26 @@
 # CLASSIFY 
 
-This work is the continuation of previous works on system and class modeling with in-context learning through direct implementation of modern neural network architectures.
+This work is the continuation of previous works on system and class modeling with in-context learning through direct implementation of modern neural network architectures. 
 
 [1]	From system models to class models: An in-context learning paradigm
 
 
 [2]	RoboMorph: In-Context Meta-Learning for Robot Dynamics Modeling
 
+Our main contribution can be grouped under 3 main branches:
+
+1)	improved dynamical system identification with metalearning transformer models
+	
+2) 	implementation of diffusion models as a competitor neural architecture
+	
+3)	implementation of isaacgym based controllers for controller modeling and sim2real tasks
+	
 # Repository organization
-***
+
+Our approach is comprised of 2 interworking modules: data_generation, sys_identification. The former utilizes isaacgym environments for synthetic data generation while the latter
+performs training, finetuning and testing of the data.
+
+```
 └── datageneration
     ├── {data_tensors} : .pt
     │   └── train
@@ -49,77 +61,128 @@ This work is the continuation of previous works on system and class modeling wit
     │   └── genfranka.py
     |
     └── {gen.sh}
-***
+```
 
-## [data_generation](data_generation)
+```
+└── datageneration
+    ├── {data_tensors} : .pt
+    │   └── train
+    │       ├── MG1
+    │       ├── MG2
+    │       ├── ...
+    │       └── FineTune3
+    │   └── test
+    │       ├── T1
+    │       ├── T2
+    │       ├── ...
+    |       ├── Oneshot
+    |       ├── Fewshot
+    │       └── TOSC
+    │
+    ├── {data_objects} : .json
+    │   ├── MG1
+    │   ├── MG2
+    │   ├── ...
+    │   └── FineTune3
+    |
+    ├── {plots} : .png  
+    │   ├── aux
+    │   ├── MG1
+    │   ├── ...
+    │   └── FineTune3
+    |
+    ├── {logs} : .txt
+    │   ├── aux
+    │   ├── MG1
+    │   ├── ...
+    │   └── FineTune3
+    |
+    ├── {datageneration_modules} : .py
+    │   ├── randomenvs.py
+    │   ├── controllers.py
+    │   ├── genutil.py
+    │   └── genfranka.py
+    |
+    └── {gen.sh}
+```
+We decided to tackle data generation with varying datasets that have different randomization amounts and schemes. A rundown of these datasets are as below.
 
-x
+Training Datasets
+[1]
 
-### Simulation Naming and Data Generation Module
+[2]
 
-x
+[3]
+
+[4]
+
+[5]
+
+[6]
+
+[7]
+
+Testing Datasets
+[1]
+
+[2]
+
+[3]
+
+[4]
+
+[5]
+
+
+## Data Generation
 
 ### Datasets
 
-x
+## System Identification
+
+### sim2sim
+
+### sim2real
 
 ## In Context Learning Architectures for Class Modeling
 
-x
-
 ### Training
  
-x
-
 ### Testing
-
-x
 
 ### FineTuning
 
-x
-
 #### Example
-I have a certain model `ckpt_partition_20_batch16_embd192_heads8_lay12_MSE_ds1.pt`  
-located in `Transformer_for_isaac/out_ds1`  
-with a txt file located in `data_generation/training_ds1_list.txt`
 
-I want to train-fine tuning on a certain dsX.
+For data generation, it is important to modify gen.sh for specific needs. A most simplistic use case could be to generate data for franka emika panda
+subjected to direct feedforward joint torques, in which case the generation script is callable as:
 
-In order to correctly update the same model, it is necessary to rename such as:
-`ckpt_partition_20_batch16_embd192_heads8_lay12_MSE.pt`  
-is located in `Transformer_for_isaac/out_dsX`    
-with the same txt file located in `data_generation/training_dataset_list.txt`  
+./gen.sh -> python genfranka.py xxx
 
-then Launch (ATTENTION to the parameter: --model-dir "out_dsX")
+For training, it is important to modify gen.sh for specific needs. A most simplistic use case could be to generate data for franka emika panda
+subjected to direct feedforward joint torques, in which case the generation script is callable as:
 
-```
-source simulate_and_train.sh
-```
-In `simulate_and_train.sh` is possible to save some intermediates versions, depending on the dimension of simulation blocks.
-Use wandb as register to keep trace.  
-https://wandb.ai/home
+./gen.sh -> python genfranka.py xxx
 
-Once the simulations-trainings will have been finished, the same file needs to be renamed as: 
+For testing, it is important to modify gen.sh for specific needs. A most simplistic use case could be to generate data for franka emika panda
+subjected to direct feedforward joint torques, in which case the generation script is callable as:
 
-
-### [Auxiliar](Auxiliar)
-
-# Additional information
+./gen.sh -> python genfranka.py xxx
 
 # Installation and requirements
 
-### Isaac Gym rlgpu dataset environment
+### IsaacGym
 
 Download the Isaac Gym Preview 4 release from the website (https://developer.nvidia.com/isaac-gym), then follow the installation instructions in the documentation. We highly recommend using a conda environment to simplify set up. 
 
-### CLASSIFY training environment
+### Conda Environment
 
-With the setup of NVIDIA Isaac Gym, a conda environment called rlgpu should be added automatically during set-up steps.
+Please replicate the conda environment for reproduciblity
 
 ## Hardware requirements
-While all the scripts can run on CPU, execution may be frustratingly slow. For faster training, a GPU is highly recommended.
-To run the paper's examples, we used a Desktop Computer equipped with an NVIDIA RTX 4090 GPU.
 
+This projects requires a modern GPU to be evaluated. For our findings we used a combination of Nvidia RTX4070 and Nvidia A100 GPUs.
 
 # Citing
+
+If you find this work useful, please consider citing it.
