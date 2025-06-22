@@ -1,9 +1,24 @@
 # CLASSIFY 
 
+[[Paper]]() 
+[[Data]]()
+[[Colab (data generation)]]()
+[[Colab (sim2sim)]]()
+[[Colab (sim2real)]]()
+
+[Gunes Cagin Aydin](https://github.com/Gunesnes)<sup>1</sup>,
+[Loris Roveda](https://www.supsi.ch/loris-roveda)<sup>2</sup>,
+[Asad Ali Shadid](https://www.supsi.ch/en/asad-ali-shahid)<sup>3</sup>,
+[Angelo Morencelli](https://www.supsi.ch/en/angelo-moroncelli-)<sup>1</sup>,
+
+<sup>1</sup>Politecnico di Milano,
+<sup>2</sup>SUPSI/IDSIA,
+
+* Insert Media
+
 This work is the continuation of previous works on system and class modeling with in-context learning through direct implementation of modern neural network architectures. 
 
 [1]	From system models to class models: An in-context learning paradigm
-
 
 [2]	RoboMorph: In-Context Meta-Learning for Robot Dynamics Modeling
 
@@ -186,3 +201,4 @@ This projects requires a modern GPU to be evaluated. For our findings we used a 
 # Citing
 
 If you find this work useful, please consider citing it.
+
