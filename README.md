@@ -1,7 +1,6 @@
 # IN CONTEXT META LEARNING FOR SYSTEM IDENTIFICATION
 
 [[Project Page]](https://sites.google.com/view/dynamical-incontextlearning/ana-sayfa) 
-[[Data]](https://drive.google.com/drive/folders/1WRHcEYSfIIVRhBrlzR18CGVkvezJIilo?usp=sharing)
 
 [Gunes Cagin Aydin](https://github.com/Gunesnes)<sup>1</sup>,
 [Elia Tosin](https://www.supsi.ch/elia-tosin)<sup>2</sup>,
@@ -12,8 +11,6 @@
 
 <sup>1</sup>Politecnico di Milano,
 <sup>2</sup>SUPSI/IDSIA,
-
-![alt text](<Screenshot 2025-09-21 115915.png>)
 
 This work is the continuation of previous works on dynamical identification through in-context learning, principally found on: 
 
