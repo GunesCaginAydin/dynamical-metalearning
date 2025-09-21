@@ -182,27 +182,13 @@ where we specify simulation parameters, control inputs, directories and naming c
 
 ## System Identification
 
-System identification is practices on 2 fundamentally different problems: sim2sim and sim2real. For sim2sim, we train our models using
-feedforward torques from isaacgym generated without any prior knowledge of the internal representation of isaacgym controllers. For sim2real
-we train our models using feedback torques, tracking trajectories and controller gains with novel implementations of osc, pid and joint pid
-controllers.
+System identification (or as colloquially called dynamical identification throughout this work) is practiced in 2 different problems: dynamic identification of feedforward and feedback controller dynamics. In both cases, the resultant input/output mapping defined through an emerging black-box model of the dynamic behavior constitutes to a forward dynamical problem.
 
-### sim2sim
+For feedforward controller dynamics we principally consider joint torques as inputs and cartesian and joint variables as outputs. For feedback controller dynamics, we choose to diversify the available inputs and consider either one of joint torques, joint or cartesian reference trajectories to the controller or controller as inputs while considering cartesian and joint variables as outputs.
 
-For data generation, it is important to modify gen.sh for specific needs. A most simplistic use case could be to generate data for franka emika panda
-subjected to direct feedforward joint torques, in which case the generation script is callable as:
+The identified dynamics are consecutively tested in simulation and benchmarked against real trajectories collected from Franka Emika Panda through a set of comparitive metrics in horizon estimation tasks.
 
-```console
-$ pip install -e .
-```
-
-### sim2real
-For data generation, it is important to modify gen.sh for specific needs. A most simplistic use case could be to generate data for franka emika panda
-subjected to direct feedforward joint torques, in which case the generation script is callable as:
-
-```console
-$ pip install -e .
-```
+![alt text](image-1.png)
 
 ### Training / Testing / Finetuning
 
