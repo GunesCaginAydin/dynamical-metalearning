@@ -1,4 +1,4 @@
-# IN CONTEXT META LEARNING FOR SYSTEM IDENTIFICATION
+# ADVANCING IDENTIFICATION METHODOLOGIES THROUGH IN-CONTEXT DYNAMICAL METALEARNING
 
 [[Project Page]](https://sites.google.com/view/dynamical-incontextlearning/ana-sayfa) 
 
