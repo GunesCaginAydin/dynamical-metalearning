@@ -1,47 +1,46 @@
 # IN CONTEXT META LEARNING FOR SYSTEM IDENTIFICATION
 
-[[Paper]]() 
-[[Data]]()
-[[Colab (data generation)]]()
-[[Colab (sim2sim)]]()
-[[Colab (sim2real)]]()
+[[Project Page]](https://sites.google.com/view/dynamical-incontextlearning/ana-sayfa) 
+[[Data]](https://drive.google.com/drive/folders/1WRHcEYSfIIVRhBrlzR18CGVkvezJIilo?usp=sharing)
 
 [Gunes Cagin Aydin](https://github.com/Gunesnes)<sup>1</sup>,
-[Loris Roveda](https://www.supsi.ch/loris-roveda)<sup>2</sup>,
-[Asad Ali Shadid](https://www.supsi.ch/en/asad-ali-shahid)<sup>2</sup>,
-[Angelo Morencelli](https://www.supsi.ch/en/angelo-moroncelli-)<sup>1</sup>,
+[Elia Tosin](https://www.supsi.ch/elia-tosin)<sup>2</sup>,
+[Asad Ali Shahid](https://www.supsi.ch/en/asad-ali-shahid)<sup>2</sup>,
+[Angelo Moroncelli](https://www.supsi.ch/en/angelo-moroncelli-)<sup>2</sup>,
+[Loris Roveda](https://www.supsi.ch/loris-roveda)<sup>1,2</sup>,
+[Francesco Braghin](https://www.mecc.polimi.it/it/personale/francesco.braghin)<sup>1</sup>,
 
 <sup>1</sup>Politecnico di Milano,
 <sup>2</sup>SUPSI/IDSIA,
 
-(Insert Media)
+![alt text](image.png)
 
-This work is the continuation of previous works on system and class modeling with in-context learning through direct implementation of modern neural network architectures. 
+This work is the continuation of previous works on dynamical identification through in-context learning, principally found on: 
 
 [1]	From system models to class models: An in-context learning paradigm
 
 [2]	RoboMorph: In-Context Meta-Learning for Robot Dynamics Modeling
 
-Our main contribution can be grouped under 3 main branches:
+Our main contribution can be grouped under 3 main categories:
 
-1)	improved dynamical system identification with metalearning transformer models
-	
-2) 	implementation of diffusion models as a competitor neural architecture
-	
-3)	implementation of isaacgym based controllers for controller modeling and sim2real tasks
+1)	improved dynamical identification with better domain exploration, transfer learning between domains
+  
+2) 	implementation of non-autoregressive diffusion based neural architectures in dynamical identification tasks
+  
+3)	benchmarking on real trajectories, conducting sim2real experiments
 
 ## Logs and Plots
 
-Our findings and results are listed on our host website. The naming conventions follow from the repository organization explained in the next section-
+Our findings are listed on the [[project site]](https://sites.google.com/view/dynamical-incontextlearning/ana-sayfa) . The naming conventions follow from the repository organization explained in the next section.
 
-[[Datasets]]()
-[[Models]]()
-[[Logs]]()
-[[Plots]]()
+[[Datasets]](https://drive.google.com/drive/folders/1WRHcEYSfIIVRhBrlzR18CGVkvezJIilo?usp=sharing)
+[[Models]](https://drive.google.com/drive/folders/1WRHcEYSfIIVRhBrlzR18CGVkvezJIilo?usp=sharing)
+[[Logs]](https://drive.google.com/drive/folders/1WRHcEYSfIIVRhBrlzR18CGVkvezJIilo?usp=sharing)
+[[Plots]](https://drive.google.com/drive/folders/1WRHcEYSfIIVRhBrlzR18CGVkvezJIilo?usp=sharing)
 
 ## Repository Organization
 
-Our approach is comprised of 2 interworking modules: data_generation, sys_identification. The former utilizes isaacgym environments for synthetic data generation while the latter performs training, finetuning and testing of the data on Franka Emika Panda and Kuka Allegro robotic manipulators. Below are the module hierarchies...
+Our approach is comprised of 2 interworking modules: data_generation, sys_identification. The former utilizes isaacgym environments for synthetic data generation while the latter performs training, finetuning and testing of the data on Franka Emika Panda and Kuka Allegro robotic manipulators. Below are the module hierarchies.
 
 ```
 └── data_generation
@@ -126,113 +125,103 @@ Our approach is comprised of 2 interworking modules: data_generation, sys_identi
 
 ## Data Generation
 
-We decided to tackle data generation with varying datasets that have different randomization amounts and input/output generators. Most important points of variance in our investigation is on:
+We decided to tackle data generation with varying datasets that have different randomization amounts and input/output generators. Most important points of variance in our investigations are on:
 
-* rigid body properties, dof states, dof properties
+* rigid properties, dof states, dof properties
 
 * isaacgym internal controller dof properties
 
-* osc / pid / joint_pid controller gains
+* osc / pid / joint_pid / cic controller gains
 
 * input trajectories
 
+
+
 ### Training Datasets
-1) MG1: base dataset MS/CH
+1) MG1: base dataset MS/CH | feedforward
 
-2) MG2: base + 10% randomization on states and props
+2) MG2: base + 10% randomization on states and props | feedforward
  
-3) MG3: base + 6D orientation
+3) MG3: base + 6D orientation | feedforward
 
-4) MG4: base + frequency ranzomization
+4) MG4: base + frequency ranzomization | feedforward
 
-5) MG5: base + out-of-distribution frequency randomization
+5) MG5: base + out-of-distribution frequency randomization | feedforward
  
-6) MG6: base + isaacgym internally measured torques
+6) MG6: base + isaacgym internally measured torques | feedforward
 
-7) MGOSC: base dataset VS/FS/FC
+7) MGOSC: base dataset VS/FS/FC | feedforward
 
-8) MGC: base dataset osc/pid/joint_pid
+8) MGC: base dataset osc/pid/joint_pid/cic | feedback
 
 ### Testing Datasets
-1) T1: MS/CH
+1) T1: MS/CH | in-distribution 
 
-2) T2: 25-50% randomization
+2) T2: MS/CH out-of-distribution | rigid properties
 
-3) T3: out-of-distribution frequencies
+3) T3: MS/CH out-of-distribution | frequencies
 
-4) T4: IMP/TRAPZ
+4) T4: IMP/TRAPZ | out-of-distribution
 
-5) TOSC: VS/FS/FC
+5) TOSC: VS/FS/FC | out-of-distribution
 
-6) TC: osc/pid/joint_pid
+6) TC: osc/pid/joint_pid | out-of-distribution
+
+7) TREAL: VS/FS/FC trajectories collected from Franka Emika Panda | real 
 
 ### Creating a Dataset
 
-It is possible to create a new dataset from scratch using the isaacgym pipeline. A simplistic dataset with link and position randomizaiton
-could be as below. Check gen.sh for more information and detailed examples.
+It is possible to create a new dataset from scratch using the data_generation module. A simplistic dataset with link and position randomization
+could be as below:
 
 ```console
-$ pip install -e .
+$ python genfranka.py -ne 8 -ni 1000 -f 0.15 -nctrl -tjt "MS" -td 'train' -nd 'MGC' -hdo '4D' -tr 'franka' -v -dg -df
 ```
+
+where we specify simulation parameters, control inputs, directories and naming conventions alltogether. Check gen.sh for more information and detailed examples.
 
 ## System Identification
 
-System identification is practices on 2 fundamentally different problems: sim2sim and sim2real. For sim2sim, we train our models using
-feedforward torques from isaacgym generated without any prior knowledge of the internal representation of isaacgym controllers. For sim2real
-we train our models using feedback torques, tracking trajectories and controller gains with novel implementations of osc, pid and joint pid
-controllers.
+System identification (or as colloquially called dynamical identification throughout this work) is practiced in 2 different problems: dynamic identification of feedforward and feedback controller dynamics. In both cases, the resultant input/output mapping defined through an emerging black-box model of the dynamic behavior constitutes to a forward dynamical problem.
 
-### sim2sim
+For feedforward controller dynamics we principally consider joint torques as inputs and cartesian and joint variables as outputs. For feedback controller dynamics, we choose to diversify the available inputs and consider either one of joint torques, joint or cartesian reference trajectories to the controller or controller as inputs while considering cartesian and joint variables as outputs.
 
-For data generation, it is important to modify gen.sh for specific needs. A most simplistic use case could be to generate data for franka emika panda
-subjected to direct feedforward joint torques, in which case the generation script is callable as:
+The identified dynamics are consecutively tested in simulation and benchmarked against real trajectories collected from Franka Emika Panda through a set of comparitive metrics in horizon estimation tasks.
 
-```console
-$ pip install -e .
-```
-
-### sim2real
-For data generation, it is important to modify gen.sh for specific needs. A most simplistic use case could be to generate data for franka emika panda
-subjected to direct feedforward joint torques, in which case the generation script is callable as:
-
-```console
-$ pip install -e .
-```
+![alt text](image-1.png)
 
 ### Training / Testing / Finetuning
 
-For data generation, it is important to modify gen.sh for specific needs. A most simplistic use case could be to generate data for franka emika panda
-subjected to direct feedforward joint torques, in which case the generation script is callable as:
+Training models is possible on all datasets adhering to the (env X horizon X input dim) dimensionality constraints. Hyperparameters as well as neural architecture specific parameters, such as MLP layers, heads and embeddings for transformers and diffusion timesteps, convolutional layers, and block for diffusers, can be fixed before training.
 
 ```console
-$ pip install -e .
+$ python train.py -in 7 -out 14 -cos -std --data-name 'MG1' -lr '6e-4' -trb 32 -vlb 32 -evitr 100 -ctx 20 transformer -ttrf 1 -nl 12 -nh 12 -ne 384
+
 ```
 
-```console
-$ pip install -e .
-```
+Testing, or inference, and finetuning is subsequently conducted on trained models where the inference horizon and context can be updated if the proposed neural architecture is adequate for any such modification.
 
 ```console
-$ pip install -e .
+$ python test.py -cos -std --data-name 'MG1' --test-name 'T1' --total-sim-iterations 500
+
 ```
+
+Check train.sh and test.sh for more information and detailed examples.
 
 # INSTALLATION AND REQUIREMENTS
 
 ## Environments
 
-We used IsaacGym 4 (deprecated now) for data generation and varying modules for training/testing our models on machines with Nvidia RTX4070 and Nvidia A100 GPUs with Ubuntu 20.04. 
+We used IsaacGym 4 (deprecated now) for data generation and trained/tested the subsequent models on machines with Nvidia RTX4070 and Nvidia A100 GPUs with Ubuntu 20.04. 
 
 ### IsaacGym
 
-Download the Isaac Gym Preview 4 release from the website (https://developer.nvidia.com/isaac-gym), then follow the installation instructions in the documentation.
+Download the Isaac Gym Preview 4 release from the website (https://developer.nvidia.com/isaac-gym), then follow the installation instructions in the documentation. 
 
-```console
-$ pip install -e .
-```
 
 ### Conda Environment
 
-Set the conda environment from .yaml.
+Before using the data_generation and sys_identification modules it is required to first set the conda environment from .yaml file.
 
 ```console
 $ conda env create -f dep.yaml
@@ -240,7 +229,7 @@ $ conda env create -f dep.yaml
 
 ## Hardware requirements
 
-This projects requires a modern GPU. We used a combination of Nvidia RTX4070 and Nvidia A100 GPUs. However, most of the work is still possible to do on older gen Nvida 3000 GPUs.
+This projects requires a modern GPU. We used, at any given time, either one of Nvidia RTX4070 and Nvidia A100 GPUs. However, we presume that the work is emulatable still in older generation Nvidia GPUs. We have not conducted any tests using CPUs. 
 
 ## Citing
 
