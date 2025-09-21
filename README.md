@@ -13,7 +13,7 @@
 <sup>1</sup>Politecnico di Milano,
 <sup>2</sup>SUPSI/IDSIA,
 
-![alt text](image.png)
+![alt text](<Screenshot 2025-09-21 115915.png>)
 
 This work is the continuation of previous works on dynamical identification through in-context learning, principally found on: 
 
@@ -188,7 +188,7 @@ For feedforward controller dynamics we principally consider joint torques as inp
 
 The identified dynamics are consecutively tested in simulation and benchmarked against real trajectories collected from Franka Emika Panda through a set of comparitive metrics in horizon estimation tasks.
 
-![alt text](image-1.png)
+![alt text](image.png)
 
 ### Training / Testing / Finetuning
 
