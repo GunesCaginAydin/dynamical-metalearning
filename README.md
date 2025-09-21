@@ -13,7 +13,7 @@
 <sup>1</sup>Politecnico di Milano,
 <sup>2</sup>SUPSI/IDSIA,
 
-(Insert Media)
+![alt text](image.png)
 
 This work is the continuation of previous works on dynamical identification through in-context learning, principally found on: 
 
