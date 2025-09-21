@@ -1,4 +1,4 @@
-# ADVANCING IDENTIFICATION METHODOLOGIES THROUGH IN-CONTEXT DYNAMICAL METALEARNING
+# Advancing Identification Methodologies Through In-Context Dynamical Metalearning
 
 [[Project Page]](https://sites.google.com/view/dynamical-incontextlearning/ana-sayfa) 
 
@@ -25,6 +25,8 @@ Our main contribution can be grouped under 3 main categories:
 2) 	implementation of non-autoregressive diffusion based neural architectures in dynamical identification tasks
   
 3)	benchmarking on real trajectories, conducting sim2real experiments
+
+![alt text](image.png)
 
 ## Logs and Plots
 
@@ -132,8 +134,6 @@ We decided to tackle data generation with varying datasets that have different r
 
 * input trajectories
 
-
-
 ### Training Datasets
 1) MG1: base dataset MS/CH | feedforward
 
@@ -184,8 +184,6 @@ System identification (or as colloquially called dynamical identification throug
 For feedforward controller dynamics we principally consider joint torques as inputs and cartesian and joint variables as outputs. For feedback controller dynamics, we choose to diversify the available inputs and consider either one of joint torques, joint or cartesian reference trajectories to the controller or controller as inputs while considering cartesian and joint variables as outputs.
 
 The identified dynamics are consecutively tested in simulation and benchmarked against real trajectories collected from Franka Emika Panda through a set of comparitive metrics in horizon estimation tasks.
-
-![alt text](image.png)
 
 ### Training / Testing / Finetuning
 
