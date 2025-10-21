@@ -1,0 +1,50 @@
+---
+
+---
+
+<header>
+		<h2>
+			Advancing Identification Methodologies Through In Context Dynamical Metalearning:
+			A Comparison Between Different Neural Architectures
+		</h2>
+		<div class="academic-links">
+			Gunes Cagin Aydin<sup>1,2</sup>, Tosin Elia<sup>2</sup>, Angelo Moroncelli<sup>2</sup>, Asad Ali Shahid<sup>2</sup>, Loris Roveda<sup>1,2</sup>, Francesco Braghin<sup>1,2</sup>
+		</div>
+		<div class="site-links">
+			<a href="/">Github</a>
+			<a href="/">Colab</a>
+			<a href="/">Paper (Preprint)</a>
+		</div>
+		<p>
+			In-context learning has emerged as a key capability of modern neural architectures. While its impact has been significant in domains such as natural language processing, computer vision, and policy generation, its potential for system identification remains underexplored in robotics. Building upon prior work on meta-learnable dynamical modeling with Transformers, we propose a methodology for predicting end-effector poses and joint positions from torque signals for each robotic joint — without requiring prior knowledge of the system’s physical parameters — using diffusion models. In the first part of this work, we enhance the RoboMorph framework by improving dataset generation through large-scale simulation with NVIDIA Isaac Gym, which we also adopt as a baseline for comparison. We then train and compare two complementary in-context learning architectures: a Transformer-based model and a Diffuser-based model, applied to the dynamic behavior of the Franka Emika Panda and KUKA Allegro robotic platforms. To explore different ERNSI Workshop 2025 configurations of the system identification problem using Diffusers, we frame it from multiple perspectives, leveraging classifier guidance, trajectory inpainting, and receding horizon approaches for improved trajectory estimation. Our aim is to investigate the implications of this approach for online control. We demonstrate that our meta-learned models can perform fast online inference, making them suitable for real-time applications. Furthermore, we exploit the inherent flexibility of diffusion models to condition on external signals at inference time — such as controller parameters — enabling enhanced in-context system identification. We conduct extensive benchmarking across a variety of Cartesian and joint space tasks generated in Isaac Gym. Code and datasets will be released to foster reproducibility and further research. 
+		</p>
+</header>
+<style>
+	header {
+		text-align: center;
+		color: #005828;
+		background-color: rgb(255, 254, 166);
+		margin: 2em 12em 2em 12em;
+		padding: 0.5em 2em 2em 2em;
+	}
+
+	h2 {
+
+	}
+
+	.academic-links {
+
+	}
+
+	.site-links {
+		display: flex;
+		gap: 1em;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.site-links a {
+		color: black;
+		text-decoration: none;
+	}
+</style>
