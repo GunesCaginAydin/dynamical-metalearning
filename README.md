@@ -28,6 +28,8 @@ Our main contribution can be grouped under 3 main categories:
 
 ![alt text](./assets/meta-learning-scheme.png)
 
+![alt text](./assets/identification-pipeline.png)
+
 ## Logs and Plots
 
 Our findings are listed on the [Project Page](https://sites.google.com/view/dynamical-incontextlearning/ana-sayfa) . The naming conventions follow from the repository organization explained in the next section.

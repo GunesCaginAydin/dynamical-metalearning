@@ -3,6 +3,6 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://GunesCaginAydin.github.io',
+  site: 'https://GunesCaginAydin.github.io/Dynamical-Metalearning',
   base: '/',
 })
