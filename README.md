@@ -1,6 +1,6 @@
 # Advancing Identification Methodologies Through In-Context Dynamical Metalearning
 
-[[Project Page]](https://sites.google.com/view/dynamical-incontextlearning/ana-sayfa) 
+🚀 [Project Page](https://sites.google.com/view/dynamical-incontextlearning/ana-sayfa) 
 
 [Gunes Cagin Aydin](https://github.com/Gunesnes)<sup>1</sup>,
 [Elia Tosin](https://www.supsi.ch/elia-tosin)<sup>2</sup>,
@@ -26,16 +26,16 @@ Our main contribution can be grouped under 3 main categories:
   
 3)	benchmarking on real trajectories, conducting sim2real experiments
 
-![alt text](image.png)
+![alt text](./assets/meta-learning-scheme.png)
 
 ## Logs and Plots
 
-Our findings are listed on the [[project site]](https://sites.google.com/view/dynamical-incontextlearning/ana-sayfa) . The naming conventions follow from the repository organization explained in the next section.
+Our findings are listed on the [Project Page](https://sites.google.com/view/dynamical-incontextlearning/ana-sayfa) . The naming conventions follow from the repository organization explained in the next section.
 
-[[Datasets]](https://drive.google.com/drive/folders/1WRHcEYSfIIVRhBrlzR18CGVkvezJIilo?usp=sharing)
-[[Models]](https://drive.google.com/drive/folders/1WRHcEYSfIIVRhBrlzR18CGVkvezJIilo?usp=sharing)
-[[Logs]](https://drive.google.com/drive/folders/1WRHcEYSfIIVRhBrlzR18CGVkvezJIilo?usp=sharing)
-[[Plots]](https://drive.google.com/drive/folders/1WRHcEYSfIIVRhBrlzR18CGVkvezJIilo?usp=sharing)
+[Datasets](https://drive.google.com/drive/folders/1WRHcEYSfIIVRhBrlzR18CGVkvezJIilo?usp=sharing)
+[Models](https://drive.google.com/drive/folders/1WRHcEYSfIIVRhBrlzR18CGVkvezJIilo?usp=sharing)
+[Logs](https://drive.google.com/drive/folders/1WRHcEYSfIIVRhBrlzR18CGVkvezJIilo?usp=sharing)
+[Plots](https://drive.google.com/drive/folders/1WRHcEYSfIIVRhBrlzR18CGVkvezJIilo?usp=sharing)
 
 ## Repository Organization
 
