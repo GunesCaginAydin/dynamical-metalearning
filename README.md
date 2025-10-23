@@ -27,11 +27,11 @@ Our main contribution can be grouped under 3 main categories:
 3)	benchmarking on real trajectories, conducting sim2real experiments
 
 <p align="center">
-  <img width="460" src="./assets/meta-learning-scheme.png">
+  <img src="./assets/meta-learning-scheme.png">
 </p>
 
 <p align="center">
-  <img width="460" src="./assets/identification-pipeline.png">
+  <img src="./assets/identification-pipeline.png">
 </p>
 
 ## Logs and Plots
