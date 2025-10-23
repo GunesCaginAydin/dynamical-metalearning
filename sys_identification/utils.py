@@ -661,11 +661,21 @@ class preprocess(dataset):
 
         ry = testmetric(self.ytrue, self.ysim, time_axis=1, **params)
 
+<<<<<<< HEAD
         rync = np.array([np.nan_to_num(col, np.mean(col)) for col in ry.T]).T
         ry_mc = np.nanmean(rync,axis=1) 
         ry_stdc = np.nanstd(rync,axis=1)
 
         ryne = np.array([np.nan_to_num(row, np.mean(row)) for row in ry])
+=======
+        #rync = np.array([np.nan_to_num(col, np.mean(col)) for col in ry.T]).T
+        rync = np.array(ry)
+        ry_mc = np.nanmean(rync,axis=1) 
+        ry_stdc = np.nanstd(rync,axis=1)
+
+        #ryne = np.array([np.nan_to_num(row, np.mean(row)) for row in ry])
+        ryne = np.array(ry)
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         ry_me = np.nanmean(ryne,axis=0)
         ry_stde = np.nanstd(ryne,axis=0)
 
@@ -715,6 +725,7 @@ class plotcfg():
                         'size'   : 25}
 
     LABELCOORDS4D = ["$x$","$y$","$z$" ,"$X$","$Y$","$Z$" ,"$W$",
+<<<<<<< HEAD
                         "q0","q1","q2","q3","q4","q5","q6"]
     LABELCOORDS6D = ["$x$","$y$","$z$" ,"$d11$","$d12$","$d13$","$d22$","$d23$" ,"$d33$",
                         "q0","q1","q2","q3","q4","q5","q6"]
@@ -733,6 +744,30 @@ class plotcfg():
                         "$\epsilon_{d13}$" ,"$ \epsilon_{d22}$","$\epsilon_{d23}$" ,"$ \epsilon_{d33}$",
                         "$ \epsilon_{q0}$","$ \epsilon_{q1}$","$ \epsilon_{q2}$","$ \epsilon_{q3}$",
                         "$ \epsilon_{q4}$","$ \epsilon_{q5}$","$ \epsilon_{q6}$"] 
+=======
+                        "$q_{0}$","$q_{1}$","$q_{2}$","$q_{3}$","$q_{4}$","$q_{5}$","$q_{6}$"]
+    LABELCOORDS6D = ["$x$","$y$","$z$" ,"$d_{11}$","$d_{12}$","$d_{13}$","$d_{22}$","$d_{23}$" ,"$d_{33}$",
+                        "$q_{0}$","$q_{1}$","$q_{2}$","$q_{3}$","$q_{4}$","$q_{5}$","$q_{6}$"]
+    LABELCOORDSNAMES = ['Cartesian Pos. x [mm]','Cartesian Pos. y [mm]','Cartesian Pos. z [mm]','Cartesian Orn. X [-]','Cartesian Orn. Y [-]',
+                        'Cartesian Orn. Z [-]','Cartesian Orn. W [-]','Joint Pos. q0 [deg]','Joint Pos. q1 [deg]','Joint Pos. q2 [deg]','Joint Pos. q3 [deg]',
+                        'Joint Pos. q4 [deg]','Joint Pos. q5 [deg]','Joint Pos. q6 [deg]'
+    ]
+
+    LABELPRED4D = ["$\hat x$","$\hat y$","$\hat z$","$\hat X$","$ \hat Y$","$\hat Z$" ,"$ \hat W$"
+                        ,"$ \hat q_{0}$","$ \hat q_{1}$","$ \hat q_{2}$","$ \hat q_{3}$","$ \hat q_{4}$","$ \hat q_{5}$","$ \hat q_{6}$"]
+    LABELPRED6D = ["$\hat x$","$\hat y$","$\hat z$","$\hat d_{11}$","$ \hat d_{12}$","$\hat d_{13}$" ,"$ \hat d_{22}$"
+                        ,"$\hat d_{23}$" ,"$ \hat d_{33}$","$ \hat q_{0}$","$ \hat q_{1}$","$ \hat q_{2}$","$ \hat q_{3}$"
+                        ,"$ \hat q_{4}$","$ \hat q_{5}$","$ \hat q_{6}$"]
+
+    LABELERROR4D = ["$\epsilon_{x}$","$\epsilon_{y}$","$\epsilon_{z}$","$\epsilon_{X}$","$ \epsilon_{Y}$",
+                        "$\epsilon_{Z}$" ,"$ \epsilon_{W}$",
+                        "$ \epsilon_{q_0}$","$ \epsilon_{q_1}$","$ \epsilon_{q_2}$","$ \epsilon_{q_3}$",
+                        "$ \epsilon_{q_4}$","$ \epsilon_{q_5}$","$ \epsilon_{q_6}$"] 
+    LABELERROR6D = ["$\epsilon_{x}$","$\epsilon_{y}$","$\epsilon_{z}$","$\epsilon_{d11}$","$ \epsilon_{d12}$",
+                        "$\epsilon_{d13}$" ,"$ \epsilon_{d22}$","$\epsilon_{d23}$" ,"$ \epsilon_{d33}$",
+                        "$ \epsilon_{q_0}$","$ \epsilon_{q_1}$","$ \epsilon_{q_2}$","$ \epsilon_{q_3}$",
+                        "$ \epsilon_{q_4}$","$ \epsilon_{q_5}$","$ \epsilon_{q_6}$"] 
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
     LABELID =['RMSE',
               'R²',
@@ -750,6 +785,12 @@ class plotcfg():
     COLORS = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf',
               '#bca801', '#d8d9a4', '#6e3800', '#ed6300', '#ff5d00', '#e25f3c', '#776cdb', '#65bacd', '#2e4e2d', '#666547',
                '#fb2e01', '#6fcb9f', '#ffe28a', '#fffeb3', '#96ceb4', '#ffeead', '#ff6f69', '#ffcc5c', '#88d8b0']
+<<<<<<< HEAD
+=======
+    
+    axslims = [[-1000,1000],[-1000,1000],[-1000,1000],[-1,1],[-1,1],[-1,1],[-1,1],
+               [-180,180],[-180,180],[-180,180],[-180,180],[-180,180],[-180,180],[-180,180]]
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
 class postprocess(dataset, plotcfg):
     """
@@ -829,8 +870,14 @@ class postprocess(dataset, plotcfg):
 
         self.modeldict = {} # data of each model from .pt
         loc = data['modelloc']
+<<<<<<< HEAD
         for model in self.modellist:
             self.modeldict[model] = torch.load(f=f'{loc}/{model}', weights_only=False, map_location='cpu')
+=======
+        if False:
+            for model in self.modellist:
+                self.modeldict[model] = torch.load(f=f'{loc}/{model}', weights_only=False, map_location='cpu')
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
         self.logpath = data['logpath']
         self.figpath = data['figpath']
@@ -839,6 +886,10 @@ class postprocess(dataset, plotcfg):
         d = datetime.datetime.now()
         self.savename = args.process_name if args.process_name is not None else d.strftime("%d%m%Y_%Hh%Mm%Ss")
 
+<<<<<<< HEAD
+=======
+        plt.rcParams['text.usetex'] = False
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         plt.rc('font', **self.FONT)
         plt.rc('axes', prop_cycle=matplotlib.cycler(color=self.COLORS))
 
@@ -856,6 +907,12 @@ class postprocess(dataset, plotcfg):
         with open(logto, 'a+') as f:
             f.write(self.tabulate(*args, **kwargs))
 
+<<<<<<< HEAD
+=======
+        #figpath1 = os.path.join(self.figpath,self.dataname,self.savename,self.modelname,self.testname,'metricdict')
+        #np.save(figpath1,self.metricdict)
+
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
     def tabulate(self, modelname=None, testname=None, specificto='test', *args, **kwargs):
         """
         Tabulates testing metrics.
@@ -1080,7 +1137,11 @@ class postprocess(dataset, plotcfg):
             ax[1].set_xlabel('Iterations')
             ax[1].set_ylabel(f'Loss')
         lossname = 'loss_single.png' if len(self.modellist)==1 else 'loss_multi.png'
+<<<<<<< HEAD
         fig.suptitle(f'Loss Variation Over Iterations', y = 1.0, weight='bold')
+=======
+        #fig.suptitle(f'Loss Variation Over Iterations', y = 1.0, weight='bold')
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         if save:
             plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{lossname}',
                         bbox_inches='tight')
@@ -1088,7 +1149,12 @@ class postprocess(dataset, plotcfg):
             plt.show()
 
     def plotsim2sim(self, modelname=None, testname=None, of='best', dim=4, save=False, 
+<<<<<<< HEAD
                     title='Ground Truth vs Model Prediction for a Single Simulation'):
+=======
+                    title='Ground Truth vs Model Prediction for a Single Simulation',
+                    includeerrors=True):
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         """
         Plots the true generated pose, estimated pose and relative simulation error on the original
         time frame defined by the true generated pose.
@@ -1104,6 +1170,7 @@ class postprocess(dataset, plotcfg):
         """
         model = self.modelname if modelname is None else modelname
         test = self.testname if testname is None else testname
+<<<<<<< HEAD
         if of=='best':
             idx = np.argmax(self.metricdict[model][test]['metrics']['r2']['cmean'])
         elif of=='worst':
@@ -1115,16 +1182,35 @@ class postprocess(dataset, plotcfg):
         else:
             raise ValueError
 
+=======
+
+        if of=='best':
+            idx = np.argmin(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))
+        elif of=='worst':
+            idx = np.argmax(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))
+        elif of=='median':
+            idx = np.argsort(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))[len(self.metricdict[model][test]['metrics']['r']['cmean'])//2]
+        elif of=='random':
+            idx = np.random.random_integers(low = 0, high=len(self.metricdict[model][test]['metrics']['r']['cmean']))
+        else:
+            raise ValueError
+        
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         true = self.metricdict[model][test]['ytrue'][idx,:,:]
         sim = self.metricdict[model][test]['ysim'][idx,:,:]
         err = self.metricdict[model][test]['yerr'][idx,:,:]
 
         if dim==4:
+<<<<<<< HEAD
             fig, ax = plt.subplots(7, 2, figsize=(20, 20))
+=======
+            fig, ax = plt.subplots(7, 2, figsize=(15,20))
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
             k = 0
             for j in range(2):
                 for i in range(7):
+<<<<<<< HEAD
                     ax[i,j].plot(true[:,k] ,'k', 
                         label=self.LABELCOORDS4D[k],linewidth=3)
                     ax[i,j].plot(sim[:,k], 'b', 
@@ -1135,6 +1221,29 @@ class postprocess(dataset, plotcfg):
                     ax[i,j].legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
                     ax[i,j].set_xlabel('Iterations')
                     k=k+1
+=======
+                    if k ==0:
+                        l1 = ax[i,j].plot(true[:,k] ,'k', 
+                                label='groundtruth',linewidth=2)
+                        l2 = ax[i,j].plot(sim[:,k], 'b', 
+                                label='estimation',linewidth=1.5)
+                    else:
+                        ax[i,j].plot(true[:,k] ,'k', 
+                                linewidth=3)
+                        ax[i,j].plot(sim[:,k], 'b', 
+                                linewidth=1)
+                    if includeerrors:
+                        ax[i,j].plot(err[:,k], 'r', 
+                            linewidth=1)
+                    ax[i,j].grid(True,linestyle='--')
+                    ax[i,j].set_ylabel(self.LABELCOORDSNAMES[k],fontsize=15)
+                    ax[i,j].set_xlabel('Iterations [-]',fontsize=15)
+                    ax[i,j].set_ylim(self.axslims[k])
+                    k=k+1
+                
+                    ax[i,j].tick_params(axis='x', labelsize=15)
+                    ax[i,j].tick_params(axis='y', labelsize=15)
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
         elif dim==6:
             fig = plt.figure(figsize = (20,20))
@@ -1147,6 +1256,7 @@ class postprocess(dataset, plotcfg):
                     label=self.LABELCOORDS6D[k],linewidth=3)
                 ax1.plot(sim[:,k], 'b', 
                     label=self.LABELPRED6D[k],linewidth=1)
+<<<<<<< HEAD
                 ax1.plot(err[:,k], 'r', 
                     label=self.LABELERROR6D[k],linewidth=1)
                 ax1.grid(True)
@@ -1154,12 +1264,25 @@ class postprocess(dataset, plotcfg):
                 ax1.set_xlabel('Iterations')
                 k=k+1
             
+=======
+                if includeerrors:
+                    ax1.plot(err[:,k], 'r', 
+                        label=self.LABELERROR6D[k],linewidth=1)
+                ax1.grid(True)
+                ax1.set_xlabel('Iterations')
+                k=k+1
+            
+                ax1.tick_params(axis='x', labelsize=20)
+                ax1.tick_params(axis='y', labelsize=20)
+
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
             for i2 in range(7):
                 ax2 = fig.add_subplot(gs[i2,1])
                 ax2.plot(true[:,k] ,'k', 
                     label=self.LABELCOORDS6D[k],linewidth=3)
                 ax2.plot(sim[:,k], 'b', 
                     label=self.LABELPRED6D[k],linewidth=1)
+<<<<<<< HEAD
                 ax2.plot(err[:,k], 'r', 
                     label=self.LABELERROR6D[k],linewidth=1)
                 ax2.grid(True)
@@ -1173,12 +1296,32 @@ class postprocess(dataset, plotcfg):
                      f'\n\nTest Name: {test}\n\n Model Name: {model}'
                      f'\n\nTest Score: {score}/10.0', y=1.01, weight='bold')
         fig.tight_layout()
+=======
+                if includeerrors:
+                    ax2.plot(err[:,k], 'r', 
+                        label=self.LABELERROR6D[k],linewidth=1)
+                ax2.grid(True)
+                ax2.set_xlabel('Iterations')
+                k=k+1
+
+                ax2.tick_params(axis='x', labelsize=20)
+                ax2.tick_params(axis='y', labelsize=20)
+
+        fig.legend(loc='upper right',fontsize=15,fancybox=True)
+        score = np.round(self.metricdict[model][test]['score'],decimals=2)
+        fig.suptitle('Groundtruth and Inference over the Horizon')
+        fig.supxlabel('Iterations')
+        fig.supylabel('Output Variables')
+        fig.tight_layout(pad=1.2,h_pad=1.2,w_pad=1.2)
+
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         if save:
             plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/sim2sim_{of}.png',
                         bbox_inches='tight')
         else:
             plt.show()
 
+<<<<<<< HEAD
     def plotsim2real(self, modelname=None, testname=None, of='best', dim=4, save=False, 
                     title='Acquisation vs Model Prediction for a Single Simulation'):
         """
@@ -1274,6 +1417,11 @@ class postprocess(dataset, plotcfg):
 
     def plothorizon(self, modelname=None, testname=None, of='best', dim=4, iter=1000, ctx=200, save=False, 
                     title='Horizon Prediction for a Single Simulation'):
+=======
+    def plothorizon(self, modelname=None, testname=None, of='best', dim=4, iter=1000, ctx=200, save=False, 
+                    title='Horizon Prediction for a Single Simulation',
+                    includeerrors=True):
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         """
         Plots the horizon prediction for a given simulation determined by the user.
 
@@ -1290,6 +1438,7 @@ class postprocess(dataset, plotcfg):
         """
         model = self.modelname if modelname is None else modelname
         test = self.testname if testname is None else testname
+<<<<<<< HEAD
         if of=='best':
             idx = np.argmax(self.metricdict[model][test]['metrics']['r2']['cmean'])
         elif of=='worst':
@@ -1298,6 +1447,17 @@ class postprocess(dataset, plotcfg):
             idx = np.argsort(self.metricdict[model][test]['metrics']['r2']['cmean'])[len(self.metricdict[self.modelname][self.testname]['metrics']['r2']['cmean'])//2]
         elif of=='random':
             idx = np.random.random_integers(low = 0, high=len(self.metricdict[model][test]['metrics']['r2']['cmean']))
+=======
+
+        if of=='best':
+            idx = np.argmin(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))
+        elif of=='worst':
+            idx = np.argmax(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))
+        elif of=='median':
+            idx = np.argsort(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))[len(self.metricdict[model][test]['metrics']['r']['cmean'])//2]
+        elif of=='random':
+            idx = np.random.random_integers(low = 0, high=len(self.metricdict[model][test]['metrics']['r']['cmean']))
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         else:
             raise ValueError
         
@@ -1305,6 +1465,10 @@ class postprocess(dataset, plotcfg):
         sim = self.metricdict[model][test]['ysim'][idx,:,:]
         err = self.metricdict[model][test]['yerr'][idx,:,:]
         true = self.metricdict[model][test]['ytrue'][idx,:,:]
+<<<<<<< HEAD
+=======
+
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         total = np.concatenate([yctx,true])
 
         t_context = np.arange(1, ctx)
@@ -1312,7 +1476,11 @@ class postprocess(dataset, plotcfg):
         t_total = np.arange(0, iter)
 
         if dim==4:
+<<<<<<< HEAD
             fig, ax = plt.subplots(7, 2, figsize=(20, 20))
+=======
+            fig, ax = plt.subplots(7, 2, figsize=(15, 20))
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
             k = 0
             for j in range(2):
@@ -1323,6 +1491,7 @@ class postprocess(dataset, plotcfg):
                         color = 'k', linestyle='--')
                     ax[i,j].axvspan(t_context[0], t_context[-1],
                         facecolor='lime', alpha=0.2)
+<<<<<<< HEAD
                     ax[i,j].plot(t_total,total[:,k] ,'k', 
                         label=self.LABELCOORDS4D[k],linewidth=3)
                     ax[i,j].plot(t_prediction,sim[:,k], 'b', 
@@ -1333,6 +1502,29 @@ class postprocess(dataset, plotcfg):
                     ax[i,j].legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
                     ax[i,j].set_xlabel('Iterations')
                     k=k+1
+=======
+                    if k==0:
+                        l1 = ax[i,j].plot(t_total,total[:,k] ,'k', 
+                            label='groundtruth',linewidth=2)
+                        l2 = ax[i,j].plot(t_prediction,sim[:,k], 'b', 
+                            label='estimation',linewidth=1.5)
+                    else:
+                        ax[i,j].plot(t_total,total[:,k] ,'k', 
+                            linewidth=3)
+                        ax[i,j].plot(t_prediction,sim[:,k], 'b', 
+                            linewidth=1)
+                    if includeerrors:
+                        ax[i,j].plot(t_prediction,err[:,k], 'r', 
+                            label=self.LABELERROR4D[k],linewidth=1)
+                    ax[i,j].grid(True,linestyle='--')
+                    ax[i,j].set_ylabel(self.LABELCOORDSNAMES[k],fontsize=15)
+                    ax[i,j].set_xlabel('Iterations [-]',fontsize=15)
+                    ax[i,j].set_ylim(self.axslims[k])
+                    k=k+1
+                
+                    ax[i,j].tick_params(axis='x', labelsize=15)
+                    ax[i,j].tick_params(axis='y', labelsize=15)
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
         elif dim==6:
             fig = plt.figure(figsize = (20,20))
@@ -1352,6 +1544,7 @@ class postprocess(dataset, plotcfg):
                     label=self.LABELCOORDS6D[k],linewidth=3)
                 ax1.plot(t_prediction,sim[:,k], 'b', 
                     label=self.LABELPRED6D[k],linewidth=1)
+<<<<<<< HEAD
                 ax1.plot(t_prediction,err[:,k], 'r', 
                     label=self.LABELERROR6D[k],linewidth=1)
                 ax1.grid(True)
@@ -1359,6 +1552,19 @@ class postprocess(dataset, plotcfg):
                 ax1.set_xlabel('Iterations')
                 k=k+1
 
+=======
+                if includeerrors:
+                    ax1.plot(t_prediction,err[:,k], 'r', 
+                        label=self.LABELERROR6D[k],linewidth=1)
+                ax1.grid(True)
+                ax1.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0., fontsize='small')
+                ax1.set_xlabel('Iterations')
+                k=k+1
+
+                ax1.tick_params(axis='x', labelsize=20)
+                ax1.tick_params(axis='y', labelsize=20)
+
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
             for i2 in range(7):
                 ax2 = fig.add_subplot(gs[i2,1])
                 ax2.axvline(x = t_prediction[-1], 
@@ -1372,6 +1578,7 @@ class postprocess(dataset, plotcfg):
                     label=self.LABELCOORDS6D[k],linewidth=3)
                 ax2.plot(t_prediction,sim[:,k], 'b', 
                     label=self.LABELPRED6D[k],linewidth=1)
+<<<<<<< HEAD
                 ax2.plot(t_prediction,err[:,k], 'r', 
                     label=self.LABELERROR6D[k],linewidth=1)
                 ax2.grid(True)
@@ -1385,6 +1592,28 @@ class postprocess(dataset, plotcfg):
                      f'\n\nTest Name: {test}\n\n Model Name: {model}'
                      f'\n\nTest Score: {score}/10.0', y=1.01, weight='bold')
         fig.tight_layout()
+=======
+                if includeerrors:
+                    ax2.plot(t_prediction,err[:,k], 'r', 
+                        label=self.LABELERROR6D[k],linewidth=1)
+                ax2.grid(True)
+                ax2.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0., fontsize='small')
+                ax2.set_xlabel('Iterations')
+                k=k+1
+            
+                ax2.tick_params(axis='x', labelsize=20)
+                ax2.tick_params(axis='y', labelsize=20)
+
+        score = np.round(self.metricdict[model][test]['score'],decimals=2)
+
+        fig.legend(loc='upper right',fontsize=15,fancybox=True)
+        score = np.round(self.metricdict[model][test]['score'],decimals=2)
+        fig.suptitle('Groundtruth and Inference over the Horizon')
+        fig.supxlabel('Iterations')
+        fig.supylabel('Output Variables')
+        fig.tight_layout(pad=1.2,h_pad=1.2,w_pad=1.2)
+
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         if save:
             plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/horizon_{of}.png',
                         bbox_inches='tight')
@@ -1405,6 +1634,7 @@ class postprocess(dataset, plotcfg):
         """
         model = self.modelname if modelname is None else modelname
         test = self.testname if testname is None else testname
+<<<<<<< HEAD
         if of=='best':
             idx = np.argmax(self.metricdict[model][test]['metrics']['r2']['cmean'])
         elif of=='worst':
@@ -1422,6 +1652,24 @@ class postprocess(dataset, plotcfg):
 
         if dim==4:
             fig, ax = plt.subplots(7, 2, figsize=(20, 20))
+=======
+        
+        if of=='best':
+            idx = np.argmin(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))
+        elif of=='worst':
+            idx = np.argmax(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))
+        elif of=='median':
+            idx = np.argsort(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))[len(self.metricdict[model][test]['metrics']['r']['cmean'])//2]
+        elif of=='random':
+            idx = np.random.random_integers(low = 0, high=len(self.metricdict[model][test]['metrics']['r']['cmean']))
+        else:
+            raise ValueError
+        
+        err = self.metricdict[model][test]['yerr'][idx,:,:]
+
+        if dim==4:
+            fig, ax = plt.subplots(7, 2, figsize=(15, 20))
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
             k = 0
             for j in range(2):
@@ -1429,10 +1677,21 @@ class postprocess(dataset, plotcfg):
                     errc = err[:,k]
                     ax[i,j].plot(errc, 'r', 
                         label=self.LABELERROR4D[k],linewidth=3)
+<<<<<<< HEAD
                     ax[i,j].grid(True)
                     ax[i,j].legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
                     ax[i,j].set_xlabel('Iterations')
                     k=k+1
+=======
+                    ax[i,j].grid(True,linestyle='--')
+                    ax[i,j].set_ylabel(self.LABELCOORDSNAMES[k],fontsize=15)
+                    ax[i,j].set_xlabel('Iterations [-]',fontsize=15)
+                    ax[i,j].set_ylim([x/10 for x in self.axslims[k]])
+                    k=k+1
+                
+                    ax[i,j].tick_params(axis='x', labelsize=15)
+                    ax[i,j].tick_params(axis='y', labelsize=15)
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
         elif dim==6:
             fig = plt.figure(figsize = (20,20))
@@ -1445,16 +1704,27 @@ class postprocess(dataset, plotcfg):
                 ax1.plot(errc, 'r', 
                     label=self.LABELERROR6D[k],linewidth=3)
                 ax1.grid(True)
+<<<<<<< HEAD
                 ax1.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
                 ax1.set_xlabel('Iterations')
                 k=k+1
             
+=======
+                #ax1.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+                ax1.set_xlabel('Iterations')
+                k=k+1
+            
+                ax1.tick_params(axis='x', labelsize=20)
+                ax1.tick_params(axis='y', labelsize=20)
+            
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
             for i2 in range(7):
                 ax2 = fig.add_subplot(gs[i2,1])
                 errc = err[:,k]
                 ax2.plot(errc, 'r', 
                     label=self.LABELERROR6D[k],linewidth=3)
                 ax2.grid(True)
+<<<<<<< HEAD
                 ax2.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
                 ax2.set_xlabel('Iterations')
                 k=k+1
@@ -1465,12 +1735,28 @@ class postprocess(dataset, plotcfg):
                      f'\n\nTest Name: {test}\n\n Model Name: {model}'
                      f'\n\nTest Score: {score}/10.0', y=1.01, weight='bold')
         fig.tight_layout()
+=======
+                #ax2.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+                ax2.set_xlabel('Iterations')
+                k=k+1
+
+                ax2.tick_params(axis='x', labelsize=20)
+                ax2.tick_params(axis='y', labelsize=20)
+
+        score = np.round(self.metricdict[model][test]['score'],decimals=2)
+
+        fig.suptitle('Groundtruth and Inference over the Horizon')
+        fig.supxlabel('Iterations')
+        fig.supylabel('Output Variables')
+        fig.tight_layout(pad=1.2,h_pad=1.2,w_pad=1.2)
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         if save:
             plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/percent_error_{of}.png',
                         bbox_inches='tight')
         else:
             plt.show()
 
+<<<<<<< HEAD
     def plotmetrics_overtime(self, modelname=None, testname=None, save=False,
                             title = f'Cumulative Accuracy Projected on Iteration Steps'):
         """
@@ -1618,6 +1904,8 @@ class postprocess(dataset, plotcfg):
             plt.show()
 
 
+=======
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
     def plotmetrics_overenvironments(self, modelname=None, testname=None, save=False, 
                                     title='Cumulative Accuracy Metrics Mean over Coordinates Projected on All Environments'):
         """
@@ -1634,7 +1922,11 @@ class postprocess(dataset, plotcfg):
         model = self.modelname if modelname is None else modelname
         test = self.testname if testname is None else testname
         metrics = self.metricdict[model][test]['metrics']
+<<<<<<< HEAD
         fig,[[ax1, ax2],[ax3, ax4]]  = plt.subplots(2, 2,figsize=(20, 20))
+=======
+        fig,[[ax1, ax2],[ax3, ax4]]  = plt.subplots(2, 2,figsize=(10, 10))
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         
         ax1.plot(metrics['r2']['cmean'],
                         linewidth=2)
@@ -1643,6 +1935,7 @@ class postprocess(dataset, plotcfg):
         ax1.scatter(np.nanargmin(metrics['r2']['cmean']),
                         np.nanmin(metrics['r2']['cmean']),
                         marker='o', color='red', s=120)
+<<<<<<< HEAD
         ax1.annotate(f'worst env',
                      (np.nanargmin(metrics['r2']['cmean']),np.nanmin(metrics['r2']['cmean'])),
                      xytext=(-2*self.OFFSET,self.OFFSET),
@@ -1661,6 +1954,21 @@ class postprocess(dataset, plotcfg):
         ax1.set_title('$R^{2}$ Value')
         ax1.set(xlabel='Environment')
         
+=======
+        ax1.scatter(np.nanargmax(metrics['r2']['cmean']),
+                        np.nanmax(metrics['r2']['cmean']),
+                        marker='o', color='red', s=120)
+        ax1.axhspan(np.nanpercentile(metrics['r2']['cmean'],25), 
+                        np.nanpercentile(metrics['r2']['cmean'],75), 
+                        facecolor='gold', alpha=0.2)
+        ax1.grid(visible=True, which='both',linestyle='--')
+        ax1.set_ylim([0,1])
+        ax1.set_title('$R^{2}$ Value',fontsize=15)
+        ax1.set_xlabel('Environment',fontsize=15)
+        ax1.set_ylabel('$R^{2}$ Value [0-1]',fontsize=15)
+        ax1.tick_params(axis='x', labelsize=15)
+        ax1.tick_params(axis='y', labelsize=15)
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
         ax2.plot(metrics['r']['cmean'],
                         linewidth=2.0)
@@ -1669,6 +1977,7 @@ class postprocess(dataset, plotcfg):
         ax2.scatter(np.nanargmin(metrics['r']['cmean']),
                         np.nanmin(metrics['r']['cmean']),
                         marker='o', color='red', s=120)
+<<<<<<< HEAD
         ax2.annotate(f'best env',
                      (np.nanargmin(metrics['r']['cmean']),np.nanmin(metrics['r']['cmean'])),
                      xytext=(-2*self.OFFSET,self.OFFSET),
@@ -1686,6 +1995,21 @@ class postprocess(dataset, plotcfg):
         ax2.grid(visible=True, which='both')
         ax2.set_title('$RMSE$ Value')
         ax2.set(xlabel='Environment')
+=======
+        ax2.scatter(np.nanargmax(metrics['r']['cmean']),
+                        np.nanmax(metrics['r']['cmean']),
+                        marker='o', color='red', s=120)
+        ax2.axhspan(np.nanpercentile(metrics['r']['cmean'],25), 
+                        np.nanpercentile(metrics['r']['cmean'],75), 
+                        facecolor='gold', alpha=0.2)
+        ax2.grid(visible=True, which='both',linestyle='--')
+        ax2.set_ylim(bottom=0)
+        ax2.set_title('$RMSE$ Value',fontsize=15)
+        ax2.set_xlabel('Environment',fontsize=15)
+        ax2.set_ylabel('$RMSE$ Value [0--]',fontsize=15)
+        ax2.tick_params(axis='x', labelsize=15)
+        ax2.tick_params(axis='y', labelsize=15)
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
 
         ax3.plot(metrics['f']['cmean'],
@@ -1695,6 +2019,7 @@ class postprocess(dataset, plotcfg):
         ax3.scatter(np.nanargmin(metrics['f']['cmean']),
                         np.nanmin(metrics['f']['cmean']),
                         marker='o', color='red', s=120)
+<<<<<<< HEAD
         ax3.annotate(f'worst env.',
                      (np.nanargmin(metrics['f']['cmean']),np.nanmin(metrics['f']['cmean'])),
                      xytext=(-2*self.OFFSET,self.OFFSET),
@@ -1712,6 +2037,21 @@ class postprocess(dataset, plotcfg):
         ax3.grid(visible=True, which='both')
         ax3.set_title('$fit$ Value')
         ax3.set(xlabel='Environment')
+=======
+        ax3.scatter(np.nanargmax(metrics['f']['cmean']),
+                        np.nanmax(metrics['f']['cmean']),
+                        marker='o', color='red', s=120)
+        ax3.axhspan(np.nanpercentile(metrics['f']['cmean'],25), 
+                        np.nanpercentile(metrics['f']['cmean'],75), 
+                        facecolor='gold', alpha=0.2)
+        ax3.grid(visible=True, which='both',linestyle='--')
+        ax3.set_ylim([0,100])
+        ax3.set_title('$Fit Idx$ Value',fontsize=15)
+        ax3.set_xlabel('Environment',fontsize=15)
+        ax3.set_ylabel('$Fit Idx$ Value [0-100]',fontsize=15)
+        ax3.tick_params(axis='x', labelsize=15)
+        ax3.tick_params(axis='y', labelsize=15)
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
 
         ax4.plot(metrics['nr']['cmean'],
@@ -1721,6 +2061,7 @@ class postprocess(dataset, plotcfg):
         ax4.scatter(np.nanargmin(metrics['nr']['cmean']),
                         np.nanmin(metrics['nr']['cmean']),
                         marker='o', color='red', s=120)
+<<<<<<< HEAD
         ax4.annotate(f'best env.',
                      (np.nanargmin(metrics['nr']['cmean']),np.nanmin(metrics['nr']['cmean'])),
                      xytext=(-2*self.OFFSET,self.OFFSET),
@@ -1745,12 +2086,36 @@ class postprocess(dataset, plotcfg):
         fig.suptitle(title + 
                      f'\n\nTest Name: {test}\n\n Model Name: {model}'
                      f'\n\nTest Score: {score}/10.0', y=1.15, weight='bold')
+=======
+        ax4.scatter(np.nanargmax(metrics['nr']['cmean']),
+                        np.nanmax(metrics['nr']['cmean']),
+                        marker='o', color='red', s=120)
+        ax4.axhspan(np.nanpercentile(metrics['nr']['cmean'],25), 
+                        np.nanpercentile(metrics['nr']['cmean'],75), 
+                        facecolor='gold', alpha=0.2)
+        ax4.grid(visible=True, which='both',linestyle='--')
+        ax4.set_ylim(bottom=0)
+        ax4.set_title('$NRMSE',fontsize=15)
+        ax4.set_xlabel('Environment',fontsize=15)
+        ax4.set_ylabel('$NRMSE$ Value [0--]',fontsize=15)
+        ax4.tick_params(axis='x', labelsize=15)
+        ax4.tick_params(axis='y', labelsize=15)
+
+        score = np.round(self.metricdict[model][test]['score'],decimals=2)
+
+        fig.suptitle('Variation of Metrics over Environments')
+        fig.supxlabel('Environments')
+        fig.supylabel('Metrics')
+        fig.tight_layout(pad=1.2,h_pad=1.2,w_pad=1.2)
+
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         if save:
             plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/metrics_overenvironments.png',
                         bbox_inches='tight')
         else:
             plt.show()
 
+<<<<<<< HEAD
     def plotvariation_overenvironments(self, modelname=None, testname=None, save=False, 
                                        title='Cumulative Metric Variation Projected on All Environments'):
         """
@@ -1796,6 +2161,8 @@ class postprocess(dataset, plotcfg):
         else:
             plt.show()
 
+=======
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
     def plotmetrics_overjoints(self, modelname=None, testname=None, save=False, 
                                 title='Cumulative Accuracy Metrics Mean over Environments Projected on All Coordinates'):
         """
@@ -1812,7 +2179,11 @@ class postprocess(dataset, plotcfg):
         model = self.modelname if modelname is None else modelname
         test = self.testname if testname is None else testname
         metrics = self.metricdict[model][test]['metrics']
+<<<<<<< HEAD
         fig,[[ax1, ax2],[ax3, ax4]]  = plt.subplots(2, 2,figsize=(20, 20))
+=======
+        fig,[[ax1, ax2],[ax3, ax4]]  = plt.subplots(2, 2,figsize=(10, 10))
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         
         ax1.plot(metrics['r2']['emean'],
                         linewidth=2)
@@ -1821,6 +2192,7 @@ class postprocess(dataset, plotcfg):
         ax1.scatter(np.nanargmin(metrics['r2']['emean']),
                         np.nanmin(metrics['r2']['emean']),
                         marker='o', color='red', s=120)
+<<<<<<< HEAD
         ax1.annotate(f'worst coord',
                      (np.nanargmin(metrics['r2']['emean']),np.nanmin(metrics['r2']['emean'])),
                      xytext=(-2*self.OFFSET,self.OFFSET),
@@ -1839,6 +2211,21 @@ class postprocess(dataset, plotcfg):
         ax1.set_title('$R^{2}$ Value')
         ax1.set(xlabel='Coordinate')
         
+=======
+        ax1.scatter(np.nanargmax(metrics['r2']['emean']),
+                        np.nanmax(metrics['r2']['emean']),
+                        marker='o', color='red', s=120)
+        ax1.axhspan(np.nanpercentile(metrics['r2']['emean'],25), 
+                        np.nanpercentile(metrics['r2']['emean'],75), 
+                        facecolor='gold', alpha=0.2)
+        ax1.grid(visible=True, which='both',linestyle='--')
+        ax1.set_ylim([0,1])
+        ax1.set_title('$R^{2}$ Value',fontsize=15)
+        ax1.set_xlabel('Coordinate',fontsize=15)
+        ax1.set_ylabel('$R^{2}$ Value [0-1]',fontsize=15)
+        ax1.tick_params(axis='x', labelsize=15)
+        ax1.tick_params(axis='y', labelsize=15)
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
         ax2.plot(metrics['r']['emean'],
                         linewidth=2.0)
@@ -1847,6 +2234,7 @@ class postprocess(dataset, plotcfg):
         ax2.scatter(np.nanargmin(metrics['r']['emean']),
                         np.nanmin(metrics['r']['emean']),
                         marker='o', color='red', s=120)
+<<<<<<< HEAD
         ax2.annotate(f'best coord.',
                      (np.nanargmin(metrics['r']['emean']),np.nanmin(metrics['r']['emean'])),
                      xytext=(-2*self.OFFSET,self.OFFSET),
@@ -1864,6 +2252,21 @@ class postprocess(dataset, plotcfg):
         ax2.grid(visible=True, which='both')
         ax2.set_title('$RMSE$ Value')
         ax2.set(xlabel='Coordinate')
+=======
+        ax2.scatter(np.nanargmax(metrics['r']['emean']),
+                        np.nanmax(metrics['r']['emean']),
+                        marker='o', color='red', s=120)
+        ax2.axhspan(np.nanpercentile(metrics['r']['emean'],25), 
+                        np.nanpercentile(metrics['r']['emean'],75), 
+                        facecolor='gold', alpha=0.2)
+        ax2.grid(visible=True, which='both',linestyle='--')
+        ax2.set_ylim(bottom=0)
+        ax2.set_title('$RMSE$ Value',fontsize=15)
+        ax2.set_xlabel('Coordinate',fontsize=15)
+        ax2.set_ylabel('$RMSE$ Value [0--]',fontsize=15)
+        ax2.tick_params(axis='x', labelsize=15)
+        ax2.tick_params(axis='y', labelsize=15)
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
 
         ax3.plot(metrics['f']['emean'],
@@ -1873,6 +2276,7 @@ class postprocess(dataset, plotcfg):
         ax3.scatter(np.nanargmin(metrics['f']['emean']),
                         np.nanmin(metrics['f']['emean']),
                         marker='o', color='red', s=120)
+<<<<<<< HEAD
         ax3.annotate(f'worst coord.',
                      (np.nanargmin(metrics['f']['emean']),np.nanmin(metrics['f']['emean'])),
                      xytext=(-2*self.OFFSET,self.OFFSET),
@@ -1890,6 +2294,21 @@ class postprocess(dataset, plotcfg):
         ax3.grid(visible=True, which='both')
         ax3.set_title('$fit$ Value')
         ax3.set(xlabel='Coordinate')
+=======
+        ax3.scatter(np.nanargmax(metrics['f']['emean']),
+                        np.nanmax(metrics['f']['emean']),
+                        marker='o', color='red', s=120)
+        ax3.axhspan(np.nanpercentile(metrics['f']['emean'],25), 
+                        np.nanpercentile(metrics['f']['emean'],75), 
+                        facecolor='gold', alpha=0.2)
+        ax3.grid(visible=True, which='both',linestyle='--')
+        ax3.set_ylim([0,100])
+        ax3.set_title('$Fit Idx$ Value',fontsize=15)
+        ax3.set_xlabel('Coordinate',fontsize=15)
+        ax3.set_ylabel('$Fit Idx$ Value [0-100]',fontsize=15)
+        ax3.tick_params(axis='x', labelsize=15)
+        ax3.tick_params(axis='y', labelsize=15)
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
 
         ax4.plot(metrics['nr']['emean'],
@@ -1899,6 +2318,7 @@ class postprocess(dataset, plotcfg):
         ax4.scatter(np.nanargmin(metrics['nr']['emean']),
                         np.nanmin(metrics['nr']['emean']),
                         marker='o', color='red', s=120)
+<<<<<<< HEAD
         ax4.annotate(f'best coord',
                      (np.nanargmin(metrics['nr']['emean']),np.nanmin(metrics['nr']['emean'])),
                      xytext=(-2*self.OFFSET,self.OFFSET),
@@ -1923,12 +2343,35 @@ class postprocess(dataset, plotcfg):
         fig.suptitle(title + 
                      f'\n\nTest Name: {test}\n\n Model Name: {model}'
                      f'\n\nTest Score: {score}/10.0', y=1.15, weight='bold')
+=======
+        ax4.scatter(np.nanargmax(metrics['nr']['emean']),
+                        np.nanmax(metrics['nr']['emean']),
+                        marker='o', color='red', s=120)
+        ax4.axhspan(np.nanpercentile(metrics['nr']['emean'],25), 
+                        np.nanpercentile(metrics['nr']['emean'],75), 
+                        facecolor='gold', alpha=0.2)
+        ax4.grid(visible=True, which='both',linestyle='--')
+        ax4.set_ylim(bottom=0)
+        ax4.set_title('$NRMSE',fontsize=15)
+        ax4.set_xlabel('Coordinate',fontsize=15)
+        ax4.set_ylabel('$NRMSE$ Value [0--]',fontsize=15)
+        ax4.tick_params(axis='x', labelsize=15)
+        ax4.tick_params(axis='y', labelsize=15)
+
+        score = np.round(self.metricdict[model][test]['score'],decimals=2)
+
+        fig.suptitle('Variation of Metrics over Joint and Cartesian Variables')
+        fig.supxlabel('Joint and Cartesian Variables')
+        fig.supylabel('Metrics')
+        fig.tight_layout(pad=1.2,h_pad=1.2,w_pad=1.2)
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         if save:
             plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/metrics_overcoordinates.png',
                         bbox_inches='tight')
         else:
             plt.show()
 
+<<<<<<< HEAD
     def plotvariation_overjoints(self, modelname=None, testname=None, save=False, 
                                  title='Cumulative Metric Variation Projected on All Coordinates'):
         """
@@ -1968,13 +2411,112 @@ class postprocess(dataset, plotcfg):
                      f'\n\nTest Score: {score}/10.0', y=1.15, weight='bold')
         if save:
             plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/variation_overcoordinates.png',
+=======
+    def plottimevariation_stdmean(self, modelnames=None, testname=None, save=False, ctxs=[], iters=[],
+                                  figsize=(15,20), legend=None, labels=None):
+
+        fig, ax = plt.subplots(nrows=7, ncols=2, figsize=figsize)
+        for n, nmodel in enumerate(self.modellist if modelnames is None else [modelnames]):    
+            for p, ntest in enumerate(self.testlist if testname is None else [testname]):
+                err = self.metricdict[nmodel][ntest]['yerr']
+                errmean = np.mean(err,axis=0) 
+                errstd = np.std(err,axis=0)
+
+                t_context = np.arange(1, ctxs[n])
+                t_prediction = np.arange(0, iters[n]-ctxs[n]) + ctxs[n]
+                t_total = np.arange(1, iters[n])
+                errup = errmean + 1.96*errstd/np.sqrt(err.shape[0])
+                errdown = errmean - 1.96*errstd/np.sqrt(err.shape[0])
+                k = 0
+                for j in range(2):
+                    for i in range(7):
+                        if k==0 and (legend is not None):
+                            ax[i,j].plot(t_prediction,errmean[:,k], color=self.COLORS[n],
+                                linewidth=1.5,label=legend[i])
+                        else:
+                            ax[i,j].plot(t_prediction,errmean[:,k], color=self.COLORS[n],
+                                linewidth=1.5)
+                        ax[i,j].fill_between(t_prediction,errdown[:,k],errup[:,k],fc=self.COLORS[n],alpha=0.25)
+                        ax[i,j].grid(True,linestyle='--')
+                        ax[i,j].set_ylabel(self.LABELCOORDSNAMES[k],fontsize=15)
+                        ax[i,j].set_xlabel('Iterations [-]',fontsize=15)
+                        ax[i,j].set_ylim([x/10 for x in self.axslims[k]])
+                        k=k+1
+                    
+                        ax[i,j].tick_params(axis='x', labelsize=15)
+                        ax[i,j].tick_params(axis='y', labelsize=15)
+
+        if legend is not None:
+            fig.legend(loc='upper right',fontsize=15,fancybox=True)
+
+        fig.suptitle('Variation of Metrics over Joint and Cartesian Variables')
+        fig.supxlabel('Joint and Cartesian Variables')
+        fig.supylabel('Metrics')
+        fig.tight_layout(pad=1.2,h_pad=1.2,w_pad=1.2)
+
+        if save and modelnames is None:
+            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/errormeanandstd_{labels}.png',
+                        bbox_inches='tight')
+        elif save and modelnames is not None:
+            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{self.modelname}/{self.testname}/errormeanandstd.png',
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
                         bbox_inches='tight')
         else:
             plt.show()
 
+<<<<<<< HEAD
     def plotvariation_tests(self, modelname=None, testnames=None, metric='f', save=False, labels=None, include_legend=True,
                             title = 'Cumulative Metric Variation for All Available Tests of a Single Model',
                             legendentries=None, omitscores=False):
+=======
+    def plotmetric_singletraj_models(self, modelnames=None, testname=None, save=False, ctxs=[], iters=[], idx=0,
+                                  figsize=(15,20), legend=None, labels=None):
+        """
+        Plots chosen metrics on a single graph for a single trajectory - useful for comparing different context
+        trainings and inferences.
+        """
+        fig, ax = plt.subplots(nrows=7, ncols=2, figsize=figsize)
+        for n, nmodel in enumerate(self.modellist if modelnames is None else [modelnames]):    
+            for p, ntest in enumerate(self.testlist if testname is None else [testname]):
+                rmse_list = self.metricdict[nmodel][ntest]['metrics']['r']['cvalue']
+                rmse_single = rmse_list[idx,:]
+
+                k = 0
+                for j in range(2):
+                    for i in range(7):
+                        ax[i,j].plot(ctxs, rmse_single, color=self.COLORS[p],
+                            linewidth=1.5,label=legend[i])
+                        ax[i,j].grid(True,linestyle='--')
+                        ax[i,j].set_ylabel(self.LABELCOORDSNAMES[k],fontsize=15)
+                        ax[i,j].set_xlabel('Contexts [-]',fontsize=15)
+                        ax[i,j].set_ylim([x/10 for x in self.axslims[k]])
+                        k=k+1
+                    
+                        ax[i,j].tick_params(axis='x', labelsize=15)
+                        ax[i,j].tick_params(axis='y', labelsize=15)
+
+        if legend is not None:
+            fig.legend(loc='upper right',fontsize=15,fancybox=True)
+
+        fig.suptitle('Variation of Metrics over Joint and Cartesian Variables wrt Changing Training/Inference Contexts')
+        fig.supxlabel('Joint and Cartesian Variables')
+        fig.supylabel('Metrics')
+        fig.tight_layout(pad=1.2,h_pad=1.2,w_pad=1.2)
+
+        if save and modelnames is None:
+            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/ctxstraj_{labels}.png',
+                        bbox_inches='tight')
+        elif save and modelnames is not None:
+            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{self.modelname}/{self.testname}/ctxstraj.png',
+                        bbox_inches='tight')
+        else:
+            plt.show()
+        
+
+    def plotvariation_tests(self, modelname=None, testnames=None, metric='f', save=False, labels=None, include_legend=True,
+                            title = 'Cumulative Metric Variation for All Available Tests of a Single Model',
+                            legendentries=None, omitscores=False, seperate=False, figsize=(15,15), savename='variation_overtests'):
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         """
         Plots the test variation over all joints and all environments for a given model
         pertaining to all tests performed. The relevant distribution of a test dataset 
@@ -1991,13 +2533,18 @@ class postprocess(dataset, plotcfg):
             title (string): title variability
         """
         model = self.modelname if modelname is None else modelname
+<<<<<<< HEAD
         fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(20,20))
+=======
+        fig, axes = plt.subplots(nrows=1, ncols=1, figsize=figsize)
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         cur = []
         scores = []
         for i, test in enumerate(self.testlist if testnames is None else testnames):
             score = str(np.round(self.metricdict[model][test]['score'],decimals=2))
             if metric=='f':
                 cur.append(self.metricdict[model][test]['metrics']['f']['cmean'])
+<<<<<<< HEAD
             elif metric=='r':
                 cur.append(self.metricdict[model][test]['metrics']['r']['cmean'])
             elif metric=='nr':
@@ -2026,6 +2573,116 @@ class postprocess(dataset, plotcfg):
 
         for patch, color in zip(bplot['boxes'], self.COLORS):
             patch.set_facecolor(color)
+=======
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = np.arange(len(self.testlist))+1
+                axes.set_ylim([0,100])
+                axes.set_ylabel('$Fit Idx$ Value [0-100]')
+                axes.set_title(f'$Fit Idx$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
+            elif metric=='r' and (not seperate):
+                cur.append(self.metricdict[model][test]['metrics']['r']['cmean'])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = np.arange(len(self.testlist))+1
+                axes.set_ylim([0,50])
+                axes.set_ylabel('$RMSE$ Value [0,) [-]')
+                axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for All Output Variables',y=1.02)
+
+            elif metric=='r' and seperate=='pos':
+                cur.append(self.metricdict[model][test]['metrics']['r']['emean'][:3])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = np.arange(len(self.testlist))+1
+                axes.set_ylim([0,100])
+                axes.set_ylabel('$RMSE$ Value [0,) [mm]')
+                axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for Cartesian Position Estimation',y=1.02)  
+
+            elif metric=='r' and seperate=='orn':
+                cur.append(self.metricdict[model][test]['metrics']['r']['emean'][3:7])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = np.arange(len(self.testlist))+1
+                axes.set_ylim([0,0.1])
+                axes.set_ylabel('$RMSE$ Value [0,) [-]')
+                axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for Cartesian Orientation Estimation',y=1.02)  
+
+            elif metric=='r' and seperate=='cartesian':
+                cur.append(self.metricdict[model][test]['metrics']['r']['emean'][:3])
+                cur.append(self.metricdict[model][test]['metrics']['r']['emean'][3:7])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = (np.arange(len(self.testlist))+1)*2 - 0.5
+                axes.set_ylim([0,50])
+                axes.set_ylabel('$RMSE$ Value [0,) [mm,-]')
+                axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for Cartesian Kinematic Estimation',y=1.02)  
+
+            elif metric=='r' and seperate=='joint':
+                cur.append(self.metricdict[model][test]['metrics']['r']['emean'][7:])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = np.arange(len(self.testlist))+1
+                axes.set_ylim([0,18])
+                axes.set_ylabel('$RMSE$ Value [0,) [deg]')
+                axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for Joint Kinematic Estimation',y=1.02)  
+
+            elif metric=='r' and seperate=='all':
+                cur.append(self.metricdict[model][test]['metrics']['r']['emean'][:3])
+                cur.append(self.metricdict[model][test]['metrics']['r']['emean'][3:7])
+                cur.append(self.metricdict[model][test]['metrics']['r']['emean'][7:])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = (np.arange(len(self.testlist))+1)*3 - 1
+                axes.set_ylim([0,100])
+                axes.set_ylabel('$RMSE$ Value [0,) [mm,-deg]')
+                axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
+            elif metric=='nr':
+                cur.append(self.metricdict[model][test]['metrics']['nr']['cmean'])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = np.arange(len(self.testlist))+1
+                axes.set_ylim(bottom=0)
+                axes.set_ylabel('$NRMSE$ Value [0,)$')
+                axes.set_title(f'$NRMSE$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
+            elif metric=='r2':
+                cur.append(self.metricdict[model][test]['metrics']['r2']['cmean'])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = np.arange(len(self.testlist))+1
+                axes.set_ylim([0,1])
+                axes.set_ylabel('$r^{2}$ Value [0-1]')
+                axes.set_title(f'$r^{2}$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
+            elif metric=='aic':
+                aic_act = self.metricdict[model][test]['metrics']['aic']['cmean']
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                aic_min = np.min(aic_act)
+                aic_delta = aic_act - aic_min
+                cur.append(aic_delta)
+                axes.set_ylim(bottom=0)
+                axes.set_ylabel('$AIC$ Value [0,)')
+                axes.set_title(f'$AIC$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
+            elif metric=='fpe':
+                cur.append(self.metricdict[model][test]['metrics']['fpe']['cmean'])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                axes.set_ylim(top=0)
+                axes.set_ylabel('$FPE$ Value (-inf,0]')
+                axes.set_title(f'$FPE$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+            
+            if seperate=='orn' or seperate=='pos' or seperate=='joint':
+                pass
+            elif seperate=='cartesian':
+                for patch, color in zip(bplot['boxes'], self.COLORS[:2]):
+                    patch.set_facecolor(color)
+            elif seperate=='all':
+                for patch, color in zip(bplot['boxes'], self.COLORS[:3]):
+                    patch.set_facecolor(color)
+            elif not seperate:
+                for patch, color in zip(bplot['boxes'], self.COLORS):
+                    patch.set_facecolor(color)
+                    
+            scores.append(score)
+            labels = scores if labels is None else labels
+            axes.set_xticks(ticklocs,labels)
+            axes.grid(True,alpha=0.6,linestyle='--')
+            axes.set_xlabel('Type of Test')
+
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         if include_legend:
             if legendentries:
                 if not omitscores:
@@ -2034,12 +2691,18 @@ class postprocess(dataset, plotcfg):
                     l = [l for i, l in enumerate(legendentries)]
             else:
                 l = self.testlist
+<<<<<<< HEAD
             leg = axes.legend(bplot['boxes'], l, loc='best',fancybox=True,
                         framealpha=1, shadow=True, borderpad=1, fontsize='small', title='test type')
+=======
+            leg = fig.legend(bplot['boxes'], l, loc='upper right',bbox_to_anchor=(1.01,0.95),fancybox=True, 
+                             framealpha=1, shadow=True, borderpad=1, fontsize='small', title='test type')
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
             lframe = leg.get_frame()
             lframe.set_facecolor('#b4aeae')
             lframe.set_edgecolor('black')
             lframe.set_alpha(1)
+<<<<<<< HEAD
 
         fig.suptitle(title + 
                      f'\n\nModel Name: {model}\n\nMetric : {metric}',
@@ -2048,13 +2711,24 @@ class postprocess(dataset, plotcfg):
         plt.tight_layout()
         if save:
             plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/variation_overtests.png',
+=======
+            
+        plt.tight_layout()
+        if save:
+            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{savename}',
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
                         bbox_inches='tight')
         else:
             plt.show()  
  
     def plotvariation_models(self, modelnames=None, metric='f', save=False, labels=None, include_legend=True,
                              title = 'Cumulative Metric Variation Over All Tests of All Models',
+<<<<<<< HEAD
                              legendentries=None, savelegend=None, omitscores=False,limitaxes=False):
+=======
+                             legendentries=None, savelegend=None, omitscores=False,limitaxes=False, savename=False,
+                             xlabel=None, figsize=(20,20), seperate=False):
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         """
         Plots the test variation over all joints and all environments of all the models
         pertaining to all tests performed. The relevant distribution of a test dataset 
@@ -2071,7 +2745,11 @@ class postprocess(dataset, plotcfg):
             legendetnries (list): if not None put legend entries into legend
             title (string): title variability
         """
+<<<<<<< HEAD
         fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(20,20))
+=======
+        fig, axes = plt.subplots(nrows=1, ncols=1, figsize=figsize)
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         for i, nmodel in enumerate(self.modellist if modelnames is None else modelnames):
             cur = []
             scores = []
@@ -2079,26 +2757,85 @@ class postprocess(dataset, plotcfg):
                 score = str(np.round(self.metricdict[nmodel][test]['score'],decimals=2))
                 if metric=='f':
                     cur.append(self.metricdict[nmodel][test]['metrics']['f']['cmean'])
+<<<<<<< HEAD
                 elif metric=='r':
                     cur.append(self.metricdict[nmodel][test]['metrics']['r']['cmean'])
                 elif metric=='nr':
                     cur.append(self.metricdict[nmodel][test]['metrics']['nr']['cmean'])
                 elif metric=='r2':
                     cur.append(self.metricdict[nmodel][test]['metrics']['r2']['cmean'])
+=======
+                    axes.set_ylabel('$Fit Idx$ Value [0-100]')
+                    axes.set_title(f'$Fit Idx$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
+                elif metric=='r' and (not seperate):
+                    cur.append(self.metricdict[nmodel][test]['metrics']['r']['cmean'])
+                    axes.set_ylim([0,50])
+                    axes.set_ylabel('$RMSE$ Value [0,) [-]')
+                    axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for All Output Variables',y=1.02)
+
+                elif metric=='r' and seperate=='pos':
+                    cur.append(self.metricdict[nmodel][test]['metrics']['r']['emean'][:3])
+                    axes.set_ylim([0,100])
+                    axes.set_ylabel('$RMSE$ Value [0,) [mm]')
+                    axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for Cartesian Position Estimation',y=1.02)  
+
+                elif metric=='r' and seperate=='orn':
+                    cur.append(self.metricdict[nmodel][test]['metrics']['r']['emean'][3:7])
+                    axes.set_ylim([0,0.1])
+                    axes.set_ylabel('$RMSE$ Value [0,) [-]')
+                    axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for Cartesian Orientation Estimation',y=1.02)  
+
+                elif metric=='r' and seperate=='joint':
+                    cur.append(self.metricdict[nmodel][test]['metrics']['r']['emean'][7:])
+                    axes.set_ylim([0,18])
+                    axes.set_ylabel('$RMSE$ Value [0,) [deg]')
+                    axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for Joint Kinematic Estimation',y=1.02)  
+
+                elif metric=='nr':
+                    cur.append(self.metricdict[nmodel][test]['metrics']['nr']['cmean'])
+                    axes.set_ylim(bottom=0)
+                    axes.set_ylabel('$NRMSE$ Value [0,)$')
+                    axes.set_title(f'$NRMSE$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
+                elif metric=='r2':
+                    cur.append(self.metricdict[nmodel][test]['metrics']['r2']['cmean'])
+                    axes.set_ylim([0,1])
+                    axes.set_ylabel('$r^{2}$ Value [0-1]')
+                    axes.set_title(f'$r^{2}$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
                 elif metric=='aic':
                     aic_act = self.metricdict[nmodel][test]['metrics']['aic']['cmean']
                     aic_min = np.min(aic_act)
                     aic_delta = aic_act - aic_min
                     cur.append(aic_delta)
+<<<<<<< HEAD
                 elif metric=='fpe':
                     cur.append(self.metricdict[nmodel][test]['metrics']['fpe']['cmean'])
                 scores.append(score)
 
             bplot = axes.boxplot(cur,1,'',patch_artist = True, medianprops = dict(color = "green", 
+=======
+                    bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                    axes.set_ylim(bottom=0)
+                    axes.set_ylabel('$AIC$ Value [0,)')
+                    axes.set_title(f'$AIC$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
+                elif metric=='fpe':
+                    cur.append(self.metricdict[nmodel][test]['metrics']['fpe']['cmean'])
+                    bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                    axes.set_ylim(top=0)
+                    axes.set_ylabel('$FPE$ Value (-inf,0]')
+                    axes.set_title(f'$FPE$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+            
+            bplot = axes.boxplot(cur,patch_artist = True, medianprops = dict(color = "green", 
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
                             linewidth = 1.5), whiskerprops = dict(color = "red", linewidth = 2),
                             positions=(np.arange(len(self.testlist)) + i*(len(self.testlist)+1)),
                             widths=0.5)
             ticklocs = np.arange(len(self.modellist))*(len(self.testlist)+1) + np.mean(np.arange(len(self.testlist)))
+<<<<<<< HEAD
 
             for pos, (patch, color) in enumerate(zip(bplot['boxes'], self.COLORS)):
                 patch.set_facecolor(color)
@@ -2110,6 +2847,18 @@ class postprocess(dataset, plotcfg):
             labels = self.modellist if labels is None else labels
             axes.set_xticks(ticklocs,labels)
             axes.grid(True,alpha=0.6)
+=======
+            
+            scores.append(score)
+            labels = scores if labels is None else labels
+            axes.set_xticks(ticklocs,labels)
+            axes.grid(True,alpha=0.6,linestyle='--')
+            axes.set_xlabel('Type of Neural Architecture' if xlabel is None else xlabel)
+            axes.xaxis.labelpad = 20
+            
+            for pos, (patch, color) in enumerate(zip(bplot['boxes'], self.COLORS)):
+                patch.set_facecolor(color)
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
         if include_legend:
             if legendentries:
@@ -2119,12 +2868,17 @@ class postprocess(dataset, plotcfg):
                     l = [l for i, l in enumerate(legendentries)]
             else:
                 l = self.testlist
+<<<<<<< HEAD
             leg = axes.legend(bplot['boxes'], l, loc='best',fancybox=True, 
+=======
+            leg = fig.legend(bplot['boxes'], l, loc='upper right',bbox_to_anchor=(1.01,0.95),fancybox=True, 
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
                              framealpha=1, shadow=True, borderpad=1, fontsize='small', title='test type')
             lframe = leg.get_frame()
             lframe.set_facecolor('#b4aeae')
             lframe.set_edgecolor('black')
             lframe.set_alpha(1)
+<<<<<<< HEAD
 
             if savelegend:
                 leg.savefig('modellegend.png')
@@ -2819,4 +3573,25 @@ class postprocess(dataset, plotcfg):
         Alias for joint accuracy comparison of a finetuned and pretrained model.
         """
         return self.plotcomparison_metrics_overjoints(modelnames=models, testname=test, save=save, title=title)
+=======
+            
+            if savelegend:
+                leg.savefig('modellegend.png')
+
+        if limitaxes:
+            axes.set_ylim(bottom=0,top=1)
+        plt.setp(axes.get_xticklabels(), rotation=0, horizontalalignment='center')    
+        plt.tight_layout()
+        if save:
+            if not savename:
+                plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/variation_overmodels.png',
+                            bbox_inches='tight')
+            else:
+                plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{savename}',
+                            bbox_inches='tight')
+        else:
+            plt.show()
+        
+
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
     

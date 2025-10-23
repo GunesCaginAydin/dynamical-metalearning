@@ -164,7 +164,11 @@ class TSTransformer(nn.Module):
                                           dropout=config.dropout, bias=config.bias)
         self.decoder = TransformerDecoder(config.n_embd, config.n_head, config.n_layer,
                                           dropout=config.dropout, bias=config.bias)
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         self.encoder_wte = nn.Linear(config.n_u + config.n_y, config.n_embd)
         self.encoder_wpe = nn.Embedding(config.seq_len_ctx, config.n_embd)
         #self.decoder_wte = nn.Linear(config.n_u + config.n_y, config.n_embd)
