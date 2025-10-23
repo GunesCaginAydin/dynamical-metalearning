@@ -31,7 +31,7 @@ Our main contribution can be grouped under 3 main categories:
 </p>
 
 <p align="center">
-  <img src="./assets/identification-pipeline.png">
+  <img height=1000px, src="./assets/identification-pipeline.png">
 </p>
 
 ## Logs and Plots
