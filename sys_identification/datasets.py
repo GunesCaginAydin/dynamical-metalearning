@@ -12,10 +12,7 @@ from scipy import interpolate
 import datetime
 import os
 import json
-<<<<<<< HEAD
-=======
 import csv
->>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 from pathlib import Path
 try:
     from architectures.transformer.transformer_sim import Configtf, TSTransformer
@@ -455,11 +452,7 @@ class dataset(cfg):
             self.testpath = os.path.join(parentpath,testdatadir)
             for dirpath, dirnames, filenames in os.walk(top=self.testpath):
                 for filename in filenames:
-<<<<<<< HEAD
-                    if filename.endswith('.pt'):
-=======
                     if filename.endswith('.pt') or filename.endswith('.csv'):
->>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
                         self.testlist.append(filename)
             print(f'Test data is acquired from:\n{self.testpath}\n')
 
@@ -791,11 +784,7 @@ class dataset(cfg):
                                            shuffle=False,
                                            pin_memory=True, num_workers=10) 
             
-<<<<<<< HEAD
-    def load(self, data, eval=False, itr=1000):
-=======
     def load(self, data, eval=False, itr=1000, real=False):
->>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         """
         Loads control action used in the dataset from the respective .pt file, control action may belong
         to imposed typology or osc typology, in either case the program functions the same. The loaded
@@ -814,12 +803,6 @@ class dataset(cfg):
             itr (int): number of iterations to store the data until
         """
         datapath = self.trainpath if eval==False else self.testpath
-<<<<<<< HEAD
-        actdict = torch.load(Path(f'{datapath}/{data}'), weights_only=False)
-        
-        self.control = torch.movedim(actdict['control_action'][1:itr+1,:,:7],-2,-3).to('cpu').detach()
-        self.position = torch.movedim(actdict['position'][:itr,:,:],-2,-3).to('cpu').detach()
-=======
 
         if not real:
             actdict = torch.load(Path(f'{datapath}/{data}'), weights_only=False)
@@ -841,7 +824,6 @@ class dataset(cfg):
 
             self.control = rowl[:,:7][1:itr+1,:].unsqueeze(0)
             self.position = rowl[:,7:][1:itr+1,:].unsqueeze(0)
->>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
         if self.args.controller:
             self.masses = actdict['masses'].to('cpu').detach()
@@ -866,10 +848,6 @@ class dataset(cfg):
             "ki" : self.ki
         }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
     def setcheckpoint(self, iter, curtime):
         """
         Defines the checkpoint dictionary pertaining to every iteration.
