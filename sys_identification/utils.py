@@ -661,11 +661,13 @@ class preprocess(dataset):
 
         ry = testmetric(self.ytrue, self.ysim, time_axis=1, **params)
 
-        rync = np.array([np.nan_to_num(col, np.mean(col)) for col in ry.T]).T
+        #rync = np.array([np.nan_to_num(col, np.mean(col)) for col in ry.T]).T
+        rync = np.array(ry)
         ry_mc = np.nanmean(rync,axis=1) 
         ry_stdc = np.nanstd(rync,axis=1)
 
-        ryne = np.array([np.nan_to_num(row, np.mean(row)) for row in ry])
+        #ryne = np.array([np.nan_to_num(row, np.mean(row)) for row in ry])
+        ryne = np.array(ry)
         ry_me = np.nanmean(ryne,axis=0)
         ry_stde = np.nanstd(ryne,axis=0)
 
@@ -715,24 +717,28 @@ class plotcfg():
                         'size'   : 25}
 
     LABELCOORDS4D = ["$x$","$y$","$z$" ,"$X$","$Y$","$Z$" ,"$W$",
-                        "q0","q1","q2","q3","q4","q5","q6"]
-    LABELCOORDS6D = ["$x$","$y$","$z$" ,"$d11$","$d12$","$d13$","$d22$","$d23$" ,"$d33$",
-                        "q0","q1","q2","q3","q4","q5","q6"]
+                        "$q_{0}$","$q_{1}$","$q_{2}$","$q_{3}$","$q_{4}$","$q_{5}$","$q_{6}$"]
+    LABELCOORDS6D = ["$x$","$y$","$z$" ,"$d_{11}$","$d_{12}$","$d_{13}$","$d_{22}$","$d_{23}$" ,"$d_{33}$",
+                        "$q_{0}$","$q_{1}$","$q_{2}$","$q_{3}$","$q_{4}$","$q_{5}$","$q_{6}$"]
+    LABELCOORDSNAMES = ['Cartesian Pos. x [mm]','Cartesian Pos. y [mm]','Cartesian Pos. z [mm]','Cartesian Orn. X [-]','Cartesian Orn. Y [-]',
+                        'Cartesian Orn. Z [-]','Cartesian Orn. W [-]','Joint Pos. q0 [deg]','Joint Pos. q1 [deg]','Joint Pos. q2 [deg]','Joint Pos. q3 [deg]',
+                        'Joint Pos. q4 [deg]','Joint Pos. q5 [deg]','Joint Pos. q6 [deg]'
+    ]
 
     LABELPRED4D = ["$\hat x$","$\hat y$","$\hat z$","$\hat X$","$ \hat Y$","$\hat Z$" ,"$ \hat W$"
-                        ,"$ \hat q0$","$ \hat q1$","$ \hat q2$","$ \hat q3$","$ \hat q4$","$ \hat q5$","$ \hat q6$"]
-    LABELPRED6D = ["$\hat x$","$\hat y$","$\hat z$","$\hat d11$","$ \hat d12$","$\hat d13$" ,"$ \hat d22$"
-                        ,"$\hat d23$" ,"$ \hat d33$","$ \hat q0$","$ \hat q1$","$ \hat q2$","$ \hat q3$"
-                        ,"$ \hat q4$","$ \hat q5$","$ \hat q6$"]
+                        ,"$ \hat q_{0}$","$ \hat q_{1}$","$ \hat q_{2}$","$ \hat q_{3}$","$ \hat q_{4}$","$ \hat q_{5}$","$ \hat q_{6}$"]
+    LABELPRED6D = ["$\hat x$","$\hat y$","$\hat z$","$\hat d_{11}$","$ \hat d_{12}$","$\hat d_{13}$" ,"$ \hat d_{22}$"
+                        ,"$\hat d_{23}$" ,"$ \hat d_{33}$","$ \hat q_{0}$","$ \hat q_{1}$","$ \hat q_{2}$","$ \hat q_{3}$"
+                        ,"$ \hat q_{4}$","$ \hat q_{5}$","$ \hat q_{6}$"]
 
     LABELERROR4D = ["$\epsilon_{x}$","$\epsilon_{y}$","$\epsilon_{z}$","$\epsilon_{X}$","$ \epsilon_{Y}$",
                         "$\epsilon_{Z}$" ,"$ \epsilon_{W}$",
-                        "$ \epsilon_{q0}$","$ \epsilon_{q1}$","$ \epsilon_{q2}$","$ \epsilon_{q3}$",
-                        "$ \epsilon_{q4}$","$ \epsilon_{q5}$","$ \epsilon_{q6}$"] 
+                        "$ \epsilon_{q_0}$","$ \epsilon_{q_1}$","$ \epsilon_{q_2}$","$ \epsilon_{q_3}$",
+                        "$ \epsilon_{q_4}$","$ \epsilon_{q_5}$","$ \epsilon_{q_6}$"] 
     LABELERROR6D = ["$\epsilon_{x}$","$\epsilon_{y}$","$\epsilon_{z}$","$\epsilon_{d11}$","$ \epsilon_{d12}$",
                         "$\epsilon_{d13}$" ,"$ \epsilon_{d22}$","$\epsilon_{d23}$" ,"$ \epsilon_{d33}$",
-                        "$ \epsilon_{q0}$","$ \epsilon_{q1}$","$ \epsilon_{q2}$","$ \epsilon_{q3}$",
-                        "$ \epsilon_{q4}$","$ \epsilon_{q5}$","$ \epsilon_{q6}$"] 
+                        "$ \epsilon_{q_0}$","$ \epsilon_{q_1}$","$ \epsilon_{q_2}$","$ \epsilon_{q_3}$",
+                        "$ \epsilon_{q_4}$","$ \epsilon_{q_5}$","$ \epsilon_{q_6}$"] 
 
     LABELID =['RMSE',
               'R²',
@@ -750,6 +756,9 @@ class plotcfg():
     COLORS = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf',
               '#bca801', '#d8d9a4', '#6e3800', '#ed6300', '#ff5d00', '#e25f3c', '#776cdb', '#65bacd', '#2e4e2d', '#666547',
                '#fb2e01', '#6fcb9f', '#ffe28a', '#fffeb3', '#96ceb4', '#ffeead', '#ff6f69', '#ffcc5c', '#88d8b0']
+    
+    axslims = [[-1000,1000],[-1000,1000],[-1000,1000],[-1,1],[-1,1],[-1,1],[-1,1],
+               [-180,180],[-180,180],[-180,180],[-180,180],[-180,180],[-180,180],[-180,180]]
 
 class postprocess(dataset, plotcfg):
     """
@@ -829,8 +838,9 @@ class postprocess(dataset, plotcfg):
 
         self.modeldict = {} # data of each model from .pt
         loc = data['modelloc']
-        for model in self.modellist:
-            self.modeldict[model] = torch.load(f=f'{loc}/{model}', weights_only=False, map_location='cpu')
+        if False:
+            for model in self.modellist:
+                self.modeldict[model] = torch.load(f=f'{loc}/{model}', weights_only=False, map_location='cpu')
 
         self.logpath = data['logpath']
         self.figpath = data['figpath']
@@ -839,6 +849,7 @@ class postprocess(dataset, plotcfg):
         d = datetime.datetime.now()
         self.savename = args.process_name if args.process_name is not None else d.strftime("%d%m%Y_%Hh%Mm%Ss")
 
+        plt.rcParams['text.usetex'] = False
         plt.rc('font', **self.FONT)
         plt.rc('axes', prop_cycle=matplotlib.cycler(color=self.COLORS))
 
@@ -855,6 +866,9 @@ class postprocess(dataset, plotcfg):
         
         with open(logto, 'a+') as f:
             f.write(self.tabulate(*args, **kwargs))
+
+        #figpath1 = os.path.join(self.figpath,self.dataname,self.savename,self.modelname,self.testname,'metricdict')
+        #np.save(figpath1,self.metricdict)
 
     def tabulate(self, modelname=None, testname=None, specificto='test', *args, **kwargs):
         """
@@ -1080,7 +1094,7 @@ class postprocess(dataset, plotcfg):
             ax[1].set_xlabel('Iterations')
             ax[1].set_ylabel(f'Loss')
         lossname = 'loss_single.png' if len(self.modellist)==1 else 'loss_multi.png'
-        fig.suptitle(f'Loss Variation Over Iterations', y = 1.0, weight='bold')
+        #fig.suptitle(f'Loss Variation Over Iterations', y = 1.0, weight='bold')
         if save:
             plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{lossname}',
                         bbox_inches='tight')
@@ -1088,7 +1102,8 @@ class postprocess(dataset, plotcfg):
             plt.show()
 
     def plotsim2sim(self, modelname=None, testname=None, of='best', dim=4, save=False, 
-                    title='Ground Truth vs Model Prediction for a Single Simulation'):
+                    title='Ground Truth vs Model Prediction for a Single Simulation',
+                    includeerrors=True):
         """
         Plots the true generated pose, estimated pose and relative simulation error on the original
         time frame defined by the true generated pose.
@@ -1104,37 +1119,49 @@ class postprocess(dataset, plotcfg):
         """
         model = self.modelname if modelname is None else modelname
         test = self.testname if testname is None else testname
+
         if of=='best':
-            idx = np.argmax(self.metricdict[model][test]['metrics']['r2']['cmean'])
+            idx = np.argmin(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))
         elif of=='worst':
-            idx = np.argmin(self.metricdict[model][test]['metrics']['r2']['cmean'])
+            idx = np.argmax(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))
         elif of=='median':
-            idx = np.argsort(self.metricdict[model][test]['metrics']['r2']['cmean'])[len(self.metricdict[model][test]['metrics']['r2']['cmean'])//2]
+            idx = np.argsort(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))[len(self.metricdict[model][test]['metrics']['r']['cmean'])//2]
         elif of=='random':
-            idx = np.random.random_integers(low = 0, high=len(self.metricdict[model][test]['metrics']['r2']['cmean']))
+            idx = np.random.random_integers(low = 0, high=len(self.metricdict[model][test]['metrics']['r']['cmean']))
         else:
             raise ValueError
-
+        
         true = self.metricdict[model][test]['ytrue'][idx,:,:]
         sim = self.metricdict[model][test]['ysim'][idx,:,:]
         err = self.metricdict[model][test]['yerr'][idx,:,:]
 
         if dim==4:
-            fig, ax = plt.subplots(7, 2, figsize=(20, 20))
+            fig, ax = plt.subplots(7, 2, figsize=(15,20))
 
             k = 0
             for j in range(2):
                 for i in range(7):
-                    ax[i,j].plot(true[:,k] ,'k', 
-                        label=self.LABELCOORDS4D[k],linewidth=3)
-                    ax[i,j].plot(sim[:,k], 'b', 
-                        label=self.LABELPRED4D[k],linewidth=1)
-                    ax[i,j].plot(err[:,k], 'r', 
-                        label=self.LABELERROR4D[k],linewidth=1)
-                    ax[i,j].grid(True)
-                    ax[i,j].legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-                    ax[i,j].set_xlabel('Iterations')
+                    if k ==0:
+                        l1 = ax[i,j].plot(true[:,k] ,'k', 
+                                label='groundtruth',linewidth=2)
+                        l2 = ax[i,j].plot(sim[:,k], 'b', 
+                                label='estimation',linewidth=1.5)
+                    else:
+                        ax[i,j].plot(true[:,k] ,'k', 
+                                linewidth=3)
+                        ax[i,j].plot(sim[:,k], 'b', 
+                                linewidth=1)
+                    if includeerrors:
+                        ax[i,j].plot(err[:,k], 'r', 
+                            linewidth=1)
+                    ax[i,j].grid(True,linestyle='--')
+                    ax[i,j].set_ylabel(self.LABELCOORDSNAMES[k],fontsize=15)
+                    ax[i,j].set_xlabel('Iterations [-]',fontsize=15)
+                    ax[i,j].set_ylim(self.axslims[k])
                     k=k+1
+                
+                    ax[i,j].tick_params(axis='x', labelsize=15)
+                    ax[i,j].tick_params(axis='y', labelsize=15)
 
         elif dim==6:
             fig = plt.figure(figsize = (20,20))
@@ -1147,133 +1174,48 @@ class postprocess(dataset, plotcfg):
                     label=self.LABELCOORDS6D[k],linewidth=3)
                 ax1.plot(sim[:,k], 'b', 
                     label=self.LABELPRED6D[k],linewidth=1)
-                ax1.plot(err[:,k], 'r', 
-                    label=self.LABELERROR6D[k],linewidth=1)
+                if includeerrors:
+                    ax1.plot(err[:,k], 'r', 
+                        label=self.LABELERROR6D[k],linewidth=1)
                 ax1.grid(True)
-                ax1.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
                 ax1.set_xlabel('Iterations')
                 k=k+1
             
+                ax1.tick_params(axis='x', labelsize=20)
+                ax1.tick_params(axis='y', labelsize=20)
+
             for i2 in range(7):
                 ax2 = fig.add_subplot(gs[i2,1])
                 ax2.plot(true[:,k] ,'k', 
                     label=self.LABELCOORDS6D[k],linewidth=3)
                 ax2.plot(sim[:,k], 'b', 
                     label=self.LABELPRED6D[k],linewidth=1)
-                ax2.plot(err[:,k], 'r', 
-                    label=self.LABELERROR6D[k],linewidth=1)
+                if includeerrors:
+                    ax2.plot(err[:,k], 'r', 
+                        label=self.LABELERROR6D[k],linewidth=1)
                 ax2.grid(True)
-                ax2.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
                 ax2.set_xlabel('Iterations')
                 k=k+1
 
-        score = np.round(self.metricdict[model][test]['score'],decimals=2)
+                ax2.tick_params(axis='x', labelsize=20)
+                ax2.tick_params(axis='y', labelsize=20)
 
-        fig.suptitle(title + 
-                     f'\n\nTest Name: {test}\n\n Model Name: {model}'
-                     f'\n\nTest Score: {score}/10.0', y=1.01, weight='bold')
-        fig.tight_layout()
+        fig.legend(loc='upper right',fontsize=15,fancybox=True)
+        score = np.round(self.metricdict[model][test]['score'],decimals=2)
+        fig.suptitle('Groundtruth and Inference over the Horizon')
+        fig.supxlabel('Iterations')
+        fig.supylabel('Output Variables')
+        fig.tight_layout(pad=1.2,h_pad=1.2,w_pad=1.2)
+
         if save:
             plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/sim2sim_{of}.png',
                         bbox_inches='tight')
         else:
             plt.show()
 
-    def plotsim2real(self, modelname=None, testname=None, of='best', dim=4, save=False, 
-                    title='Acquisation vs Model Prediction for a Single Simulation'):
-        """
-        Plots the true acquired and conditioned pose, estimated pose and relative simulation error 
-        on the original time frame defined by the true acquired pose. Real data has to be preprocessed
-        before using plotsim2real method.
-
-        Parameters
-        ---
-            modelname (string): name of the current model
-            testname (string): name of the current string
-            of (string): best-worst-median-random plots of sim2sim
-            dim (int): orientation dimension [3,4,6]
-            save (bool): if True, save the model under figpath (/plots/{data_name})
-            title (string): title variability
-        """
-        model = self.modelname if modelname is None else modelname
-        test = self.testname if testname is None else testname
-        if of=='best':
-            idx = np.argmax(self.metricdict[model][test]['metrics']['r2']['cmean'])
-        elif of=='worst':
-            idx = np.argmin(self.metricdict[model][test]['metrics']['r2']['cmean'])
-        elif of=='median':
-            idx = np.argsort(self.metricdict[model][test]['metrics']['r2']['cmean'])[len(self.metricdict[model][test]['metrics']['r2']['cmean'])//2]
-        elif of=='random':
-            idx = np.random.random_integers(low = 0, high=len(self.metricdict[model][test]['metrics']['r2']['cmean']))
-        else:
-            raise ValueError
-        
-        real = self.metricdict[model][test]['ytrue'][idx,:,:]
-        sim = self.metricdict[model][test]['ysim'][idx,:,:]
-        err = self.metricdict[model][test]['yerr'][idx,:,:]
-
-        if dim==4:
-            fig, ax = plt.subplots(7, 2, figsize=(20, 20))
-
-            k = 0
-            for j in range(2):
-                for i in range(7):
-                    ax[i,j].plot(real[:,k] ,'k', 
-                        label=self.LABELCOORDS4D[k],linewidth=3)
-                    ax[i,j].plot(sim[:,k], 'b', 
-                        label=self.LABELPRED4D[k],linewidth=1)
-                    ax[i,j].plot(err[:,k], 'r', 
-                        label=self.LABELERROR4D[k],linewidth=1)
-                    ax[i,j].grid(True)
-                    ax[i,j].legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-                    ax[i,j].set_xlabel('Iterations')
-                    k=k+1
-
-        elif dim==6:
-            fig = plt.figure(figsize = (20,20))
-            gs = matplotlib.gridspec.GridSpec(9,2, figure=fig)
-
-            k = 0
-            for i1 in range(9):
-                ax1 = fig.add_subplot(gs[i1,0])
-                ax1.plot(real[:,k] ,'k', 
-                    label=self.LABELCOORDS6D[k],linewidth=3)
-                ax1.plot(sim[:,k], 'b', 
-                    label=self.LABELPRED6D[k],linewidth=1)
-                ax1.plot(err[:,k], 'r', 
-                    label=self.LABELERROR6D[k],linewidth=1)
-                ax1.grid(True)
-                ax1.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-                ax1.set_xlabel('Iterations')
-                k=k+1
-            
-            for i2 in range(7):
-                ax2 = fig.add_subplot(gs[i2,1])
-                ax2.plot(real[:,k] ,'k', 
-                    label=self.LABELCOORDS6D[k],linewidth=3)
-                ax2.plot(sim[:,k], 'b', 
-                    label=self.LABELPRED6D[k],linewidth=1)
-                ax2.plot(err[:,k], 'r', 
-                    label=self.LABELERROR6D[k],linewidth=1)
-                ax2.grid(True)
-                ax2.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-                ax2.set_xlabel('Iterations')
-                k=k+1
-
-        score = np.round(self.metricdict[model][test]['score'],decimals=2)
-
-        fig.suptitle(title + 
-                     f'\n\nTest Name: {test}\n\n Model Name: {model}'
-                     f'\n\nTest Score: {score}/10.0', y=1.01, weight='bold')
-        fig.tight_layout()
-        if save:
-            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/sim2real_{of}.png',
-                        bbox_inches='tight')
-        else:
-            plt.show()
-
     def plothorizon(self, modelname=None, testname=None, of='best', dim=4, iter=1000, ctx=200, save=False, 
-                    title='Horizon Prediction for a Single Simulation'):
+                    title='Horizon Prediction for a Single Simulation',
+                    includeerrors=True):
         """
         Plots the horizon prediction for a given simulation determined by the user.
 
@@ -1290,14 +1232,15 @@ class postprocess(dataset, plotcfg):
         """
         model = self.modelname if modelname is None else modelname
         test = self.testname if testname is None else testname
+
         if of=='best':
-            idx = np.argmax(self.metricdict[model][test]['metrics']['r2']['cmean'])
+            idx = np.argmin(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))
         elif of=='worst':
-            idx = np.argmin(self.metricdict[model][test]['metrics']['r2']['cmean'])
+            idx = np.argmax(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))
         elif of=='median':
-            idx = np.argsort(self.metricdict[model][test]['metrics']['r2']['cmean'])[len(self.metricdict[self.modelname][self.testname]['metrics']['r2']['cmean'])//2]
+            idx = np.argsort(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))[len(self.metricdict[model][test]['metrics']['r']['cmean'])//2]
         elif of=='random':
-            idx = np.random.random_integers(low = 0, high=len(self.metricdict[model][test]['metrics']['r2']['cmean']))
+            idx = np.random.random_integers(low = 0, high=len(self.metricdict[model][test]['metrics']['r']['cmean']))
         else:
             raise ValueError
         
@@ -1312,7 +1255,7 @@ class postprocess(dataset, plotcfg):
         t_total = np.arange(0, iter)
 
         if dim==4:
-            fig, ax = plt.subplots(7, 2, figsize=(20, 20))
+            fig, ax = plt.subplots(7, 2, figsize=(15, 20))
 
             k = 0
             for j in range(2):
@@ -1323,16 +1266,27 @@ class postprocess(dataset, plotcfg):
                         color = 'k', linestyle='--')
                     ax[i,j].axvspan(t_context[0], t_context[-1],
                         facecolor='lime', alpha=0.2)
-                    ax[i,j].plot(t_total,total[:,k] ,'k', 
-                        label=self.LABELCOORDS4D[k],linewidth=3)
-                    ax[i,j].plot(t_prediction,sim[:,k], 'b', 
-                        label=self.LABELPRED4D[k],linewidth=1)
-                    ax[i,j].plot(t_prediction,err[:,k], 'r', 
-                        label=self.LABELERROR4D[k],linewidth=1)
-                    ax[i,j].grid(True)
-                    ax[i,j].legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-                    ax[i,j].set_xlabel('Iterations')
+                    if k==0:
+                        l1 = ax[i,j].plot(t_total,total[:,k] ,'k', 
+                            label='groundtruth',linewidth=2)
+                        l2 = ax[i,j].plot(t_prediction,sim[:,k], 'b', 
+                            label='estimation',linewidth=1.5)
+                    else:
+                        ax[i,j].plot(t_total,total[:,k] ,'k', 
+                            linewidth=3)
+                        ax[i,j].plot(t_prediction,sim[:,k], 'b', 
+                            linewidth=1)
+                    if includeerrors:
+                        ax[i,j].plot(t_prediction,err[:,k], 'r', 
+                            label=self.LABELERROR4D[k],linewidth=1)
+                    ax[i,j].grid(True,linestyle='--')
+                    ax[i,j].set_ylabel(self.LABELCOORDSNAMES[k],fontsize=15)
+                    ax[i,j].set_xlabel('Iterations [-]',fontsize=15)
+                    ax[i,j].set_ylim(self.axslims[k])
                     k=k+1
+                
+                    ax[i,j].tick_params(axis='x', labelsize=15)
+                    ax[i,j].tick_params(axis='y', labelsize=15)
 
         elif dim==6:
             fig = plt.figure(figsize = (20,20))
@@ -1352,12 +1306,16 @@ class postprocess(dataset, plotcfg):
                     label=self.LABELCOORDS6D[k],linewidth=3)
                 ax1.plot(t_prediction,sim[:,k], 'b', 
                     label=self.LABELPRED6D[k],linewidth=1)
-                ax1.plot(t_prediction,err[:,k], 'r', 
-                    label=self.LABELERROR6D[k],linewidth=1)
+                if includeerrors:
+                    ax1.plot(t_prediction,err[:,k], 'r', 
+                        label=self.LABELERROR6D[k],linewidth=1)
                 ax1.grid(True)
-                ax1.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+                ax1.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0., fontsize='small')
                 ax1.set_xlabel('Iterations')
                 k=k+1
+
+                ax1.tick_params(axis='x', labelsize=20)
+                ax1.tick_params(axis='y', labelsize=20)
 
             for i2 in range(7):
                 ax2 = fig.add_subplot(gs[i2,1])
@@ -1372,19 +1330,26 @@ class postprocess(dataset, plotcfg):
                     label=self.LABELCOORDS6D[k],linewidth=3)
                 ax2.plot(t_prediction,sim[:,k], 'b', 
                     label=self.LABELPRED6D[k],linewidth=1)
-                ax2.plot(t_prediction,err[:,k], 'r', 
-                    label=self.LABELERROR6D[k],linewidth=1)
+                if includeerrors:
+                    ax2.plot(t_prediction,err[:,k], 'r', 
+                        label=self.LABELERROR6D[k],linewidth=1)
                 ax2.grid(True)
-                ax2.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+                ax2.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0., fontsize='small')
                 ax2.set_xlabel('Iterations')
                 k=k+1
+            
+                ax2.tick_params(axis='x', labelsize=20)
+                ax2.tick_params(axis='y', labelsize=20)
 
         score = np.round(self.metricdict[model][test]['score'],decimals=2)
 
-        fig.suptitle(title + 
-                     f'\n\nTest Name: {test}\n\n Model Name: {model}'
-                     f'\n\nTest Score: {score}/10.0', y=1.01, weight='bold')
-        fig.tight_layout()
+        fig.legend(loc='upper right',fontsize=15,fancybox=True)
+        score = np.round(self.metricdict[model][test]['score'],decimals=2)
+        fig.suptitle('Groundtruth and Inference over the Horizon')
+        fig.supxlabel('Iterations')
+        fig.supylabel('Output Variables')
+        fig.tight_layout(pad=1.2,h_pad=1.2,w_pad=1.2)
+
         if save:
             plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/horizon_{of}.png',
                         bbox_inches='tight')
@@ -1405,23 +1370,22 @@ class postprocess(dataset, plotcfg):
         """
         model = self.modelname if modelname is None else modelname
         test = self.testname if testname is None else testname
+        
         if of=='best':
-            idx = np.argmax(self.metricdict[model][test]['metrics']['r2']['cmean'])
+            idx = np.argmin(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))
         elif of=='worst':
-            idx = np.argmin(self.metricdict[model][test]['metrics']['r2']['cmean'])
+            idx = np.argmax(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))
         elif of=='median':
-            idx = np.argsort(self.metricdict[model][test]['metrics']['r2']['cmean'])[len(self.metricdict[self.modelname][self.testname]['metrics']['r2']['cmean'])//2]
+            idx = np.argsort(np.mean(self.metricdict[model][test]['metrics']['r']['valuee'][:,:3],axis=1))[len(self.metricdict[model][test]['metrics']['r']['cmean'])//2]
         elif of=='random':
-            idx = np.random.random_integers(low = 0, high=len(self.metricdict[model][test]['metrics']['r2']['cmean']))
+            idx = np.random.random_integers(low = 0, high=len(self.metricdict[model][test]['metrics']['r']['cmean']))
         else:
             raise ValueError
         
-        sim = self.metricdict[model][test]['ysim'][idx,:,:]
         err = self.metricdict[model][test]['yerr'][idx,:,:]
-        true = self.metricdict[model][test]['ytrue'][idx,:,:]
 
         if dim==4:
-            fig, ax = plt.subplots(7, 2, figsize=(20, 20))
+            fig, ax = plt.subplots(7, 2, figsize=(15, 20))
 
             k = 0
             for j in range(2):
@@ -1429,10 +1393,14 @@ class postprocess(dataset, plotcfg):
                     errc = err[:,k]
                     ax[i,j].plot(errc, 'r', 
                         label=self.LABELERROR4D[k],linewidth=3)
-                    ax[i,j].grid(True)
-                    ax[i,j].legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-                    ax[i,j].set_xlabel('Iterations')
+                    ax[i,j].grid(True,linestyle='--')
+                    ax[i,j].set_ylabel(self.LABELCOORDSNAMES[k],fontsize=15)
+                    ax[i,j].set_xlabel('Iterations [-]',fontsize=15)
+                    ax[i,j].set_ylim([x/10 for x in self.axslims[k]])
                     k=k+1
+                
+                    ax[i,j].tick_params(axis='x', labelsize=15)
+                    ax[i,j].tick_params(axis='y', labelsize=15)
 
         elif dim==6:
             fig = plt.figure(figsize = (20,20))
@@ -1445,9 +1413,12 @@ class postprocess(dataset, plotcfg):
                 ax1.plot(errc, 'r', 
                     label=self.LABELERROR6D[k],linewidth=3)
                 ax1.grid(True)
-                ax1.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+                #ax1.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
                 ax1.set_xlabel('Iterations')
                 k=k+1
+            
+                ax1.tick_params(axis='x', labelsize=20)
+                ax1.tick_params(axis='y', labelsize=20)
             
             for i2 in range(7):
                 ax2 = fig.add_subplot(gs[i2,1])
@@ -1455,168 +1426,24 @@ class postprocess(dataset, plotcfg):
                 ax2.plot(errc, 'r', 
                     label=self.LABELERROR6D[k],linewidth=3)
                 ax2.grid(True)
-                ax2.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+                #ax2.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
                 ax2.set_xlabel('Iterations')
                 k=k+1
 
+                ax2.tick_params(axis='x', labelsize=20)
+                ax2.tick_params(axis='y', labelsize=20)
+
         score = np.round(self.metricdict[model][test]['score'],decimals=2)
 
-        fig.suptitle(title + 
-                     f'\n\nTest Name: {test}\n\n Model Name: {model}'
-                     f'\n\nTest Score: {score}/10.0', y=1.01, weight='bold')
-        fig.tight_layout()
+        fig.suptitle('Groundtruth and Inference over the Horizon')
+        fig.supxlabel('Iterations')
+        fig.supylabel('Output Variables')
+        fig.tight_layout(pad=1.2,h_pad=1.2,w_pad=1.2)
         if save:
             plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/percent_error_{of}.png',
                         bbox_inches='tight')
         else:
             plt.show()
-
-    def plotmetrics_overtime(self, modelname=None, testname=None, save=False,
-                            title = f'Cumulative Accuracy Projected on Iteration Steps'):
-        """
-        Plots the variation of metrics over a single test on a single model over the entire iteration
-        regime.
-
-        Parameters
-        ---
-            modelname (string): name of the current model
-            testname (string): name of the current string
-            save (bool): if True, save the model under figpath (/plots/{data_name})
-            title (string): title variability
-        """
-        model = self.modelname if modelname is None else modelname
-        test = self.testname if testname is None else testname
-        true = self.metricdict[model][test]['ytrue']
-        sim = self.metricdict[model][test]['ysim']
-        r2 = r_squared(true, sim, time_axis=0)
-        r2m = np.mean(r2, axis=1)
-
-        r = rmse(true, sim, time_axis=0)
-        rm = np.mean(r, axis=1)
-
-        f = fit_index(true, sim, time_axis=0)
-        fm = np.mean(f, axis=1)
-
-        nr = nrmse(true, sim, time_axis=0)
-        nrm = np.mean(nr, axis=1)       
-
-        fig,[[ax1, ax2],[ax3, ax4]]  = plt.subplots(2, 2,figsize=(20, 20))
-
-        ax1.plot(r2m,
-                        linewidth=2)
-        ax1.axhline(np.mean(r2m),c='r',
-                        linewidth=2.0,linestyle='solid') 
-        ax1.scatter(np.nanargmin(r2m),
-                        np.nanmin(r2m),
-                        marker='o', color='red', s=120)
-        ax1.annotate(f'worst iter',
-                     (np.nanargmin(r2m),np.nanmin(r2m)),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
-        ax1.scatter(np.nanargmax(r2m),
-                        np.nanmax(r2m),
-                        marker='o', color='red', s=120)
-        ax1.annotate(f'best iter',
-                     (np.nanargmax(r2m),np.nanmax(r2m)),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
-        ax1.axhspan(np.nanpercentile(r2m,25), 
-                        np.nanpercentile(r2m,75), 
-                        facecolor='gold', alpha=0.2)
-        ax1.grid(visible=True, which='both')
-        ax1.set_title('$R^{2}$ Value')
-        ax1.set(xlabel='Iteration')
-        
-
-        ax2.plot(rm,
-                        linewidth=2.0)
-        ax2.axhline(np.mean(rm),c='r',
-                        linewidth=2.0,linestyle='solid') 
-        ax2.scatter(np.nanargmin(rm),
-                        np.nanmin(rm),
-                        marker='o', color='red', s=120)
-        ax2.annotate(f'best iter',
-                     (np.nanargmin(rm),np.nanmin(rm)),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
-        ax2.scatter(np.nanargmax(rm),
-                        np.nanmax(rm),
-                        marker='o', color='red', s=120)
-        ax2.annotate(f'worst iter',
-                     (np.nanargmax(rm),np.nanmax(rm)),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
-        ax2.axhspan(np.nanpercentile(rm,25), 
-                        np.nanpercentile(rm,75), 
-                        facecolor='gold', alpha=0.2)
-        ax2.grid(visible=True, which='both')
-        ax2.set_title('$RMSE$ Value')
-        ax2.set(xlabel='Iteration')
-
-
-        ax3.plot(fm,
-                        linewidth=2.0)
-        ax3.axhline(np.mean(fm),c='r',
-                        linewidth=2.0,linestyle='solid') 
-        ax3.scatter(np.nanargmin(fm),
-                        np.nanmin(fm),
-                        marker='o', color='red', s=120)
-        ax3.annotate(f'worst iter',
-                     (np.nanargmin(fm),np.nanmin(fm)),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
-        ax3.scatter(np.nanargmax(fm),
-                        np.nanmax(fm),
-                        marker='o', color='red', s=120)
-        ax3.annotate(f'best iter',
-                     (np.nanargmax(fm),np.nanmax(fm)),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
-        ax3.axhspan(np.nanpercentile(fm,25), 
-                        np.nanpercentile(fm,75), 
-                        facecolor='gold', alpha=0.2)
-        ax3.grid(visible=True, which='both')
-        ax3.set_title('$fit$ Value')
-        ax3.set(xlabel='Iteration')
-
-
-        ax4.plot(nrm,
-                        linewidth=2.0)
-        ax4.axhline(np.mean(nrm),c='r',
-                        linewidth=2.0,linestyle='solid') 
-        ax4.scatter(np.nanargmin(nrm),
-                        np.nanmin(nrm),
-                        marker='o', color='red', s=120)
-        ax4.annotate(f'best iter',
-                     (np.nanargmin(nrm),np.nanmin(nrm)),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
-        ax4.scatter(np.nanargmax(nrm),
-                        np.nanmax(nrm),
-                        marker='o', color='red', s=120)
-        ax4.annotate(f'worst iter',
-                     (np.nanargmax(nrm),np.nanmax(nrm)),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
-        ax4.axhspan(np.nanpercentile(nrm,25), 
-                        np.nanpercentile(nrm,75), 
-                        facecolor='gold', alpha=0.2)
-        ax4.grid(visible=True, which='both')
-        ax4.set_title('$NRMSE$ Value')
-        ax4.set(xlabel='Iteration')
-
-        score = np.round(self.metricdict[model][test]['score'],decimals=2)
-
-        fig.tight_layout()
-        fig.suptitle(title + 
-                     f'\n\nTest Name: {test}\n\n Model Name: {model}'
-                     f'\n\nTest Score: {score}/10.0', y=1.15, weight='bold')
-        if save:
-            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/metrics_overtime.png',
-                        bbox_inches='tight')
-        else:
-            plt.show()
-
 
     def plotmetrics_overenvironments(self, modelname=None, testname=None, save=False, 
                                     title='Cumulative Accuracy Metrics Mean over Coordinates Projected on All Environments'):
@@ -1634,7 +1461,7 @@ class postprocess(dataset, plotcfg):
         model = self.modelname if modelname is None else modelname
         test = self.testname if testname is None else testname
         metrics = self.metricdict[model][test]['metrics']
-        fig,[[ax1, ax2],[ax3, ax4]]  = plt.subplots(2, 2,figsize=(20, 20))
+        fig,[[ax1, ax2],[ax3, ax4]]  = plt.subplots(2, 2,figsize=(10, 10))
         
         ax1.plot(metrics['r2']['cmean'],
                         linewidth=2)
@@ -1643,24 +1470,19 @@ class postprocess(dataset, plotcfg):
         ax1.scatter(np.nanargmin(metrics['r2']['cmean']),
                         np.nanmin(metrics['r2']['cmean']),
                         marker='o', color='red', s=120)
-        ax1.annotate(f'worst env',
-                     (np.nanargmin(metrics['r2']['cmean']),np.nanmin(metrics['r2']['cmean'])),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
         ax1.scatter(np.nanargmax(metrics['r2']['cmean']),
                         np.nanmax(metrics['r2']['cmean']),
                         marker='o', color='red', s=120)
-        ax1.annotate(f'best env',
-                     (np.nanargmax(metrics['r2']['cmean']),np.nanmax(metrics['r2']['cmean'])),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
         ax1.axhspan(np.nanpercentile(metrics['r2']['cmean'],25), 
                         np.nanpercentile(metrics['r2']['cmean'],75), 
                         facecolor='gold', alpha=0.2)
-        ax1.grid(visible=True, which='both')
-        ax1.set_title('$R^{2}$ Value')
-        ax1.set(xlabel='Environment')
-        
+        ax1.grid(visible=True, which='both',linestyle='--')
+        ax1.set_ylim([0,1])
+        ax1.set_title('$R^{2}$ Value',fontsize=15)
+        ax1.set_xlabel('Environment',fontsize=15)
+        ax1.set_ylabel('$R^{2}$ Value [0-1]',fontsize=15)
+        ax1.tick_params(axis='x', labelsize=15)
+        ax1.tick_params(axis='y', labelsize=15)
 
         ax2.plot(metrics['r']['cmean'],
                         linewidth=2.0)
@@ -1669,23 +1491,19 @@ class postprocess(dataset, plotcfg):
         ax2.scatter(np.nanargmin(metrics['r']['cmean']),
                         np.nanmin(metrics['r']['cmean']),
                         marker='o', color='red', s=120)
-        ax2.annotate(f'best env',
-                     (np.nanargmin(metrics['r']['cmean']),np.nanmin(metrics['r']['cmean'])),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
         ax2.scatter(np.nanargmax(metrics['r']['cmean']),
                         np.nanmax(metrics['r']['cmean']),
                         marker='o', color='red', s=120)
-        ax2.annotate(f'worst env',
-                     (np.nanargmax(metrics['r']['cmean']),np.nanmax(metrics['r']['cmean'])),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
         ax2.axhspan(np.nanpercentile(metrics['r']['cmean'],25), 
                         np.nanpercentile(metrics['r']['cmean'],75), 
                         facecolor='gold', alpha=0.2)
-        ax2.grid(visible=True, which='both')
-        ax2.set_title('$RMSE$ Value')
-        ax2.set(xlabel='Environment')
+        ax2.grid(visible=True, which='both',linestyle='--')
+        ax2.set_ylim(bottom=0)
+        ax2.set_title('$RMSE$ Value',fontsize=15)
+        ax2.set_xlabel('Environment',fontsize=15)
+        ax2.set_ylabel('$RMSE$ Value [0--]',fontsize=15)
+        ax2.tick_params(axis='x', labelsize=15)
+        ax2.tick_params(axis='y', labelsize=15)
 
 
         ax3.plot(metrics['f']['cmean'],
@@ -1695,23 +1513,19 @@ class postprocess(dataset, plotcfg):
         ax3.scatter(np.nanargmin(metrics['f']['cmean']),
                         np.nanmin(metrics['f']['cmean']),
                         marker='o', color='red', s=120)
-        ax3.annotate(f'worst env.',
-                     (np.nanargmin(metrics['f']['cmean']),np.nanmin(metrics['f']['cmean'])),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
         ax3.scatter(np.nanargmax(metrics['f']['cmean']),
                         np.nanmax(metrics['f']['cmean']),
                         marker='o', color='red', s=120)
-        ax3.annotate(f'best env.',
-                     (np.nanargmax(metrics['f']['cmean']),np.nanmax(metrics['f']['cmean'])),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
         ax3.axhspan(np.nanpercentile(metrics['f']['cmean'],25), 
                         np.nanpercentile(metrics['f']['cmean'],75), 
                         facecolor='gold', alpha=0.2)
-        ax3.grid(visible=True, which='both')
-        ax3.set_title('$fit$ Value')
-        ax3.set(xlabel='Environment')
+        ax3.grid(visible=True, which='both',linestyle='--')
+        ax3.set_ylim([0,100])
+        ax3.set_title('$Fit Idx$ Value',fontsize=15)
+        ax3.set_xlabel('Environment',fontsize=15)
+        ax3.set_ylabel('$Fit Idx$ Value [0-100]',fontsize=15)
+        ax3.tick_params(axis='x', labelsize=15)
+        ax3.tick_params(axis='y', labelsize=15)
 
 
         ax4.plot(metrics['nr']['cmean'],
@@ -1721,77 +1535,29 @@ class postprocess(dataset, plotcfg):
         ax4.scatter(np.nanargmin(metrics['nr']['cmean']),
                         np.nanmin(metrics['nr']['cmean']),
                         marker='o', color='red', s=120)
-        ax4.annotate(f'best env.',
-                     (np.nanargmin(metrics['nr']['cmean']),np.nanmin(metrics['nr']['cmean'])),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
         ax4.scatter(np.nanargmax(metrics['nr']['cmean']),
                         np.nanmax(metrics['nr']['cmean']),
                         marker='o', color='red', s=120)
-        ax4.annotate(f'worst env.',
-                     (np.nanargmax(metrics['nr']['cmean']),np.nanmax(metrics['nr']['cmean'])),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
         ax4.axhspan(np.nanpercentile(metrics['nr']['cmean'],25), 
                         np.nanpercentile(metrics['nr']['cmean'],75), 
                         facecolor='gold', alpha=0.2)
-        ax4.grid(visible=True, which='both')
-        ax4.set_title('$NRMSE$ Value')
-        ax4.set(xlabel='Environment')
+        ax4.grid(visible=True, which='both',linestyle='--')
+        ax4.set_ylim(bottom=0)
+        ax4.set_title('$NRMSE',fontsize=15)
+        ax4.set_xlabel('Environment',fontsize=15)
+        ax4.set_ylabel('$NRMSE$ Value [0--]',fontsize=15)
+        ax4.tick_params(axis='x', labelsize=15)
+        ax4.tick_params(axis='y', labelsize=15)
 
         score = np.round(self.metricdict[model][test]['score'],decimals=2)
 
-        fig.tight_layout()
-        fig.suptitle(title + 
-                     f'\n\nTest Name: {test}\n\n Model Name: {model}'
-                     f'\n\nTest Score: {score}/10.0', y=1.15, weight='bold')
+        fig.suptitle('Variation of Metrics over Environments')
+        fig.supxlabel('Environments')
+        fig.supylabel('Metrics')
+        fig.tight_layout(pad=1.2,h_pad=1.2,w_pad=1.2)
+
         if save:
             plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/metrics_overenvironments.png',
-                        bbox_inches='tight')
-        else:
-            plt.show()
-
-    def plotvariation_overenvironments(self, modelname=None, testname=None, save=False, 
-                                       title='Cumulative Metric Variation Projected on All Environments'):
-        """
-        Plots the variation of metrics over a single test on a single model over the available 
-        environments.
-
-        Parameters
-        ---
-            modelname (string): name of the current model
-            testname (string): name of the current string
-            save (bool): if True, save the model under figpath (/plots/{data_name})
-            title (string): title variability
-        """
-        model = self.modelname if modelname is None else modelname
-        test = self.testname if testname is None else testname
-        metrics = self.metricdict[model][test]['metrics']
-        m1list = [metrics['r']['valuee'].T,metrics['r2']['valuee'].T,
-                    metrics['nr']['valuee'].T,metrics['f']['valuee'].T]
-
-        fig1 = plt.figure(figsize = (20,20))
-        gs1 = matplotlib.gridspec.GridSpec(4,1, figure=fig1)
-        for j in range(4):
-            ax1 = fig1.add_subplot(gs1[j])
-            ax1.boxplot(m1list[j],patch_artist = True, 
-                            boxprops = dict(facecolor = "lightblue"), 
-                            medianprops = dict(color = "green", linewidth = 1.5), 
-                            whiskerprops = dict(color = "red", linewidth = 2), 
-            )
-            ax1.set_title(f'${self.LABELID[j]}$')
-            ax1.set_xticks([])
-            ax1.grid(alpha=0.5)
-            ax1.set_xlabel('Environments')
-
-        score = np.round(self.metricdict[model][test]['score'],decimals=2)
-
-        fig1.tight_layout()
-        fig1.suptitle(title + 
-                     f'\n\nTest Name: {test}\n\n Model Name: {model}'
-                     f'\n\nTest Score: {score}/10.0', y=1.18, weight='bold')
-        if save:
-            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/variation_overenvironemnts.png',
                         bbox_inches='tight')
         else:
             plt.show()
@@ -1812,7 +1578,7 @@ class postprocess(dataset, plotcfg):
         model = self.modelname if modelname is None else modelname
         test = self.testname if testname is None else testname
         metrics = self.metricdict[model][test]['metrics']
-        fig,[[ax1, ax2],[ax3, ax4]]  = plt.subplots(2, 2,figsize=(20, 20))
+        fig,[[ax1, ax2],[ax3, ax4]]  = plt.subplots(2, 2,figsize=(10, 10))
         
         ax1.plot(metrics['r2']['emean'],
                         linewidth=2)
@@ -1821,24 +1587,19 @@ class postprocess(dataset, plotcfg):
         ax1.scatter(np.nanargmin(metrics['r2']['emean']),
                         np.nanmin(metrics['r2']['emean']),
                         marker='o', color='red', s=120)
-        ax1.annotate(f'worst coord',
-                     (np.nanargmin(metrics['r2']['emean']),np.nanmin(metrics['r2']['emean'])),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
         ax1.scatter(np.nanargmax(metrics['r2']['emean']),
                         np.nanmax(metrics['r2']['emean']),
                         marker='o', color='red', s=120)
-        ax1.annotate(f'best coord',
-                     (np.nanargmax(metrics['r2']['emean']),np.nanmax(metrics['r2']['emean'])),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
         ax1.axhspan(np.nanpercentile(metrics['r2']['emean'],25), 
                         np.nanpercentile(metrics['r2']['emean'],75), 
                         facecolor='gold', alpha=0.2)
-        ax1.grid(visible=True, which='both')
-        ax1.set_title('$R^{2}$ Value')
-        ax1.set(xlabel='Coordinate')
-        
+        ax1.grid(visible=True, which='both',linestyle='--')
+        ax1.set_ylim([0,1])
+        ax1.set_title('$R^{2}$ Value',fontsize=15)
+        ax1.set_xlabel('Coordinate',fontsize=15)
+        ax1.set_ylabel('$R^{2}$ Value [0-1]',fontsize=15)
+        ax1.tick_params(axis='x', labelsize=15)
+        ax1.tick_params(axis='y', labelsize=15)
 
         ax2.plot(metrics['r']['emean'],
                         linewidth=2.0)
@@ -1847,23 +1608,19 @@ class postprocess(dataset, plotcfg):
         ax2.scatter(np.nanargmin(metrics['r']['emean']),
                         np.nanmin(metrics['r']['emean']),
                         marker='o', color='red', s=120)
-        ax2.annotate(f'best coord.',
-                     (np.nanargmin(metrics['r']['emean']),np.nanmin(metrics['r']['emean'])),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
         ax2.scatter(np.nanargmax(metrics['r']['emean']),
                         np.nanmax(metrics['r']['emean']),
                         marker='o', color='red', s=120)
-        ax2.annotate(f'worst coord.',
-                     (np.nanargmax(metrics['r']['emean']),np.nanmax(metrics['r']['emean'])),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
         ax2.axhspan(np.nanpercentile(metrics['r']['emean'],25), 
                         np.nanpercentile(metrics['r']['emean'],75), 
                         facecolor='gold', alpha=0.2)
-        ax2.grid(visible=True, which='both')
-        ax2.set_title('$RMSE$ Value')
-        ax2.set(xlabel='Coordinate')
+        ax2.grid(visible=True, which='both',linestyle='--')
+        ax2.set_ylim(bottom=0)
+        ax2.set_title('$RMSE$ Value',fontsize=15)
+        ax2.set_xlabel('Coordinate',fontsize=15)
+        ax2.set_ylabel('$RMSE$ Value [0--]',fontsize=15)
+        ax2.tick_params(axis='x', labelsize=15)
+        ax2.tick_params(axis='y', labelsize=15)
 
 
         ax3.plot(metrics['f']['emean'],
@@ -1873,23 +1630,19 @@ class postprocess(dataset, plotcfg):
         ax3.scatter(np.nanargmin(metrics['f']['emean']),
                         np.nanmin(metrics['f']['emean']),
                         marker='o', color='red', s=120)
-        ax3.annotate(f'worst coord.',
-                     (np.nanargmin(metrics['f']['emean']),np.nanmin(metrics['f']['emean'])),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
         ax3.scatter(np.nanargmax(metrics['f']['emean']),
                         np.nanmax(metrics['f']['emean']),
                         marker='o', color='red', s=120)
-        ax3.annotate(f'best coord.',
-                     (np.nanargmax(metrics['f']['emean']),np.nanmax(metrics['f']['emean'])),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
         ax3.axhspan(np.nanpercentile(metrics['f']['emean'],25), 
                         np.nanpercentile(metrics['f']['emean'],75), 
                         facecolor='gold', alpha=0.2)
-        ax3.grid(visible=True, which='both')
-        ax3.set_title('$fit$ Value')
-        ax3.set(xlabel='Coordinate')
+        ax3.grid(visible=True, which='both',linestyle='--')
+        ax3.set_ylim([0,100])
+        ax3.set_title('$Fit Idx$ Value',fontsize=15)
+        ax3.set_xlabel('Coordinate',fontsize=15)
+        ax3.set_ylabel('$Fit Idx$ Value [0-100]',fontsize=15)
+        ax3.tick_params(axis='x', labelsize=15)
+        ax3.tick_params(axis='y', labelsize=15)
 
 
         ax4.plot(metrics['nr']['emean'],
@@ -1899,82 +1652,130 @@ class postprocess(dataset, plotcfg):
         ax4.scatter(np.nanargmin(metrics['nr']['emean']),
                         np.nanmin(metrics['nr']['emean']),
                         marker='o', color='red', s=120)
-        ax4.annotate(f'best coord',
-                     (np.nanargmin(metrics['nr']['emean']),np.nanmin(metrics['nr']['emean'])),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
         ax4.scatter(np.nanargmax(metrics['nr']['emean']),
                         np.nanmax(metrics['nr']['emean']),
                         marker='o', color='red', s=120)
-        ax4.annotate(f'worst coord',
-                     (np.nanargmax(metrics['nr']['emean']),np.nanmax(metrics['nr']['emean'])),
-                     xytext=(-2*self.OFFSET,self.OFFSET),
-                     textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
         ax4.axhspan(np.nanpercentile(metrics['nr']['emean'],25), 
                         np.nanpercentile(metrics['nr']['emean'],75), 
                         facecolor='gold', alpha=0.2)
-        ax4.grid(visible=True, which='both')
-        ax4.set_title('$NRMSE$ Value')
-        ax4.set(xlabel='Coordinate')
+        ax4.grid(visible=True, which='both',linestyle='--')
+        ax4.set_ylim(bottom=0)
+        ax4.set_title('$NRMSE',fontsize=15)
+        ax4.set_xlabel('Coordinate',fontsize=15)
+        ax4.set_ylabel('$NRMSE$ Value [0--]',fontsize=15)
+        ax4.tick_params(axis='x', labelsize=15)
+        ax4.tick_params(axis='y', labelsize=15)
 
         score = np.round(self.metricdict[model][test]['score'],decimals=2)
 
-        fig.tight_layout()
-        fig.suptitle(title + 
-                     f'\n\nTest Name: {test}\n\n Model Name: {model}'
-                     f'\n\nTest Score: {score}/10.0', y=1.15, weight='bold')
+        fig.suptitle('Variation of Metrics over Joint and Cartesian Variables')
+        fig.supxlabel('Joint and Cartesian Variables')
+        fig.supylabel('Metrics')
+        fig.tight_layout(pad=1.2,h_pad=1.2,w_pad=1.2)
         if save:
             plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/metrics_overcoordinates.png',
                         bbox_inches='tight')
         else:
             plt.show()
 
-    def plotvariation_overjoints(self, modelname=None, testname=None, save=False, 
-                                 title='Cumulative Metric Variation Projected on All Coordinates'):
-        """
-        Plots the variation of metrics over a single test on a single model over the available 
-        coordinates.
+    def plottimevariation_stdmean(self, modelnames=None, testname=None, save=False, ctxs=[], iters=[],
+                                  figsize=(15,20), legend=None, labels=None):
 
-        Parameters
-        ---
-            modelname (dict): metric dictionary of a single test under a single model
-            save (bool): if True, save the model under figpath (/plots/{data_name})
-            title (string): title variability
-        """
-        model = self.modelname if modelname is None else modelname
-        test = self.testname if testname is None else testname
-        metrics = self.metricdict[model][test]['metrics']
-        m1list = [metrics['r']['valuec'],metrics['r2']['valuec'],
-                    metrics['nr']['valuec'],metrics['f']['valuec']]
-        
-        fig1 = plt.figure(figsize = (20,20))
-        gs1 = matplotlib.gridspec.GridSpec(4,1, figure=fig1)
-        for j in range(4):
-            ax1 = fig1.add_subplot(gs1[j])
-            ax1.boxplot(m1list[j],patch_artist = True, 
-                            boxprops = dict(facecolor = "lightblue"), 
-                            medianprops = dict(color = "green", linewidth = 1.5), 
-                            whiskerprops = dict(color = "red", linewidth = 2), 
-            )
-            ax1.set_title(f'${self.LABELID[j]}$')
-            ax1.grid(alpha=0.5)
-            ax1.set_xlabel('Coordinates')
+        fig, ax = plt.subplots(nrows=7, ncols=2, figsize=figsize)
+        for n, nmodel in enumerate(self.modellist if modelnames is None else [modelnames]):    
+            for p, ntest in enumerate(self.testlist if testname is None else [testname]):
+                err = self.metricdict[nmodel][ntest]['yerr']
+                errmean = np.mean(err,axis=0) 
+                errstd = np.std(err,axis=0)
 
-        score = np.round(self.metricdict[model][test]['score'],decimals=2)
+                t_context = np.arange(1, ctxs[n])
+                t_prediction = np.arange(0, iters[n]-ctxs[n]) + ctxs[n]
+                t_total = np.arange(1, iters[n])
+                errup = errmean + 1.96*errstd/np.sqrt(err.shape[0])
+                errdown = errmean - 1.96*errstd/np.sqrt(err.shape[0])
+                k = 0
+                for j in range(2):
+                    for i in range(7):
+                        if k==0 and (legend is not None):
+                            ax[i,j].plot(t_prediction,errmean[:,k], color=self.COLORS[n],
+                                linewidth=1.5,label=legend[i])
+                        else:
+                            ax[i,j].plot(t_prediction,errmean[:,k], color=self.COLORS[n],
+                                linewidth=1.5)
+                        ax[i,j].fill_between(t_prediction,errdown[:,k],errup[:,k],fc=self.COLORS[n],alpha=0.25)
+                        ax[i,j].grid(True,linestyle='--')
+                        ax[i,j].set_ylabel(self.LABELCOORDSNAMES[k],fontsize=15)
+                        ax[i,j].set_xlabel('Iterations [-]',fontsize=15)
+                        ax[i,j].set_ylim([x/10 for x in self.axslims[k]])
+                        k=k+1
+                    
+                        ax[i,j].tick_params(axis='x', labelsize=15)
+                        ax[i,j].tick_params(axis='y', labelsize=15)
 
-        plt.tight_layout()
-        fig1.suptitle(title + 
-                     f'\n\nTest Name: {test}\n\n Model Name: {model}'
-                     f'\n\nTest Score: {score}/10.0', y=1.15, weight='bold')
-        if save:
-            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/variation_overcoordinates.png',
+        if legend is not None:
+            fig.legend(loc='upper right',fontsize=15,fancybox=True)
+
+        fig.suptitle('Variation of Metrics over Joint and Cartesian Variables')
+        fig.supxlabel('Joint and Cartesian Variables')
+        fig.supylabel('Metrics')
+        fig.tight_layout(pad=1.2,h_pad=1.2,w_pad=1.2)
+
+        if save and modelnames is None:
+            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/errormeanandstd_{labels}.png',
+                        bbox_inches='tight')
+        elif save and modelnames is not None:
+            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{self.modelname}/{self.testname}/errormeanandstd.png',
                         bbox_inches='tight')
         else:
             plt.show()
 
+    def plotmetric_singletraj_models(self, modelnames=None, testname=None, save=False, ctxs=[], iters=[], idx=0,
+                                  figsize=(15,20), legend=None, labels=None):
+        """
+        Plots chosen metrics on a single graph for a single trajectory - useful for comparing different context
+        trainings and inferences.
+        """
+        fig, ax = plt.subplots(nrows=7, ncols=2, figsize=figsize)
+        for n, nmodel in enumerate(self.modellist if modelnames is None else [modelnames]):    
+            for p, ntest in enumerate(self.testlist if testname is None else [testname]):
+                rmse_list = self.metricdict[nmodel][ntest]['metrics']['r']['cvalue']
+                rmse_single = rmse_list[idx,:]
+
+                k = 0
+                for j in range(2):
+                    for i in range(7):
+                        ax[i,j].plot(ctxs, rmse_single, color=self.COLORS[p],
+                            linewidth=1.5,label=legend[i])
+                        ax[i,j].grid(True,linestyle='--')
+                        ax[i,j].set_ylabel(self.LABELCOORDSNAMES[k],fontsize=15)
+                        ax[i,j].set_xlabel('Contexts [-]',fontsize=15)
+                        ax[i,j].set_ylim([x/10 for x in self.axslims[k]])
+                        k=k+1
+                    
+                        ax[i,j].tick_params(axis='x', labelsize=15)
+                        ax[i,j].tick_params(axis='y', labelsize=15)
+
+        if legend is not None:
+            fig.legend(loc='upper right',fontsize=15,fancybox=True)
+
+        fig.suptitle('Variation of Metrics over Joint and Cartesian Variables wrt Changing Training/Inference Contexts')
+        fig.supxlabel('Joint and Cartesian Variables')
+        fig.supylabel('Metrics')
+        fig.tight_layout(pad=1.2,h_pad=1.2,w_pad=1.2)
+
+        if save and modelnames is None:
+            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/ctxstraj_{labels}.png',
+                        bbox_inches='tight')
+        elif save and modelnames is not None:
+            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{self.modelname}/{self.testname}/ctxstraj.png',
+                        bbox_inches='tight')
+        else:
+            plt.show()
+        
+
     def plotvariation_tests(self, modelname=None, testnames=None, metric='f', save=False, labels=None, include_legend=True,
                             title = 'Cumulative Metric Variation for All Available Tests of a Single Model',
-                            legendentries=None, omitscores=False):
+                            legendentries=None, omitscores=False, seperate=False, figsize=(15,15), savename='variation_overtests'):
         """
         Plots the test variation over all joints and all environments for a given model
         pertaining to all tests performed. The relevant distribution of a test dataset 
@@ -1991,41 +1792,121 @@ class postprocess(dataset, plotcfg):
             title (string): title variability
         """
         model = self.modelname if modelname is None else modelname
-        fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(20,20))
+        fig, axes = plt.subplots(nrows=1, ncols=1, figsize=figsize)
         cur = []
         scores = []
         for i, test in enumerate(self.testlist if testnames is None else testnames):
             score = str(np.round(self.metricdict[model][test]['score'],decimals=2))
             if metric=='f':
                 cur.append(self.metricdict[model][test]['metrics']['f']['cmean'])
-            elif metric=='r':
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = np.arange(len(self.testlist))+1
+                axes.set_ylim([0,100])
+                axes.set_ylabel('$Fit Idx$ Value [0-100]')
+                axes.set_title(f'$Fit Idx$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
+            elif metric=='r' and (not seperate):
                 cur.append(self.metricdict[model][test]['metrics']['r']['cmean'])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = np.arange(len(self.testlist))+1
+                axes.set_ylim([0,50])
+                axes.set_ylabel('$RMSE$ Value [0,) [-]')
+                axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for All Output Variables',y=1.02)
+
+            elif metric=='r' and seperate=='pos':
+                cur.append(self.metricdict[model][test]['metrics']['r']['emean'][:3])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = np.arange(len(self.testlist))+1
+                axes.set_ylim([0,100])
+                axes.set_ylabel('$RMSE$ Value [0,) [mm]')
+                axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for Cartesian Position Estimation',y=1.02)  
+
+            elif metric=='r' and seperate=='orn':
+                cur.append(self.metricdict[model][test]['metrics']['r']['emean'][3:7])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = np.arange(len(self.testlist))+1
+                axes.set_ylim([0,0.1])
+                axes.set_ylabel('$RMSE$ Value [0,) [-]')
+                axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for Cartesian Orientation Estimation',y=1.02)  
+
+            elif metric=='r' and seperate=='cartesian':
+                cur.append(self.metricdict[model][test]['metrics']['r']['emean'][:3])
+                cur.append(self.metricdict[model][test]['metrics']['r']['emean'][3:7])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = (np.arange(len(self.testlist))+1)*2 - 0.5
+                axes.set_ylim([0,50])
+                axes.set_ylabel('$RMSE$ Value [0,) [mm,-]')
+                axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for Cartesian Kinematic Estimation',y=1.02)  
+
+            elif metric=='r' and seperate=='joint':
+                cur.append(self.metricdict[model][test]['metrics']['r']['emean'][7:])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = np.arange(len(self.testlist))+1
+                axes.set_ylim([0,18])
+                axes.set_ylabel('$RMSE$ Value [0,) [deg]')
+                axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for Joint Kinematic Estimation',y=1.02)  
+
+            elif metric=='r' and seperate=='all':
+                cur.append(self.metricdict[model][test]['metrics']['r']['emean'][:3])
+                cur.append(self.metricdict[model][test]['metrics']['r']['emean'][3:7])
+                cur.append(self.metricdict[model][test]['metrics']['r']['emean'][7:])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = (np.arange(len(self.testlist))+1)*3 - 1
+                axes.set_ylim([0,100])
+                axes.set_ylabel('$RMSE$ Value [0,) [mm,-deg]')
+                axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
             elif metric=='nr':
                 cur.append(self.metricdict[model][test]['metrics']['nr']['cmean'])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = np.arange(len(self.testlist))+1
+                axes.set_ylim(bottom=0)
+                axes.set_ylabel('$NRMSE$ Value [0,)$')
+                axes.set_title(f'$NRMSE$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
             elif metric=='r2':
                 cur.append(self.metricdict[model][test]['metrics']['r2']['cmean'])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                ticklocs = np.arange(len(self.testlist))+1
+                axes.set_ylim([0,1])
+                axes.set_ylabel('$r^{2}$ Value [0-1]')
+                axes.set_title(f'$r^{2}$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
             elif metric=='aic':
                 aic_act = self.metricdict[model][test]['metrics']['aic']['cmean']
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
                 aic_min = np.min(aic_act)
                 aic_delta = aic_act - aic_min
                 cur.append(aic_delta)
+                axes.set_ylim(bottom=0)
+                axes.set_ylabel('$AIC$ Value [0,)')
+                axes.set_title(f'$AIC$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
             elif metric=='fpe':
                 cur.append(self.metricdict[model][test]['metrics']['fpe']['cmean'])
+                bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                axes.set_ylim(top=0)
+                axes.set_ylabel('$FPE$ Value (-inf,0]')
+                axes.set_title(f'$FPE$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+            
+            if seperate=='orn' or seperate=='pos' or seperate=='joint':
+                pass
+            elif seperate=='cartesian':
+                for patch, color in zip(bplot['boxes'], self.COLORS[:2]):
+                    patch.set_facecolor(color)
+            elif seperate=='all':
+                for patch, color in zip(bplot['boxes'], self.COLORS[:3]):
+                    patch.set_facecolor(color)
+            elif not seperate:
+                for patch, color in zip(bplot['boxes'], self.COLORS):
+                    patch.set_facecolor(color)
+                    
             scores.append(score)
+            labels = scores if labels is None else labels
+            axes.set_xticks(ticklocs,labels)
+            axes.grid(True,alpha=0.6,linestyle='--')
+            axes.set_xlabel('Type of Test')
 
-        bplot = axes.boxplot(cur,1,'',patch_artist = True, medianprops = dict(color = "green", 
-                        linewidth = 1.5), whiskerprops = dict(color = "red", linewidth = 2),
-                        labels=scores)
-        ticklocs = np.arange(len(self.testlist))+1
-
-        axes.grid(True,alpha=0.6)
-        axes.set_xlabel('Test Scores [0 - 10]')
-        labels = scores if labels is None else labels
-        axes.set_xticks(ticklocs,labels)
-        axes.set_title(f'{metric} Variation')
-
-        for patch, color in zip(bplot['boxes'], self.COLORS):
-            patch.set_facecolor(color)
         if include_legend:
             if legendentries:
                 if not omitscores:
@@ -2034,27 +1915,24 @@ class postprocess(dataset, plotcfg):
                     l = [l for i, l in enumerate(legendentries)]
             else:
                 l = self.testlist
-            leg = axes.legend(bplot['boxes'], l, loc='best',fancybox=True,
-                        framealpha=1, shadow=True, borderpad=1, fontsize='small', title='test type')
+            leg = fig.legend(bplot['boxes'], l, loc='upper right',bbox_to_anchor=(1.01,0.95),fancybox=True, 
+                             framealpha=1, shadow=True, borderpad=1, fontsize='small', title='test type')
             lframe = leg.get_frame()
             lframe.set_facecolor('#b4aeae')
             lframe.set_edgecolor('black')
             lframe.set_alpha(1)
-
-        fig.suptitle(title + 
-                     f'\n\nModel Name: {model}\n\nMetric : {metric}',
-                     fontsize=25, y=1.02, weight='bold') 
             
         plt.tight_layout()
         if save:
-            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/variation_overtests.png',
+            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{savename}',
                         bbox_inches='tight')
         else:
             plt.show()  
  
     def plotvariation_models(self, modelnames=None, metric='f', save=False, labels=None, include_legend=True,
                              title = 'Cumulative Metric Variation Over All Tests of All Models',
-                             legendentries=None, savelegend=None, omitscores=False,limitaxes=False):
+                             legendentries=None, savelegend=None, omitscores=False,limitaxes=False, savename=False,
+                             xlabel=None, figsize=(20,20), seperate=False):
         """
         Plots the test variation over all joints and all environments of all the models
         pertaining to all tests performed. The relevant distribution of a test dataset 
@@ -2071,7 +1949,7 @@ class postprocess(dataset, plotcfg):
             legendetnries (list): if not None put legend entries into legend
             title (string): title variability
         """
-        fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(20,20))
+        fig, axes = plt.subplots(nrows=1, ncols=1, figsize=figsize)
         for i, nmodel in enumerate(self.modellist if modelnames is None else modelnames):
             cur = []
             scores = []
@@ -2079,37 +1957,77 @@ class postprocess(dataset, plotcfg):
                 score = str(np.round(self.metricdict[nmodel][test]['score'],decimals=2))
                 if metric=='f':
                     cur.append(self.metricdict[nmodel][test]['metrics']['f']['cmean'])
-                elif metric=='r':
+                    axes.set_ylabel('$Fit Idx$ Value [0-100]')
+                    axes.set_title(f'$Fit Idx$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
+                elif metric=='r' and (not seperate):
                     cur.append(self.metricdict[nmodel][test]['metrics']['r']['cmean'])
+                    axes.set_ylim([0,50])
+                    axes.set_ylabel('$RMSE$ Value [0,) [-]')
+                    axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for All Output Variables',y=1.02)
+
+                elif metric=='r' and seperate=='pos':
+                    cur.append(self.metricdict[nmodel][test]['metrics']['r']['emean'][:3])
+                    axes.set_ylim([0,100])
+                    axes.set_ylabel('$RMSE$ Value [0,) [mm]')
+                    axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for Cartesian Position Estimation',y=1.02)  
+
+                elif metric=='r' and seperate=='orn':
+                    cur.append(self.metricdict[nmodel][test]['metrics']['r']['emean'][3:7])
+                    axes.set_ylim([0,0.1])
+                    axes.set_ylabel('$RMSE$ Value [0,) [-]')
+                    axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for Cartesian Orientation Estimation',y=1.02)  
+
+                elif metric=='r' and seperate=='joint':
+                    cur.append(self.metricdict[nmodel][test]['metrics']['r']['emean'][7:])
+                    axes.set_ylim([0,18])
+                    axes.set_ylabel('$RMSE$ Value [0,) [deg]')
+                    axes.set_title(f'$RMSE$ Cumulative Accuracy Variation for Joint Kinematic Estimation',y=1.02)  
+
                 elif metric=='nr':
                     cur.append(self.metricdict[nmodel][test]['metrics']['nr']['cmean'])
+                    axes.set_ylim(bottom=0)
+                    axes.set_ylabel('$NRMSE$ Value [0,)$')
+                    axes.set_title(f'$NRMSE$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
                 elif metric=='r2':
                     cur.append(self.metricdict[nmodel][test]['metrics']['r2']['cmean'])
+                    axes.set_ylim([0,1])
+                    axes.set_ylabel('$r^{2}$ Value [0-1]')
+                    axes.set_title(f'$r^{2}$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
                 elif metric=='aic':
                     aic_act = self.metricdict[nmodel][test]['metrics']['aic']['cmean']
                     aic_min = np.min(aic_act)
                     aic_delta = aic_act - aic_min
                     cur.append(aic_delta)
+                    bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                    axes.set_ylim(bottom=0)
+                    axes.set_ylabel('$AIC$ Value [0,)')
+                    axes.set_title(f'$AIC$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+
                 elif metric=='fpe':
                     cur.append(self.metricdict[nmodel][test]['metrics']['fpe']['cmean'])
-                scores.append(score)
-
-            bplot = axes.boxplot(cur,1,'',patch_artist = True, medianprops = dict(color = "green", 
+                    bplot = axes.boxplot(cur, patch_artist=True, widths=0.55)
+                    axes.set_ylim(top=0)
+                    axes.set_ylabel('$FPE$ Value (-inf,0]')
+                    axes.set_title(f'$FPE$ Cumulative Accuracy Variation for All Output Variables',y=1.02)  
+            
+            bplot = axes.boxplot(cur,patch_artist = True, medianprops = dict(color = "green", 
                             linewidth = 1.5), whiskerprops = dict(color = "red", linewidth = 2),
                             positions=(np.arange(len(self.testlist)) + i*(len(self.testlist)+1)),
                             widths=0.5)
             ticklocs = np.arange(len(self.modellist))*(len(self.testlist)+1) + np.mean(np.arange(len(self.testlist)))
-
+            
+            scores.append(score)
+            labels = scores if labels is None else labels
+            axes.set_xticks(ticklocs,labels)
+            axes.grid(True,alpha=0.6,linestyle='--')
+            axes.set_xlabel('Type of Neural Architecture' if xlabel is None else xlabel)
+            axes.xaxis.labelpad = 20
+            
             for pos, (patch, color) in enumerate(zip(bplot['boxes'], self.COLORS)):
                 patch.set_facecolor(color)
-                #axes.text(x=ticklocs[i],y=patch.get_ydata()[2],
-                #          s=scores[i]) 
-            axes.set_xlabel('Model Type')
-            axes.set_title(f'{metric} Variation')
-
-            labels = self.modellist if labels is None else labels
-            axes.set_xticks(ticklocs,labels)
-            axes.grid(True,alpha=0.6)
 
         if include_legend:
             if legendentries:
@@ -2119,704 +2037,29 @@ class postprocess(dataset, plotcfg):
                     l = [l for i, l in enumerate(legendentries)]
             else:
                 l = self.testlist
-            leg = axes.legend(bplot['boxes'], l, loc='best',fancybox=True, 
+            leg = fig.legend(bplot['boxes'], l, loc='upper right',bbox_to_anchor=(1.01,0.95),fancybox=True, 
                              framealpha=1, shadow=True, borderpad=1, fontsize='small', title='test type')
             lframe = leg.get_frame()
             lframe.set_facecolor('#b4aeae')
             lframe.set_edgecolor('black')
             lframe.set_alpha(1)
-
+            
             if savelegend:
                 leg.savefig('modellegend.png')
 
-        fig.suptitle(title +
-                     f'\n\nMetric : {metric}',
-                     fontsize=25, y=1.02, weight='bold') 
         if limitaxes:
-            axes.set_ylim(bottom=-3,top=1)
+            axes.set_ylim(bottom=0,top=1)
         plt.setp(axes.get_xticklabels(), rotation=0, horizontalalignment='center')    
         plt.tight_layout()
         if save:
-            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/variation_overmodels.png',
-                        bbox_inches='tight')
-        else:
-            plt.show()
-
-    def plotvariation_architectures(self,archnames=None, modelnames=None, metric='f', save=False, labels=None, include_legend=True,
-                                    title='Cumulative Metric Variation of All Architectures of Chosen Datasets over Chosen Tests',
-                                    legend_entries=None, savelegend=None):
-        pass  
-    
-    def plotcomparison_contexts(self, modelnames, ctx, iter, save=False, of='best',
-                                title='Horizon Prediction Comparison Between Various Models'):
-        """
-        Plots the horizon prediction comparison of a choice of models over a single test for contextual
-        comparisons.
-
-        Parameters
-        ---
-            modelnames (list): list of modelnames included in the comparison of ctxs
-            of (string): best-worst-median-random plots of sim2sim
-            dim (int): 
-            ctx (int):
-            iter (int):
-            save (bool): if True, save the model under figpath (/plots/{data_name})
-            title (string): title variability
-        """
-        fig, ax = plt.subplots(7, 2, figsize=(20, 20))
-
-        for model in modelnames:
-            if of=='best':
-                idx1 = np.argmax(self.metricdict[model][self.testname]['metrics']['r2']['cmean'])
-            elif of=='worst':
-                idx1 = np.argmin(self.metricdict[model][self.testname]['metrics']['r2']['cmean'])
-            elif of=='median':
-                idx1 = np.argsort(self.metricdict[model][self.testname]['metrics']['r2']['cmean'])[len(self.metricdict[model][self.testname]['metrics']['r2']['cmean'])//2]
-            elif of=='random':
-                idx1 = np.random.random_integers(low = 0, high=len(self.metricdict[model][self.testname]['metrics']['r2']['cmean']))
+            if not savename:
+                plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/variation_overmodels.png',
+                            bbox_inches='tight')
             else:
-                raise ValueError
-            
-            sim = self.metricdict[model][self.testname]['ysim'][idx1,:,:]
-            err = self.metricdict[model][self.testname]['yerr'][idx1,:,:]
-            true = self.metricdict[model][self.testname]['ytrue'][idx1,:,:]
-            ctx = self.metricdict[model][self.testname]['yctx'][idx1,:,:]
-            total = np.concatenate([ctx,true])
-
-            t_context = np.arange(1, ctx)
-            t_prediction = np.arange(1, iter-ctx+1) + ctx
-            t_total = np.arange(0, iter)
-
-            k = 0
-            for j in range(2):
-                for i in range(7):
-                    ax[i,j].axvline(x = t_prediction[-1], 
-                        color = 'k', linestyle='--')
-                    ax[i,j].axvline(x = t_context[-1], 
-                        color = 'k', linestyle='--')
-                    ax[i,j].axvspan(t_context[0], t_context[-1],
-                        facecolor='lime', alpha=0.2)
-                    ax[i,j].plot(t_total,total[:,k] ,'k', 
-                        label=self.LABELCOORDS4D[k],linewidth=2)
-                    ax[i,j].plot(t_prediction,sim[:,k], 'b', 
-                        label=self.LABELPRED4D[k],linewidth=2)
-                    ax[i,j].grid(True)
-                    ax[i,j].legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-                    ax[i,j].set_xlabel('Iterations')
-                    k=k+1
-
-        fig.suptitle(title + 
-                    f'\nTest Name: {self.testname}\n',size = 20,y = .99)
-        fig.tight_layout( pad = 2)
-        if save:
-            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/context_comparison.png',
-                        bbox_inches='tight')
+                plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{savename}',
+                            bbox_inches='tight')
         else:
             plt.show()
-
-    def plotcomparison_horizon(self, modelnames, testname, of, dim, ctx, iter,  save=False, 
-                            title='Horizon Prediction Comparison Between Two Different Models'):
-        """
-        Plots the horizon prediction comparison of two different models over a single test. Possible use
-        cases are finetuned, oneshot and fewshot model comparisons.
-
-        Parameters
-        ---
-            true (np.array): true horizon
-            sim1 (np.array): 1st simulation over a single horizon
-            err1 (np.array): 1st error over a single horizon
-            sim2 (np.array): 2nd simulation over a single horizon
-            err2 (np.array): 2nd error over a single horizon
-            of (string): best-worst-median-random plots of sim2sim
-            dim (int): 
-            ctx (int):
-            iter (int):
-            save (bool): if True, save the model under figpath (/plots/{data_name})
-            title (string): title variability
-        """
-        modelname1 = modelnames[0]
-        modelname2 = modelnames[1]
-        if of=='best':
-            idx1 = np.argmax(self.metricdict[modelname1][testname]['metrics']['r2']['cmean'])
-            idx2 = np.argmax(self.metricdict[modelname2][testname]['metrics']['r2']['cmean'])
-        elif of=='worst':
-            idx1 = np.argmin(self.metricdict[modelname1][testname]['metrics']['r2']['cmean'])
-            idx2 = np.argmin(self.metricdict[modelname2][testname]['metrics']['r2']['cmean'])
-        elif of=='median':
-            idx1 = np.argsort(self.metricdict[modelname1][testname]['metrics']['r2']['cmean'])[len(self.metricdict[modelname1][testname]['metrics']['r2']['cmean'])//2]
-            idx2 = np.argsort(self.metricdict[modelname2][testname]['metrics']['r2']['cmean'])[len(self.metricdict[modelname2][testname]['metrics']['r2']['cmean'])//2]
-        elif of=='random':
-            idx1 = np.random.random_integers(low = 0, high=len(self.metricdict[modelname1][testname]['metrics']['r2']['cmean']))
-            idx2 = np.random.random_integers(low = 0, high=len(self.metricdict[modelname1][testname]['metrics']['r2']['cmean']))
-        else:
-            raise ValueError
-        
-        sim1 = self.metricdict[modelname1][testname]['ysim'][idx1,:,:]
-        err1 = self.metricdict[modelname1][testname]['yerr'][idx1,:,:]
-        true1 = self.metricdict[modelname1][testname]['ytrue'][idx1,:,:]
-        ctx1 = self.metricdict[modelname1][testname]['yctx'][idx1,:,:]
-        sim2 = self.metricdict[modelname2][testname]['ysim'][idx2,:,:]
-        err2 = self.metricdict[modelname2][testname]['yerr'][idx2,:,:]
-        total = np.concatenate([ctx1,true1])
-
-        t_context = np.arange(1, ctx)
-        t_prediction = np.arange(1, iter-ctx+1) + ctx
-        t_total = np.arange(0, iter)
-
-        if dim==4:
-            fig, ax = plt.subplots(7, 2, figsize=(20, 20))
-
-            k = 0
-            for j in range(2):
-                for i in range(7):
-                    ax[i,j].axvline(x = t_prediction[-1], 
-                        color = 'k', linestyle='--')
-                    ax[i,j].axvline(x = t_context[-1], 
-                        color = 'k', linestyle='--')
-                    ax[i,j].axvspan(t_context[0], t_context[-1],
-                        facecolor='lime', alpha=0.2)
-                    ax[i,j].plot(t_total,total[:,k] ,'k', 
-                        label=self.LABELCOORDS4D[k],linewidth=2)
-                    ax[i,j].plot(t_prediction,sim1[:,k], 'b', 
-                        label=self.LABELPRED4D[k],linewidth=2)
-                    ax[i,j].plot(t_prediction,err1[:,k], 'r', 
-                        label=self.LABELERROR4D[k])
-                    ax[i,j].plot(t_prediction,sim2[:,k], 'g', 
-                        label=self.LABELPRED4D[k]+'new',linewidth=2)
-                    ax[i,j].plot(t_prediction,err2[:,k], 'm', 
-                        label=self.LABELERROR4D[k]+'new')
-                    ax[i,j].grid(True)
-                    ax[i,j].legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-                    ax[i,j].set_xlabel('Iterations')
-                    k=k+1
-
-        elif dim==6:
-            fig = plt.figure(figsize = (20,20))
-            gs = matplotlib.gridspec.GridSpec(9,2, figure=fig)
-
-            k = 0
-            for i1 in range(9):
-                ax1 = fig.add_subplot(gs[i1,0])
-                ax1.axvline(x = t_prediction[-1], 
-                    color = 'k', linestyle='--')
-                ax1.axvline(x = t_context[-1], 
-                    color = 'k', linestyle='--')
-                ax1.axvspan(t_context[0], t_context[-1],
-                        facecolor='lime', alpha=0.2)
-
-                ax1.plot(t_total,total[:,k] ,'k', 
-                    label=self.LABELCOORDS6D[k],linewidth=2)
-                ax1.plot(t_prediction,sim1[:,k], 'b', 
-                    label=self.LABELPRED6D[k],linewidth=2)
-                ax1.plot(t_prediction,err1[:,k], 'r', 
-                    label=self.LABELERROR6D[k])
-                ax1.plot(t_prediction,sim2[:,k], 'g', 
-                    label=self.LABELPRED6D[k]+'new',linewidth=2)
-                ax1.plot(t_prediction,err2[:,k], 'm', 
-                    label=self.LABELERROR6D[k]+'new')
-                ax1.grid(True)
-                ax1.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-                ax1.set_xlabel('Iterations')
-                k=k+1
-
-            for i2 in range(7):
-                ax2 = fig.add_subplot(gs[i2,1])
-                ax2.axvline(x = t_prediction[-1], 
-                    color = 'k', linestyle='--')
-                ax2.axvline(x = t_context[-1], 
-                    color = 'k', linestyle='--')
-                ax2.axvspan(t_context[0], t_context[-1],
-                        facecolor='lime', alpha=0.2)
-
-                ax2.plot(t_total,total[:,k] ,'k', 
-                    label=self.LABELCOORDS6D[k],linewidth=2)
-                ax2.plot(t_prediction,sim1[:,k], 'b', 
-                    label=self.LABELPRED6D[k],linewidth=2)
-                ax2.plot(t_prediction,err1[:,k], 'r', 
-                    label=self.LABELERROR6D[k])
-                ax2.plot(t_prediction,sim2[:,k], 'g', 
-                    label=self.LABELPRED6D[k]+'new',linewidth=2)
-                ax2.plot(t_prediction,err2[:,k], 'm', 
-                    label=self.LABELERROR6D[k]+'new')
-                ax2.grid(True)
-                ax2.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
-                ax2.set_xlabel('Iterations')
-                k=k+1
-
-        fig.suptitle(title + 
-                    f'\nTest Name: {testname}\n Model Name: {modelname1}',size = 20,y = .99)
-        fig.tight_layout( pad = 2)
-        if save:
-            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/horizon_comparison.png',
-                        bbox_inches='tight')
-        else:
-            plt.show()
-
-    def plotcomparison_variation_overjoints(self, modelnames, testname, save=False, 
-                                            title='Accuracy Variation Comparison Between Two Different Models'):
-        """
-        Plots the horizon prediction comparison of two different models over a single test. Possible use
-        cases are finetuned, oneshot and fewshot model comparisons.
-
-        Parameters
-        ---
-            modelnames (string)
-            testname (string)
-            save (bool): if True, save the model under figpath (/plots/{data_name})
-            title (string): title variability
-        """
-        modelname1 = modelnames[0]
-        modelname2 = modelnames[1]
-        metric1 = self.metricdict[modelname1][testname]['metrics']
-        metric2 = self.metricdict[modelname2][testname]['metrics']
-
-        m1list = [metric1['r']['valuec'],metric1['r2']['valuec'],
-                    metric1['nr']['valuec'],metric1['f']['valuec']]
-        m2list = [metric2['r']['valuec'],metric2['r2']['valuec'],
-                    metric2['nr']['valuec'],metric2['f']['valuec']]
-        
-        #fig1, axes1 = plt.subplots(nrows=4, ncols=1, figsize=(18,18))
-        fig1 = plt.figure(figsize = (20,20))
-        gs1 = matplotlib.gridspec.GridSpec(4,1, figure=fig1)
-        for j in range(4):
-            ax1 = fig1.add_subplot(gs1[j])
-            ax1.boxplot(m1list[j],patch_artist = True, 
-                            boxprops = dict(facecolor = "lightblue"), 
-                            medianprops = dict(color = "green", linewidth = 1.5), 
-                            whiskerprops = dict(color = "red", linewidth = 2), 
-            )
-            ax1.boxplot(m2list[j],patch_artist = True, 
-                            boxprops = dict(facecolor = "lightblue"), 
-                            medianprops = dict(color = "green", linewidth = 1.5), 
-                            whiskerprops = dict(color = "red", linewidth = 2), 
-            )
-            ax1.set_title(f'${self.LABELID[j]}$')
-            ax1.grid(alpha=0.5)
-
-        fig1.suptitle(title + 
-                    f'\nTest Name: {testname}\n Model Name: {modelname1}')
-        if save:
-            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/variation_comparison.png',
-                        bbox_inches='tight')
-        else:
-            plt.show()
-
-    def plotcomparison_metrics_overjoints(self, modelnames, testname, save=False, 
-                                        title=''):
-        """
-        Plots the horizon prediction comparison of two different models over a single test. Possible use
-        cases are finetuned, oneshot and fewshot model comparisons.
-
-        Parameters
-        ---
-            metric1 (dict): metric dict of model 1
-            metric2 (dict): metric dict of model 2
-            save (bool): if True, save the model under figpath (/plots/{data_name})
-            title (string): title variability
-        """
-        modelname1 = modelnames[0]
-        modelname2 = modelnames[1]
-        metric1 = self.metricdict[modelname1][testname]['metrics']
-        metric2 = self.metricdict[modelname2][testname]['metrics']
-
-        fig,[[ax1, ax2],[ax3, ax4]]  = plt.subplots(2, 2,figsize=(15, 15), dpi=200)
-
-        ax1.plot(metric1['r2']['emean'],
-                        linewidth=1.5)
-        ax1.plot(metric2['r2']['emean'],
-                        linewidth=1.5)
-        ax1.plot(np.mean(metric1['r2']['emean']),'r',
-                        linewidth=1.5,linestyle='dotted') 
-        ax1.scatter(np.nanargmin(metric1['r2']['emean']),
-                        np.nanmin(metric1['r2']['emean']),
-                        marker='o', color='red', s=30)
-        ax1.scatter(np.nanargmax(metric1['r2']['emean']),
-                        np.nanmax(metric1['r2']['emean']),
-                        marker='o', color='red', s=30)
-        ax1.axhspan(np.nanpercentile(metric1['r2']['emean'],25), 
-                        np.nanpercentile(metric1['r2']['emean'],75), 
-                        facecolor='yellow', alpha=0.2)
-        ax1.grid(visible=True, which='both')
-        ax1.set_title('$R^{2}$ Value')
-        ax1.set(xlabel='Environment Index')
         
 
-        ax2.plot(metric1['r']['emean'],
-                        linewidth=1.5)
-        ax2.plot(metric2['r']['emean'],
-                        linewidth=1.5)
-        ax2.plot(np.mean(metric1['r']['emean']),'r',
-                        linewidth=1.5,linestyle='dotted') 
-        ax2.scatter(np.nanargmin(metric1['r']['emean']),
-                        np.nanmin(metric1['r']['emean']),
-                        marker='o', color='red', s=30)
-        ax2.scatter(np.nanargmax(metric1['r']['emean']),
-                        np.nanmax(metric1['r']['emean']),
-                        marker='o', color='red', s=30)
-        ax2.axhspan(np.nanpercentile(metric1['r']['emean'],25), 
-                        np.nanpercentile(metric1['r']['emean'],75), 
-                        facecolor='yellow', alpha=0.2)
-        ax2.grid(visible=True, which='both')
-        ax2.set_title('$RMSE$ Value')
-        ax2.set(xlabel='Environment Index')
-
-
-        ax3.plot(metric1['f']['emean'],
-                        linewidth=1.5)
-        ax3.plot(metric2['f']['emean'],
-                        linewidth=1.5)
-        ax3.plot(np.mean(metric1['f']['emean']),'r',
-                        linewidth=1.5,linestyle='dotted') 
-        ax3.scatter(np.nanargmin(metric1['f']['emean']),
-                        np.nanmin(metric1['f']['emean']),
-                        marker='o', color='red', s=30)
-        ax3.scatter(np.nanargmax(metric1['f']['emean']),
-                        np.nanmax(metric1['f']['emean']),
-                        marker='o', color='red', s=30)
-        ax3.axhspan(np.nanpercentile(metric1['f']['emean'],25), 
-                        np.nanpercentile(metric1['f']['emean'],75), 
-                        facecolor='yellow', alpha=0.2)
-        ax3.grid(visible=True, which='both')
-        ax3.set_title('$fit$ Value')
-        ax3.set(xlabel='Environment Index')
-
-
-        ax4.plot(metric1['nr']['emean'],
-                        linewidth=1.5)
-        ax4.plot(metric2['nr']['emean'],
-                        linewidth=1.5)
-        ax4.plot(np.mean(metric1['nr']['emean']),'r',
-                        linewidth=1.5,linestyle='dotted') 
-        ax4.scatter(np.nanargmin(metric1['nr']['emean']),
-                        np.nanmin(metric1['nr']['emean']),
-                        marker='o', color='red', s=30)
-        ax4.scatter(np.nanargmax(metric1['nr']['emean']),
-                        np.nanmax(metric1['nr']['emean']),
-                        marker='o', color='red', s=30)
-        ax4.axhspan(np.nanpercentile(metric1['nr']['emean'],25), 
-                        np.nanpercentile(metric1['nr']['emean'],75), 
-                        facecolor='yellow', alpha=0.2)
-        ax4.grid(visible=True, which='both')
-        ax4.set_title('$NRMSE$ Value')
-        ax4.set(xlabel='Environment Index')
-
-        fig.tight_layout(pad = 1.2 )
-        fig.suptitle(title + 
-                    f'\nTest Name: {testname}\n Model Name: {modelname1}',size = 20,y = .99)
-        if save:
-            plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/metrics_comparison.png',
-                        bbox_inches='tight')
-        else:
-            plt.show()
-    
-    def plotmetric(self, modelname=None, testname=None, metric='f', jointmean=True, envmean=True, save=False):
-        """
-        Applies a chosen metric according to specified mean parameters to a batch of simulations.
-        if jointmean=False, envmean=False:
-            INVALID
-        if jointmean=True, envmean=False:
-            mean over all joints projected onto environments space
-        if jointmean=False, envmean=True:
-            mean over all environments projected onto coordinate space
-        if jointmean=True, envmean=True:
-            mean metrics over all dimensions
-
-        Parameters:
-            metrics: metric list of a test
-            metric: chosen metric to be assessed
-            jointmean=False:
-            envmean=False:
-            save=False: if True, save the model under figpath (/plots/{data_name})
-        """
-        model = self.modelname if modelname is None else modelname
-        test = self.testname if testname is None else testname
-        metrics = self.metricdict[model][test]['metrics']
-
-        if not jointmean and not envmean:
-            print('Impossible to parse without projecting onto coordinate space or environment space')
-            return
-        
-        elif jointmean and not envmean:
-            if metric=='f':
-                c = metrics['f']['cmean']
-            elif metric=='r':
-                c = metrics['r']['cmean']
-            elif metric=='nr':
-                c = metrics['nr']['cmean']
-            elif metric=='r2':
-                c = metrics['r2']['cmean']
-            elif metric=='aic':
-                aic_act = metrics['aic']['cmean']
-                aic_min = np.nanmin(aic_act)
-                c = aic_act - aic_min
-            elif metric=='fpe':
-                c = metrics['fpe']['cmean']
-
-            fig, ax1 = plt.subplots(1, figsize=(15,15), dpi=200)
-
-            ax1.plot(c,
-                            linewidth=2)
-            ax1.axhline(np.mean(c),c='r',
-                            linewidth=2.0,linestyle='solid') 
-            ax1.scatter(np.nanargmin(c),
-                            np.nanmin(c),
-                            marker='o', color='red', s=120)
-            ax1.annotate(f'worst env.' if metric=='fpe' else f'best env.',
-                        (np.nanargmin(c),np.nanmin(c)),
-                        xytext=(-2*self.OFFSET,self.OFFSET),
-                        textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
-            ax1.scatter(np.nanargmax(c),
-                            np.nanmax(c),
-                            marker='o', color='red', s=120)
-            ax1.annotate(f'best env.' if metric=='fpe' else f'worst env.',
-                        (np.nanargmax(c),np.nanmax(c)),
-                        xytext=(-2*self.OFFSET,self.OFFSET),
-                        textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
-            ax1.axhspan(np.nanpercentile(c,25), 
-                            np.nanpercentile(c,75), 
-                            facecolor='gold', alpha=0.2)
-            ax1.grid(visible=True, which='both')
-            ax1.set_title(f'{metric} Value')
-            ax1.set(xlabel='Environment')
-
-            score = np.round(self.metricdict[model][test]['score'],decimals=2)
-
-            fig.tight_layout()
-            fig.suptitle(f'Cumulative Accuracy Projected on Environments'
-                     f'\n\nTest Name: {test}\n\n Model Name: {model}'
-                     f'\n\nTest Score: {score}/10.0', y=1.25, weight='bold')
-            if save:
-                plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/{metric}_overenvironments.png',
-                        bbox_inches='tight')
-            else:
-                plt.show()
-
-        elif envmean and not jointmean:
-            if metric=='f':
-                c = metrics['f']['emean'].T
-            elif metric=='r':
-                c = metrics['r']['emean'].T
-            elif metric=='nr':
-                c = metrics['nr']['emean'].T
-            elif metric=='r2':
-                c = metrics['r2']['emean'].T
-            elif metric=='aic':
-                aic_act = metrics['aic']['emean'].T
-                aic_min = np.min(aic_act)
-                c = aic_act - aic_min
-            elif metric=='fpe':
-                c = metrics['fpe']['emean'].T
-
-            fig, ax1 = plt.subplots(1, figsize=(15,15), dpi=200)
-
-            ax1.plot(c,
-                            linewidth=2)
-            ax1.axhline(np.mean(c),c='r',
-                            linewidth=2.0,linestyle='solid') 
-            ax1.scatter(np.nanargmin(c),
-                            np.nanmin(c),
-                            marker='o', color='red', s=120)
-            ax1.annotate(f'worst coord.' if metric=='fpe' else f'best coord.',
-                        (np.nanargmin(c),np.nanmin(c)),
-                        xytext=(-2*self.OFFSET,self.OFFSET),
-                        textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
-            ax1.scatter(np.nanargmax(c),
-                            np.nanmax(c),
-                            marker='o', color='red', s=120)
-            ax1.annotate(f'best coord.' if metric=='fpe' else f'worst coord.',
-                        (np.nanargmax(c),np.nanmax(c)),
-                        xytext=(-2*self.OFFSET,self.OFFSET),
-                        textcoords='offset points', bbox=self.BBOX, arrowprops=self.ARROWPROPS)
-            ax1.axhspan(np.nanpercentile(c,25), 
-                            np.nanpercentile(c,75), 
-                            facecolor='gold', alpha=0.2)
-            ax1.grid(visible=True, which='both')
-            ax1.set_title(f'{metric} Value')
-            ax1.set(xlabel='Coordinate')    
-
-            score = np.round(self.metricdict[model][test]['score'],decimals=2)
-
-            fig.tight_layout()
-            fig.suptitle(f'Cumulative Accuracy Projected on Coordinates'
-                     f'\n\nTest Name: {test}\n\n Model Name: {model}'
-                     f'\n\nTest Score: {score}/10.0', y=1.25, weight='bold')
-            if save:
-                plt.savefig(f'{self.figpath}/{self.dataname}/{self.savename}/{model}/{test}/{metric}_overcoordinates.png',
-                        bbox_inches='tight')
-            else:
-                plt.show()
-            
-        elif jointmean and envmean:
-            r = np.mean(metrics['r']['cmean']), np.mean(metrics['r']['emean'])
-            r2 = np.mean(metrics['r2']['cmean']), np.mean(metrics['r2']['emean'])
-            f = np.mean(metrics['f']['cmean']), np.mean(metrics['f']['emean'])
-            nr = np.mean(metrics['nr']['cmean']), np.mean(metrics['nr']['emean'])
-            naic = np.mean(metrics['aic']['cmean']), np.mean(metrics['aic']['emean'])
-            fpe = np.mean(metrics['fpe']['cmean']), np.mean(metrics['fpe']['emean'])
-
-            print(f'RMSE(env, coord): {r}\nr^2(env, coord): {r2}\nNRMSE(env, coord): {nr}'
-                  f'\nfit index(env, coord): {f}\nnaic(env, coord): {naic}\nfpe(env, coord): {fpe}\n\n\n')
-        
-    def zeroshot_horizon(self, model, test, of, dim, ctx=200, iter=1000, save=False,
-                         title='ZeroShot Horizon Prediction'):
-        """
-        Alias for plotting horizon over a single environment.
-        
-        Zero shot config:
-            ctx=200
-            iter=1000
-        """
-        return self.plothorizon(modelname=model, testname=test, of=of, dim=dim, ctx=ctx, iter=iter, save=save, title=title)
-
-    def zeroshot_metrics_overjoints(self, model, test, save=False, 
-                                  title='Cumulative ZeroShot Accuracy Metrics Projected on All Environments'):
-        """
-        Alias for jointmean plot of available metrics. 
-        
-        Zero shot config:
-            ctx=200
-            iter=1000
-        """
-        return self.plotmetrics_overjoints(modelname=model, testname=test, save=save, title=title)
-
-    def zeroshot_variation_overjoints(self, model, test, save=False, 
-                                  title='Cumulative ZeroShot Metrics Variation Projected on All Environments'):
-        """
-        Alias for jointmean plot of available metrics. 
-        
-        Zero shot config:
-            ctx=200
-            iter=1000
-        """
-        return self.plotvariation_overjoints(modelname=model, testname=test, save=save, title=title)
-
-    def oneshot_horizon(self, model, test, of, dim, ctx=1200, iter=2000, save=False, 
-                        title='OneShot Horizon Prediction'):
-        """
-        Alias for plotting horizon over a single environment. 
-        
-        One shot config:
-            ctx=1200
-            iter=2000
-        """
-        return self.plothorizon(modelname=model, testname=test, of=of, dim=dim, ctx=ctx, iter=iter, save=save, title=title)
-    
-    def oneshot_horizon_comparison(self, models, test, of, dim, ctx=1200, iter=2000, save=False,
-                                   title='OneShot Horizon Comparison'):
-        """
-        Alias for plotting horizon comparison over a single environment. 
-        
-        One shot config:
-            ctx=1200
-            iter=2000
-        """
-        return self.plotcomparison_horizon(modelnames=models, testname=test, of=of, dim=dim, ctx=ctx, iter=iter, save=save, title=title)
-
-    def oneshot_metrics_overjoints(self, model, test, save=False, 
-                                 title='Cumulative OneShot Accuracy Metrics Projected on All Environments'):
-        """
-         Alias for jointmean plot over a single environment. 
-         
-         One shot config:
-            ctx=1200
-            iter=2000
-        """
-        return self.plotmetrics_overjoints(modelname=model, testname=test, save=save, title=title)
-
-    def oneshot_variation_overjoints(self, model, test, save=False, 
-                                 title='Cumulative OneShot Metrics Variation Projected on All Environments'):
-        """
-         Alias for jointmean plot over a single environment. 
-         
-         One shot config:
-            ctx=1200
-            iter=2000
-        """
-        return self.plotvariation_overjoints(modelname=model, testname=test, save=save, title=title)
-
-    def fewshot_horizon(self, model, test, of, dim, ctx=5200, iter=6000, save=False, 
-                        title='FewShot Horizon Prediction'):
-        """
-        Alias for plotting horizon over a single environment. 
-        
-        Few shot config (n=shot):
-            ctx = n*1000 + 200
-            iter = (n+1)*1000
-        """
-        return self.plothorizon(modelname=model, testname=test, of=of, dim=dim, ctx=ctx, iter=iter, save=save, title=title)
-
-    def fewshot_horizon_comparison(self, models, test, of, dim, ctx=5200, iter=6000, save=False,
-                                   title='FewShot Horizon Comparison'):
-        """
-        Alias for plotting horizon comparison over a single environment. 
-        
-        Few shot config (n=shot):
-            ctx = n*1000 + 200
-            iter = (n+1)*1000
-        """
-        return self.plotcomparison_horizon(modelnames=models, testname=test, of=of, dim=dim, ctx=ctx, iter=iter, save=save, title=title)
-
-    def fewshot_metrics_overjoints(self, model, test, save=False, 
-                                 title='Cumulative FewShot Accuracy Metrics Projected on All Environments'):
-        """
-        Alias for jointmean plot over a single environment. 
-        
-        Few shot config (n=shot):
-            ctx = n*1000 + 200
-            iter = (n+1)*1000
-        """
-        return self.plotmetrics_overjoints(modelname=model, testname=test, save=save, title=title)
-    
-    def fewshot_variation_overjoints(self, model, test, save=False, 
-                                 title='Cumulative FewShot Metrics Variation Projected on All Environments'):
-        """
-        Alias for jointmean plot over a single environment. 
-        
-        Few shot config (n=shot):
-            ctx = n*1000 + 200
-            iter = (n+1)*1000
-        """
-        return self.plotvariation_overjoints(modelname=model, testname=test, save=save, title=title)
-
-    def plotfinetune_horizon(self, model, test, of='median', dim=4, save=False, 
-                             title='FineTuned Model Horizon Prediction'):
-        """
-        Alias for horizon plot of a finetuned model.
-        """
-        return self.plothorizon(modelname=model, testname=test, of=of, dim=dim, save=save, title=title)
-
-    def plotfinetune_variation_overjoints(self, model, test, save=False,
-                             title='Cumulative FineTune Metrics Variation Projected on All Environments'):
-        """
-        Alias for joint accuracy variation of a finetuned model.
-        """
-        return self.plotvariation_overjoints(modelname=model, testname=test, save=save, title=title)
-
-    def plotfinetune_metrics_overjoints(self, model, test, save=False,
-                             title='Cumulative FineTune Accuracy Metrics Projected on All Environments'):
-        """
-        Alias for accuracy of a finetuned model.
-        """
-        return self.plotmetrics_overjoints(modelname=model, testname=test, save=save, title=title)
-    
-    def plotfinetune_horizon_comparison(self, models, test, of='median', dim=4, save=False, ctx=200, iter=1000,
-                             title='FineTuned Model Horizon Prediction Comparison'):
-        """
-        Alias for horizon prediction comparison of a finetuned and pretrained model.
-        """
-        return self.plotcomparison_horizon(modelnames=models, testname=test, of=of, dim=dim, save=save, title=title, ctx=ctx, iter=iter)
-
-    def plotfinetune_variation_overjoints_comparison(self, models, test, save=False,
-                             title='Cumulative FineTune Metrics Variation Comparison'):
-        """
-        Alias for joint accuracy variation comparison of a finetuned and pretrained model.
-        """
-        return self.plotcomparison_variation_overjoints(modelnames=models, testname=test, save=save, title=title)
-
-    def plotfinetune_metrics_overjoints_comparison(self, models, test, save=False,
-                             title='Cumulative FineTune Accuracy Metrics Comparsion'):
-        """
-        Alias for joint accuracy comparison of a finetuned and pretrained model.
-        """
-        return self.plotcomparison_metrics_overjoints(modelnames=models, testname=test, save=save, title=title)
     

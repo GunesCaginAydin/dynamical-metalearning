@@ -1,6 +1,6 @@
 import numpy as np
 
-def r_squared(y_true, y_pred, time_axis=0, modelsize=0, datasize=0):
+def r_squared(y_true, y_pred, time_axis=0, time_start=0, modelsize=0, datasize=0):
     """ Computes the R-square index.
 
     The R-squared index is computed separately on each channel.
@@ -19,6 +19,8 @@ def r_squared(y_true, y_pred, time_axis=0, modelsize=0, datasize=0):
     r_squared_val : np.array
         Array of r_squared value.
     """
+    y_pred = y_pred[:,time_start:,:]
+    y_true = y_true[:,time_start:,:]
 
     SSE = np.sum((y_pred - y_true)**2, axis=time_axis)
     y_mean = np.mean(y_true, axis=time_axis, keepdims=True)
@@ -27,7 +29,7 @@ def r_squared(y_true, y_pred, time_axis=0, modelsize=0, datasize=0):
     return 1.0 - SSE/SST
 
 
-def rmse(y_true, y_pred, time_axis=0, modelsize=0, datasize=0):
+def rmse(y_true, y_pred, time_axis=0, time_start=0, modelsize=0, datasize=0):
     """ Computes the Root Mean Square Error (RMSE).
 
     The RMSE index is computed separately on each channel.
@@ -47,13 +49,15 @@ def rmse(y_true, y_pred, time_axis=0, modelsize=0, datasize=0):
         Array of r_squared value.
 
     """
+    y_pred = y_pred[:,time_start:,:]
+    y_true = y_true[:,time_start:,:]
 
     SSE = np.mean((y_pred - y_true)**2, axis=time_axis)
     RMSE = np.sqrt(SSE)
     return RMSE
 
 
-def nrmse(y_true, y_pred, time_axis=0, modelsize=0, datasize=0):
+def nrmse(y_true, y_pred, time_axis=0, time_start=0, modelsize=0, datasize=0):
     """ Computes the Normalized Root Mean Square Error (NRMSE).
 
     The NRMSE index is computed separately on each channel.
@@ -73,6 +77,8 @@ def nrmse(y_true, y_pred, time_axis=0, modelsize=0, datasize=0):
         Array of r_squared value.
 
     """
+    y_pred = y_pred[:,time_start:,:]
+    y_true = y_true[:,time_start:,:]
 
     SSE = np.mean((y_pred - y_true)**2, axis=time_axis)
     RMSE = np.sqrt(SSE)
@@ -80,7 +86,7 @@ def nrmse(y_true, y_pred, time_axis=0, modelsize=0, datasize=0):
     return NRMSE
 
 
-def error_mean(y_true, y_pred, time_axis=0, modelsize=0, datasize=0):
+def error_mean(y_true, y_pred, time_axis=0, time_start=0, modelsize=0, datasize=0):
     """ Computes the error mean value.
 
     The error mean is computed separately on each channel.
@@ -99,12 +105,14 @@ def error_mean(y_true, y_pred, time_axis=0, modelsize=0, datasize=0):
     e_mean : np.array
         Array of error means.
     """
+    y_pred = y_pred[:,time_start:,:]
+    y_true = y_true[:,time_start:,:]
 
     e_mean = np.mean(y_true - y_pred, axis=time_axis)
     return e_mean
 
 
-def mae(y_true, y_pred, time_axis=0, modelsize=0, datasize=0):
+def mae(y_true, y_pred, time_axis=0, time_start=0, modelsize=0, datasize=0):
     """ Computes the error Mean Absolute Value (MAE)
 
     The MAE index is computed separately on each channel.
@@ -123,12 +131,14 @@ def mae(y_true, y_pred, time_axis=0, modelsize=0, datasize=0):
     e_mae : np.array
         Array of error mean absolute values.
     """
+    y_pred = y_pred[:,time_start:,:]
+    y_true = y_true[:,time_start:,:]
 
     e_mae = np.mean(np.abs(y_true - y_pred), axis=time_axis)
     return e_mae
 
 
-def fit_index(y_true, y_pred, time_axis=0, modelsize=0, datasize=0):
+def fit_index(y_true, y_pred, time_axis=0, time_start=0, modelsize=0, datasize=0):
     """ Computes the per-channel fit index.
 
     The fit index is commonly used in System Identification. See the definition in the System Identification Toolbox

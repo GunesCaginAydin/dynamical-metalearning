@@ -45,7 +45,11 @@ STIFFNESS_NOM = np.array(data["STIFFNESS_NOM"])
 DAMPING_NOM = np.array(data["DAMPING_NOM"])
 OSC_NOM = np.array(data["OSC_NOM"])
 
+<<<<<<< HEAD
 SOLVER_TIME = data["SOLVER_TIME"]/60
+=======
+SOLVER_TIME = data["SOLVER_TIME"]/1000
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 SUBSTEPS = data["SUBSTEPS"]
 SOLVER_TYPE = data["SOLVER_TYPE"]
 NUM_POS_ITER = data["NUM_POS_ITER"]
@@ -313,7 +317,11 @@ while not condition_window  and itr <= MAX_ITER-1:
         cdict["bt"] = torch.cat((cdict["bt"], track.view(1,NUM_ENVS, TOTAL_JOINTS)), 0)
     elif CIC_TASK:
         track = ctrl.obtaintrajectory(pos_des, orn_des, init_pos, init_orn, itr)
+<<<<<<< HEAD
         u = ctrl.step_cic(pos_cur, orn_cur, j_eef, TOR_END)
+=======
+        u = ctrl.step_cic(pos_cur, orn_cur, j_eef, TOR_END, dof_vel)
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
         cdict["bt"] = torch.cat((cdict["bt"], track.view(1,NUM_ENVS, 7)), 0)
     elif NO_CONTROLLER:
         u = cdict["ac"][:,:,itr].unsqueeze(-1)
@@ -454,11 +462,19 @@ num_valid_envs = NUM_ENVS - non_valid_envs
 
 ll = ll[list(white_list),:]
 ul = ul[list(white_list),:]
+<<<<<<< HEAD
 for k,v in Kc.items():
     Kc[k] = v[list(white_list),...]
 cdict["bca"] = cdict["bca"][:,list(white_list),:]
 cdict["bp"] = cdict["bp"][:,list(white_list),:]
 if CONTROLLER:
+=======
+if CONTROLLER:
+    for k,v in Kc.items():
+        Kc[k] = v[list(white_list),...]
+    cdict["bca"] = cdict["bca"][:,list(white_list),:]
+    cdict["bp"] = cdict["bp"][:,list(white_list),:]
+>>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
     cdict["bt"] = cdict["bt"][:,list(white_list),:]
 if MEASURE:
     cdict["mt"] = cdict["mt"][:,list(white_list),:]
