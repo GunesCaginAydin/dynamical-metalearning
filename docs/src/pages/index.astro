@@ -1,76 +1,106 @@
 ---
 import BaseLayout from "../layouts/base-layout.astro"
 ---
-<BaseLayout title="">
+<BaseLayout title="Dynamical Metalearning">
+    <div class="home-page">
     <p class="abstract">
         In-context learning has emerged as a key capability of modern neural architectures. While its impact has been significant in domains such as natural language processing, computer vision, and policy generation, its potential for system identification remains underexplored in robotics. Building upon prior work on meta-learnable dynamical modeling with Transformers, we propose a methodology for predicting end-effector poses and joint positions from torque signals for each robotic joint — without requiring prior knowledge of the system’s physical parameters — using diffusion models. In the first part of this work, we enhance the RoboMorph framework by improving dataset generation through large-scale simulation with NVIDIA Isaac Gym, which we also adopt as a baseline for comparison. We then train and compare two complementary in-context learning architectures: a Transformer-based model and a Diffuser-based model, applied to the dynamic behavior of the Franka Emika Panda and KUKA Allegro robotic platforms. To explore different ERNSI Workshop 2025 configurations of the system identification problem using Diffusers, we frame it from multiple perspectives, leveraging classifier guidance, trajectory inpainting, and receding horizon approaches for improved trajectory estimation. Our aim is to investigate the implications of this approach for online control. We demonstrate that our meta-learned models can perform fast online inference, making them suitable for real-time applications. Furthermore, we exploit the inherent flexibility of diffusion models to condition on external signals at inference time — such as controller parameters — enabling enhanced in-context system identification. We conduct extensive benchmarking across a variety of Cartesian and joint space tasks generated in Isaac Gym. Code and datasets will be released to foster reproducibility and further research. 
     </p>
 
     <div class="intro">
+        <div class="intro-img1">
+        <img src="sysid-pipeline.png" alt="system identification pipeline">
+        </div>
+        <div>
         <p>
-            Considering the simplified system identification problem presented on the work of Forgione et.al., the dynamic identification problem of any dynamical system may be reduced to a horizon planning problem. For the context and horizon lengths m and N and the related action-observation pairs (u (i) 1:N , y (i) 1:N , the meta-learning black box system identification model is: 
+            Considering the simplified system identification problem presented on the work of <a href="https://arxiv.org/pdf/2308.13380">Forgione et.al.</a>, the dynamic identification problem of any dynamical system may be reduced to a horizon planning problem. For the context and horizon lengths <i>m</i> and <i>N</i> and the related action-observation pairs <i>(u - y)</i> , the meta-learning black box system identification model is: 
             <br>
             <br>
-            yˆseq = Mϕ(uctx, yctx, useq)
+            <div class="equation">
+                <img src="equation.svg" alt="metalearning framework" width="150px">
+            </div>
             <br>
-            <br>
-            where the system identification model Mϕ is learnable with feedforward and feedback controller implementations. For the case of feedforward control, the action input represents feedforward controller torque outputs u = Tnom. For the other case of feedback control, the action input may either represent the feedback controller torque outputs u = Kp∆ϵ + Kd∆δϵ + Ki R ∆ϵ, feedback controller reference trajectory u = uref or feedback controller gain schedule u = concat(Kp, Kd, Ki) throughout the horizon. 
-            <br>
+            which is learnable with support and query datasets as with the generic meta-learning framework . Physically, the action trajectory represents either the feedforward controller torque outputs or feedback controller torque outputs, reference trajectories and gains. The corresponding observed trajectory stands for the complete kinematics in <i>14D</i> joint and cartesian spaces as adopted by <a href="https://arxiv.org/abs/2409.11815">Bazzi et al.</a>. The proposed input-output paradigm is as below.
         </p>
-        <img src="" alt="x" class="intro-img">
+        </div>
+    </div>
+    <div class="intro-img2">
+    <img src="training_framework.svg" alt="input-output paradigm for query and support sets in a metalearning identification framework" width="800px">
     </div>
     <div class="methods">
         <p>
-            Dynamical models are learnable with various different neural architectures. Since most of these architectures are in one way or another being used for some modeling tasks, in many ways, it is a matter of adapting the specific architectures to the needs of the problem, which is, mapping temporal high dimensional inputs to outputs. To that extent, we consider chiefly autoregressive (transformers) and non-autoregressive (diffusers) architectures.
+            Dynamical models are learnable with <highlight class="highlight">different neural architectures</highlight>.
             <br>
-            <br>
-            Autoregressive Architectures: We mainly use transformers as candidate architectures for autoregressive inference, owing clearly to the recent success in their sequential processing capabilities. Forgione et.al. suggests modifying the vanilla transformer architecture to account for temporal high dimensional input/output pairs that shows promising results in system and class identification tasks. We employ these models directly in our approach.
-            <br>
-            <br>
-            Non-Autoregressive Architectures: Non autoregressive inference, even though by nature is not synonymous with sequential processes, still is extremely adept in many contemporary ML/AI problems. To that extent, we choose to adapt generative architectures using a diffusion process backbone for system identification tasks. 
-            <br>
-            <br>    
-            Janner et.al. proposes a novel convolutional diffusion architecture that inpaints whole input/output state trajectories as action policy generators. Our diffuser model is based on this where both inputs and outputs are selectively inpainted according to a given context and the action policy generation process is modified to be representative of the identification/estimation tasks at hand.
-            Another similar diffusion-based architecture is proposed by Chi et.al. where trajectories are conditioned instead of inpainted through the use of convolutional Unets or attention-based transformers. This being an action policy generation problem is again modified to fit the identification/estimation tasks at hand.
+            <highlight class="highlight">Autoregressive Architectures</highlight>: We train 2 transformer based autoregressive architectures (<a href="https://arxiv.org/abs/2308.13380">sequential transformers</a>, <a href="https://arxiv.org/abs/2303.04137">conditioned diffusion transformers</a>) following the metalearning paradigm suggested in <a href="https://arxiv.org/abs/2308.13380">Forgione et.al.</a>. Transformers process information sequentially with input/output pairs in an instance of time at each run through the encoder/decoder compound.
+        <div class="trf-images">
+            <img src="transformer_arch.svg" alt="base transformer sketch" width="500px">
+            <img src="condtransformer_arch.svg" alt="conditional diffusion transformer sketch" width="500px">
+        </div>
+            <highlight class="highlight">Non-Autoregressive Architectures</highlight>: We adapt 2 diffusion based nonautoregressive architectures (<a href="https://arxiv.org/abs/2205.09991">inpainted diffusers</a>, <a href="https://arxiv.org/abs/2303.04137">conditional diffuser</a>)</highlight> following the same metalearning paradigm. Diffuse probabilistic estimation is not directly sequential and temporal connectivity is mainly inferred from local properties.
         </p>
-        <div class="arch-images">
-            <img alt="x" class="img1">
-            <img alt="x" class="img2">
-            <img alt="x" class="img3">
+        <div class="dif-images">
+            <img src="conddiffuser_arch.svg" alt="inpainted diffusion CNN sketch" width="500px">
+            <img src="inpaintdiffuser_arch.svg" alt="conditional diffusion CNN sketch" width="400px">
         </div>
     </div>
 
     <div class="arch-comp">
         <p>
-        Janner et.al. proposes a novel convolutional diffusion architecture that inpaints whole input/output state trajectories as action policy generators. Our diffuser model is based on this where both inputs and outputs are selectively inpainted according to a given context and the action policy generation process is modified to be representative of the identification/estimation tasks at hand.
-        Another similar diffusion-based architecture is proposed by Chi et.al. where trajectories are conditioned instead of inpainted through the use of convolutional Unets or attention-based transformers. This being an action policy generation problem is again modified to fit the identification/estimation tasks at hand.
+            For system identification, transformer based autoregressive models are superior.
         </p>
+        <div class="results">
+            <img src="arch-comp.png" alt="comparison of 4 neural architectures on system identification task using MS and CH signals" width="600px">
+            <div>
+                <img src="horizon-pos-trf.png" alt="estimation on cartesian position with transformer models" class="img1">
+                <img src="err-pos-trf.png" alt="errors on cartesian position with transformer models" class="img2">
+            </div>
+        </div>
     </div>
 
     <div class="context-tests">
         <p>
-        Janner et.al. proposes a novel convolutional diffusion architecture that inpaints whole input/output state trajectories as action policy generators. Our diffuser model is based on this where both inputs and outputs are selectively inpainted according to a given context and the action policy generation process is modified to be representative of the identification/estimation tasks at hand.
-        Another similar diffusion-based architecture is proposed by Chi et.al. where trajectories are conditioned instead of inpainted through the use of convolutional Unets or attention-based transformers. This being an action policy generation problem is again modified to fit the identification/estimation tasks at hand.
+            Context matters: query set size is critical in metalearning. However transformer and diffuser based approaches have different sensitivities to query set size.
         </p>
+        <div class="results">
+            <div><img src="ctxMS.png" alt="rmse errors in contextual texts for 20% MS input tramsformer" class="img1"></div>
+            <div><img src="ctxCH.png" alt="rmse errors in contextual texts for 20% CH input tramsformer" class="img2"></div>
+        </div>
     </div>
 
     <div class="sim2real-transformer">
         <p>
-        Janner et.al. proposes a novel convolutional diffusion architecture that inpaints whole input/output state trajectories as action policy generators. Our diffuser model is based on this where both inputs and outputs are selectively inpainted according to a given context and the action policy generation process is modified to be representative of the identification/estimation tasks at hand.
-        Another similar diffusion-based architecture is proposed by Chi et.al. where trajectories are conditioned instead of inpainted through the use of convolutional Unets or attention-based transformers. This being an action policy generation problem is again modified to fit the identification/estimation tasks at hand.
+            Transformer based approaches perform well also in basic sim2real trajectories. A major drawback is the computational requirements due to memory limitations.
         </p>
+        <div class="results">
+            <div><img src="trf20-rmse.png" alt="rmse errors in real transformer tests 20% ctx" class="img1"></div>
+            <div><img src="trf50-rmse.png" alt="rmse errors in real transformer tests 50% ctx" class="img2"></div>
+        </div>
+        <div class="results">
+            <div><img src="trf20-real.png" alt="position prediction errors in transformer 20% ctx" class="img1"></div>
+            <div><img src="trf50-real.png" alt="position prediction errors in transformer 50% ctx" class="img2"></div>
+        </div>
     </div>
 
     <div class="sim2real-diffuser">
         <p>
-        Janner et.al. proposes a novel convolutional diffusion architecture that inpaints whole input/output state trajectories as action policy generators. Our diffuser model is based on this where both inputs and outputs are selectively inpainted according to a given context and the action policy generation process is modified to be representative of the identification/estimation tasks at hand.
-        Another similar diffusion-based architecture is proposed by Chi et.al. where trajectories are conditioned instead of inpainted through the use of convolutional Unets or attention-based transformers. This being an action policy generation problem is again modified to fit the identification/estimation tasks at hand.
+            Diffusion based alternatives have inference time spatial flexibility due to convolutional layers. This comes at a slight cost in performance but overall, especially for periodic signals, extrapolation is facilitated.
         </p>
+        <div class="results">
+            <div><img src="dif20-rmse.png" alt="rmse errors in real diffuser tests 20% ctx" class="img1" width="550px"></div>
+            <div><img src="dif20-10000-real.png" alt="position prediction errors in diffuser 20% ctx 10x horizon" class="img2" width="500px"></div>
+        </div>
     </div>
-
+    </div>
 </BaseLayout>
 
 <style>
+    .home-page {
+
+    }
+    .home-page a {
+        color:  #005828;
+        text-decoration: none;
+    }
     .abstract {
         text-align: center;
         color: #005828;
@@ -79,23 +109,38 @@ import BaseLayout from "../layouts/base-layout.astro"
     }
 
     .intro {
-        text-align: right;
+        text-align: left;
         display: flex;
-
     }
 
-    .intro-img {
-        width: 1000px;
-        margin: 1em 4em
+    .equation {
+        align-self: center;
+        justify-self: center;
+    }
+    .intro-img1 {
+        margin: 1em 4em;
+        justify-self: center;
+        align-self: center;
     }
     
-    .arch-images {
-        display: flex;
-        justify-content: space-between;
+    .intro-img2 {
+        margin: 4em 0em;
+        justify-self: center;
     }
 
-    .methods {
-
+    .trf-images {
+        display: flex;
+        justify-content: space-around;
+        margin: 4em 0em;
+    }
+    .dif-images {
+        display: flex;
+        justify-content: space-around;
+        margin: 4em 0em;
+    }
+    .results {
+        display: flex;
+        margin: 4em 0em;
     }
 
     .arch-comp {
@@ -116,6 +161,11 @@ import BaseLayout from "../layouts/base-layout.astro"
     .sim2real-diffuser {
         text-align: left;
 
+    }
+
+    .highlight {
+        color: #005828;
+        font-weight: bold;
     }
 
     @media screen and (max-width : 1000px) {
