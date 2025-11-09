@@ -8,34 +8,39 @@ import BaseLayout from "../layouts/base-layout.astro"
     </p>
 
     <div class="intro">
-        <img src="trf_cond.png" alt="system identification pipeline" class="intro-img1">
+        <div class="intro-img1">
+        <img src="sysid-pipeline.png" alt="system identification pipeline">
+        </div>
         <div>
         <p>
-            Considering the simplified system identification problem presented on the work of <a href="https://arxiv.org/pdf/2308.13380">Forgione et.al.</a>, the dynamic identification problem of any dynamical system may be reduced to a horizon planning problem. For the context and horizon lengths <i>m</i> and <i>N</i> and the related action-observation pairs <br> <i>(u - y)</i> , the meta-learning black box system identification model is: 
+            Considering the simplified system identification problem presented on the work of <a href="https://arxiv.org/pdf/2308.13380">Forgione et.al.</a>, the dynamic identification problem of any dynamical system may be reduced to a horizon planning problem. For the context and horizon lengths <i>m</i> and <i>N</i> and the related action-observation pairs <i>(u - y)</i> , the meta-learning black box system identification model is: 
             <br>
             <br>
-                $$y^{'s'} = M_{'ϕ'}(y^{'q'},u^{'q'},u^{'s'})$$
+            <div class="equation">
+                <img src="equation.svg" alt="metalearning framework" width="150px">
+            </div>
             <br>
-            <br>
-            which is learnable with support and query datasets as with the generic meta-learning framework . Physically, the action trajectory represents either the feedforward controller torque outputs or feedback controller torque outputs, reference trajectories and gains. The corresponding observed trajectory stands for the complete kinematics in <i>14D</i> joint and cartesian spaces. The proposed input-output paradigm is as below.
+            which is learnable with support and query datasets as with the generic meta-learning framework . Physically, the action trajectory represents either the feedforward controller torque outputs or feedback controller torque outputs, reference trajectories and gains. The corresponding observed trajectory stands for the complete kinematics in <i>14D</i> joint and cartesian spaces as adopted by <a href="https://arxiv.org/abs/2409.11815">Bazzi et al.</a>. The proposed input-output paradigm is as below.
         </p>
         </div>
     </div>
-    <img src="trf.png" alt="input-output paradigm for query and support sets in a metalearning identification framework" class="intro-img2" width="400px">
+    <div class="intro-img2">
+    <img src="training_framework.svg" alt="input-output paradigm for query and support sets in a metalearning identification framework" width="800px">
+    </div>
     <div class="methods">
         <p>
             Dynamical models are learnable with <highlight class="highlight">different neural architectures</highlight>.
             <br>
-            <highlight class="highlight">Autoregressive Architectures</highlight>: We train 2 transformer based autoregressive architectures <highlight class="highlight">(sequential transformers, conditioned diffusion transformers)</highlight> following the metalearning paradigm suggested in <a href="https://arxiv.org/pdf/2308.13380">Forgione et.al.</a>. Transformers process information sequentially with input/output pairs in an instance of time at each run through the encoder/decoder compound. Sequential transformers and conditioned diffusion transformers are adapted from <a href="https://arxiv.org/pdf/2308.13380">Forgione et.al.</a> and <a href="https://arxiv.org/pdf/2308.13380">Forgione et.al.</a> respectively.
+            <highlight class="highlight">Autoregressive Architectures</highlight>: We train 2 transformer based autoregressive architectures (<a href="https://arxiv.org/abs/2308.13380">sequential transformers</a>, <a href="https://arxiv.org/abs/2303.04137">conditioned diffusion transformers</a>) following the metalearning paradigm suggested in <a href="https://arxiv.org/abs/2308.13380">Forgione et.al.</a>. Transformers process information sequentially with input/output pairs in an instance of time at each run through the encoder/decoder compound.
         <div class="trf-images">
-            <img src="trf.png" alt="base transformer sketch" width="500px">
-            <img src="trf_cond.png" alt="conditional diffusion transformer sketch" width="300px">
+            <img src="transformer_arch.svg" alt="base transformer sketch" width="500px">
+            <img src="condtransformer_arch.svg" alt="conditional diffusion transformer sketch" width="500px">
         </div>
-            <highlight class="highlight">Non-Autoregressive Architectures</highlight>: We adapt 2 diffusion based nonautoregressive architectures <highlight class="highlight">(inpainted diffusers, conditional diffuser)</highlight> following the same metalearning paradigm. Diffuse probabilistic estimation is not directly sequential and temporal connectivity is mainly inferred from local properties. Inpainted diffusers and conditional diffusers are extensions of <a href="https://arxiv.org/pdf/2308.13380">Forgione et.al.</a> and <a href="https://arxiv.org/pdf/2308.13380">Forgione et.al.</a> respectively.
+            <highlight class="highlight">Non-Autoregressive Architectures</highlight>: We adapt 2 diffusion based nonautoregressive architectures (<a href="https://arxiv.org/abs/2205.09991">inpainted diffusers</a>, <a href="https://arxiv.org/abs/2303.04137">conditional diffuser</a>)</highlight> following the same metalearning paradigm. Diffuse probabilistic estimation is not directly sequential and temporal connectivity is mainly inferred from local properties.
         </p>
         <div class="dif-images">
-            <img src="dif.png" alt="inpainted diffusion CNN sketch" width="500px">
-            <img src="cnn_cond.png" alt="conditional diffusion CNN sketch" width="300px">
+            <img src="conddiffuser_arch.svg" alt="inpainted diffusion CNN sketch" width="500px">
+            <img src="inpaintdiffuser_arch.svg" alt="conditional diffusion CNN sketch" width="400px">
         </div>
     </div>
 
@@ -43,7 +48,7 @@ import BaseLayout from "../layouts/base-layout.astro"
         <p>
             For system identification, transformer based autoregressive models are superior.
         </p>
-        <div class="dif-images">
+        <div class="results">
             <img src="arch-comp.png" alt="comparison of 4 neural architectures on system identification task using MS and CH signals" width="600px">
             <div>
                 <img src="horizon-pos-trf.png" alt="estimation on cartesian position with transformer models" class="img1">
@@ -56,9 +61,9 @@ import BaseLayout from "../layouts/base-layout.astro"
         <p>
             Context matters: query set size is critical in metalearning. However transformer and diffuser based approaches have different sensitivities to query set size.
         </p>
-        <div class="dif-images">
-            <img alt="x" class="img1">
-            <img alt="x" class="img2">
+        <div class="results">
+            <div><img src="ctxMS.png" alt="rmse errors in contextual texts for 20% MS input tramsformer" class="img1"></div>
+            <div><img src="ctxCH.png" alt="rmse errors in contextual texts for 20% CH input tramsformer" class="img2"></div>
         </div>
     </div>
 
@@ -66,9 +71,13 @@ import BaseLayout from "../layouts/base-layout.astro"
         <p>
             Transformer based approaches perform well also in basic sim2real trajectories. A major drawback is the computational requirements due to memory limitations.
         </p>
-        <div class="dif-images">
-            <img alt="x" class="img1">
-            <img alt="x" class="img2">
+        <div class="results">
+            <div><img src="trf20-rmse.png" alt="rmse errors in real transformer tests 20% ctx" class="img1"></div>
+            <div><img src="trf50-rmse.png" alt="rmse errors in real transformer tests 50% ctx" class="img2"></div>
+        </div>
+        <div class="results">
+            <div><img src="trf20-real.png" alt="position prediction errors in transformer 20% ctx" class="img1"></div>
+            <div><img src="trf50-real.png" alt="position prediction errors in transformer 50% ctx" class="img2"></div>
         </div>
     </div>
 
@@ -76,9 +85,9 @@ import BaseLayout from "../layouts/base-layout.astro"
         <p>
             Diffusion based alternatives have inference time spatial flexibility due to convolutional layers. This comes at a slight cost in performance but overall, especially for periodic signals, extrapolation is facilitated.
         </p>
-        <div class="dif-images">
-            <img alt="x" class="img1">
-            <img alt="x" class="img2">
+        <div class="results">
+            <div><img src="dif20-rmse.png" alt="rmse errors in real diffuser tests 20% ctx" class="img1" width="550px"></div>
+            <div><img src="dif20-10000-real.png" alt="position prediction errors in diffuser 20% ctx 10x horizon" class="img2" width="500px"></div>
         </div>
     </div>
     </div>
@@ -89,7 +98,7 @@ import BaseLayout from "../layouts/base-layout.astro"
 
     }
     .home-page a {
-        color:  #005828;;
+        color:  #005828;
         text-decoration: none;
     }
     .abstract {
@@ -102,17 +111,21 @@ import BaseLayout from "../layouts/base-layout.astro"
     .intro {
         text-align: left;
         display: flex;
-
     }
 
+    .equation {
+        align-self: center;
+        justify-self: center;
+    }
     .intro-img1 {
-        width: 1000px;
-        margin: 1em 4em
+        margin: 1em 4em;
+        justify-self: center;
+        align-self: center;
     }
     
     .intro-img2 {
-        width: 1000px;
         margin: 4em 0em;
+        justify-self: center;
     }
 
     .trf-images {
@@ -125,9 +138,9 @@ import BaseLayout from "../layouts/base-layout.astro"
         justify-content: space-around;
         margin: 4em 0em;
     }
-
-    .methods {
-
+    .results {
+        display: flex;
+        margin: 4em 0em;
     }
 
     .arch-comp {
@@ -152,6 +165,7 @@ import BaseLayout from "../layouts/base-layout.astro"
 
     .highlight {
         color: #005828;
+        font-weight: bold;
     }
 
     @media screen and (max-width : 1000px) {
