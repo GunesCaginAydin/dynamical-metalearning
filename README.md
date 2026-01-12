@@ -1,6 +1,6 @@
 # Advancing Identification Methodologies Through In-Context Dynamical Metalearning
 
-🚀 [Project Page](https://sites.google.com/view/dynamical-incontextlearning/ana-sayfa) 
+🚀 [Project Page](https://gunescaginaydin.github.io/dynamical-metalearning/) 
 
 [Gunes Cagin Aydin](https://github.com/Gunesnes)<sup>1</sup>,
 [Elia Tosin](https://www.supsi.ch/elia-tosin)<sup>2</sup>,

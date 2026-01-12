@@ -76,13 +76,8 @@ class input():
         print(f"Control Action is acquired with median frequency {self.frequency*13/12}\n")
 
         time_step = torch.linspace(0, self.num_iter, self.num_iter)
-<<<<<<< HEAD
         self.t = time_step.unsqueeze(1) * 1/60
         self.dt = 1/60
-=======
-        self.dt = 1/1000
-        self.t = time_step.unsqueeze(1) * self.dt
->>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
         self.buffer_control_action = torch.empty((1,self.num_envs,self.num_joints), dtype=torch.float32).to(device=self.args.graphics_device_id)
         self.control_action =  torch.empty((self.num_envs,self.num_joints,self.num_iter))
@@ -120,24 +115,14 @@ class input():
     def init_cartesiancontroller_constants(self):
         if self.args.type_of_trajectory=='VS' or self.args.type_of_trajectory=='FS' or self.args.type_of_trajectory=='FC':
             if self.args.random_controller_gains:
-<<<<<<< HEAD
                 self._radius = torch.rand(1,self.num_envs).uniform_(0.01,0.10).to(device=self.args.graphics_device_id)
                 self._period = torch.rand(1,self.num_envs).uniform_(20,100).to(device=self.args.graphics_device_id)
-=======
-                self._radius = torch.rand(1,self.num_envs).uniform_(0.05,0.25).to(device=self.args.graphics_device_id)
-                self._period = torch.rand(1,self.num_envs).uniform_(500,2500).to(device=self.args.graphics_device_id)
->>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
                 self._z_speed = torch.rand(1,self.num_envs).uniform_(0.1,0.3).to(device=self.args.graphics_device_id)
                 self._sign = torch.sign(torch.rand(1,self.num_envs).uniform_(-1,1)).to(device=self.args.graphics_device_id)
             #_offset =  torch.sign(torch.rand(1).uniform_(-0.3,0.3)).to(device=self.args.graphics_device_id)
             else:
-<<<<<<< HEAD
                 self._radius = torch.rand(1).uniform_(0.01,0.10).to(device=self.args.graphics_device_id)
                 self._period = torch.rand(1).uniform_(20,100).to(device=self.args.graphics_device_id)
-=======
-                self._radius = torch.rand(1).uniform_(0.05,0.25).to(device=self.args.graphics_device_id)
-                self._period = torch.rand(1).uniform_(500,2500).to(device=self.args.graphics_device_id)
->>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
                 self._z_speed = torch.rand(1).uniform_(0.1,0.3).to(device=self.args.graphics_device_id)
                 self._sign = torch.sign(torch.rand(1).uniform_(-1,1)).to(device=self.args.graphics_device_id)                
 
@@ -1733,7 +1718,6 @@ class cic(input):
                          poslim, vellim, acclim, cposlim, cvellim, cacclim, cornlim, wellim, alfalim)
 
         if self.args.random_controller_gains:
-<<<<<<< HEAD
             kp_bounds = ((1,5),(1,5),(1,5)) # x,y,z
             kv_bounds = ((0.5,1.0),(0.5,1.0),(0.5,1.0)) # x,y,z
             ka_bounds = ((0.1,0.5),(0.1,0.5),(0.1,0.5)) # x,y,z
@@ -1785,80 +1769,6 @@ class cic(input):
         self.kv_aug = torch.cat((self.kv,self.kvr),dim=1) # 6D
         self.ki_aug = torch.cat((self.ka,self.kar),dim=1) # 6D
 
-=======
-            s_bounds = ((120,180),(120,180),(120,180))
-            sr_bounds = ((7,13),(7,13),(7,13))
-            d_bounds = ((30,50),(30,50),(30,50))
-            dr_bounds = ((10,20),(10,20),(10,20))
-            daug_bounds = ((15,50),)
-            ki_bounds = ((0.30,0.40),(0.30,0.40),(0.30,0.40))
-            kir_bounds = ((0.30,0.40),(0.30,0.40),(0.30,0.40))
-
-            print('\n CIC gain randomization:\nTrans. Stiffness -->\nx:'+str(s_bounds[0])+'|y:'+str(s_bounds[1])+'|z:'+str(s_bounds[2])
-            +'\nRot. Stiffness -->\nx:'+str(sr_bounds[0])+'|y:'+str(sr_bounds[1])+'|z:'+str(sr_bounds[2])
-            +'\nTrans. Integral -->\ne11:'+str(d_bounds[0])+'|e22:'+str(d_bounds[1])+'|e33:'+str(d_bounds[2])
-            +'\nRot. Integral -->\ne11:'+str(dr_bounds[0])+'|e22:'+str(dr_bounds[1])+'|e33:'+str(dr_bounds[2])
-            +'\nTrans. Integral -->\ne11:'+str(ki_bounds[0])+'|e22:'+str(ki_bounds[1])+'|e33:'+str(ki_bounds[2])
-            +'\nRot. Integral -->\ne11:'+str(kir_bounds[0])+'|e22:'+str(kir_bounds[1])+'|e33:'+str(kir_bounds[2]))
-
-            #self.s = torch.stack([torch.FloatTensor(self.args.num_envs,1).uniform_(bounds[0],bounds[1]).to(device=self.args.graphics_device_id) for bounds in s_bounds]).squeeze().T.reshape(self.args.num_envs,3,3)
-            #self.sr = torch.stack([torch.FloatTensor(self.args.num_envs,1).uniform_(bounds[0],bounds[1]).to(device=self.args.graphics_device_id) for bounds in sr_bounds]).squeeze().T.reshape(self.args.num_envs,3,3)
-            #smid = torch.stack([torch.FloatTensor(self.args.num_envs,1).uniform_(bounds[0],bounds[1]).to(device='cuda') for bounds in s_bounds]).squeeze().T
-            #self.s = torch.stack([torch.diag(s) for s in smid]).squeeze()
-            #srmid = torch.stack([torch.FloatTensor(self.args.num_envs,1).uniform_(bounds[0],bounds[1]).to(device='cuda') for bounds in sr_bounds]).squeeze().T
-            #self.sr = torch.stack([torch.diag(s) for s in srmid]).squeeze()
-            #self.s = torch.FloatTensor(1).uniform_(s_bounds[0],s_bounds[1]).to(device=self.args.graphics_device_id).repeat(self.args.num_envs,3,3)
-            #self.sr = torch.FloatTensor(1).uniform_(sr_bounds[0],sr_bounds[1]).to(device=self.args.graphics_device_id).repeat(self.args.num_envs,3,3) 
-            #self.d = 4.0*torch.sqrt(self.s)
-            #self.dr = 2.0*torch.sqrt(self.sr)
-            #self.daug = torch.stack([torch.block_diag(p,r) for p,r in zip(self.d,self.dr)])
-
-            self.s = torch.stack([torch.FloatTensor(self.args.num_envs,1).uniform_(bounds[0],bounds[1]).to(device=self.args.graphics_device_id) for bounds in s_bounds]).squeeze().T
-            self.sr = torch.stack([torch.FloatTensor(self.args.num_envs,1).uniform_(bounds[0],bounds[1]).to(device=self.args.graphics_device_id) for bounds in sr_bounds]).squeeze().T
-            self.d = torch.stack([torch.FloatTensor(self.args.num_envs,1).uniform_(bounds[0],bounds[1]).to(device=self.args.graphics_device_id) for bounds in daug_bounds]).squeeze().T
-            self.ki = torch.stack([torch.FloatTensor(self.args.num_envs,1).uniform_(bounds[0],bounds[1]).to(device=self.args.graphics_device_id) for bounds in ki_bounds]).squeeze().T
-            self.kir = torch.stack([torch.FloatTensor(self.args.num_envs,1).uniform_(bounds[0],bounds[1]).to(device=self.args.graphics_device_id) for bounds in kir_bounds]).squeeze().T
-
-        else:
-            s_nom = 150
-            sr_nom = 10
-            d_nom = 20.0
-            ki_nom = 0.35
-            kir_nom = 0.35
-
-            print('\n CIC gain randomization:\nTrans. Stiffness -->\nx:'+str(s_nom[0])+'|y:'+str(s_nom[1])+'|z:'+str(s_nom[2])
-            +'\nRot. Stiffness -->\nx:'+str(sr_nom[0])+'|y:'+str(sr_nom[1])+'|z:'+str(sr_nom[2])
-            +'\nDamping -->\nx:'+str(d_nom[0])+'|y:'+str(d_nom[1])+'|z:'+str(d_nom[2])
-            +'\nTrans. Integral -->\ne11:'+str(ki_nom[0])+'|e22:'+str(ki_nom[1])+'|e33:'+str(ki_nom[2])
-            +'\nRot. Integral -->\ne11:'+str(kir_nom[0])+'|e22:'+str(kir_nom[1])+'|e33:'+str(kir_nom[2]))
-
-            self.s = s_nom*torch.ones(self.args.num_envs,3).to(device=self.args.graphics_device_id).T
-            self.sr = sr_nom*torch.ones(self.args.num_envs,3).to(device=self.args.graphics_device_id).T
-            self.d = d_nom*torch.ones(self.args.num_envs,3).to(device=self.args.graphics_device_id).T
-            self.ki = ki_nom*torch.ones(self.args.num_envs,3).to(device=self.args.graphics_device_id).T
-            self.kir = kir_nom*torch.ones(self.args.num_envs,3).to(device=self.args.graphics_device_id).T
-        
-        self.epos_prev = 0 # derivative previous error
-        self.i = 0 # integral accumulator
-        self.eorn_prev = 0 # derivative previous error
-        self.ir = 0 # integral accumulato
-
-        self.Tjoint_previous = 0
-
-        self.kp_aug = torch.cat((self.s,self.sr),dim=1) # 6D
-        self.kv_aug = self.d # 6D
-        self.ki_aug = torch.cat((self.ki,self.kir),dim=1) # 6D
-
-    def vertical_spiral(self, posd, posi, itr):
-        return super().vertical_spiral(posd, posi, itr)
-    
-    def fixed_spiral(self, posd, posi, itr):
-        return super().fixed_spiral(posd, posi, itr)
-
-    def fixed_circular(self, posd, posi, itr):
-        return super().fixed_circular(posd, posi, itr)
-    
->>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
     def sin_cartesian(self, posd, ornd, posi, orni, itr, reduce=None):
         return super().sin_cartesian(posd, ornd, posi, orni, itr, reduce)
     
@@ -1935,41 +1845,23 @@ class cic(input):
 
         return jacobian
     
-<<<<<<< HEAD
     def step_cic(self, cpos, corn, cvel, cwel, cacc, calfa, jacobian, torque_limits,
                  dpos=None, dorn=None, dvel=None, dwel=None, dacc=None, dalfa=None, dfriction=None):
         """
         Step CIC control to be called in each iteration controlled with PID.
-=======
-    def step_cic(self, cpos, corn, jacobian, torque_limits, dofvel,
-                dpos=None, dorn=None, dfriction=None,
-                windup_limit=1000, cutoff_coeff=0.95):
-        """
-        Step PID control to be called in each iteration controlled with PID.
->>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
         Parameters
         ---
             pos_current (torch.Tensor) : current position
             orn_current (torch.Tensor) : current orientation
-<<<<<<< HEAD
             vel_current (torch.Tensor) : current velocity
             wel_current (torch.Tensor) : current angular velocity
             acc_current (torch.Tensor) : current acceleration
             alfa_current (torch.Tensor) : current angular acceleration
-=======
->>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
             jacobian (torch.Tensor) : end-effector jacobian
             torque_limits (torch.Tensor/numpy.array) : joint torque limits
             dpos (torch.Tensor) : desired position of the current iteration (if not obtain_trajectory)
             dorn (torch.Tensor) : desired orientation of the current iteration (if not obtain_trajectory)
-<<<<<<< HEAD
-            dvel (torch.Tensor) : desired velocity of the current iteration (if not obtain_trajectory)
-            dwel (torch.Tensor) : desired angular velocity of the current iteration (if not obtain_trajectory)
-            dacc (torch.Tensor) : desired acceleration of the current iteration (if not obtain_trajectory)
-            dalfa (torch.Tensor) : desired angular acceleration of the current iteration (if not obtain_trajectory)
-=======
->>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
             dfriction (torch.Tensor) : desired friction per projected joint torques
             windup_limit (int) : integral windup limit to prevent overflow
             cutoff_coeff (float) : derivative controller low pass filter rate
@@ -1978,43 +1870,12 @@ class cic(input):
         ---
             action (torch.Tensor) : control action for the current iteration, step must be called every iter
         """
-<<<<<<< HEAD
-        torque_max = torque_limits
-        torque_min = -torque_limits
-=======
         torque_min = -1*torch.tensor(torque_limits,device=self.args.graphics_device_id).expand(self.num_envs,self.num_joints)
         torque_max = 1*torch.tensor(torque_limits,device=self.args.graphics_device_id).expand(self.num_envs,self.num_joints)
->>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
         dpos = self.desired_trajectory[:,:3] if dpos is None else dpos
         dorn = self.desired_trajectory[:,3:] if dorn is None else dorn
 
-<<<<<<< HEAD
-        dvel = self.desired_trajectory[:,:3] if dvel is None else dvel
-        dwel = self.desired_trajectory[:,3:] if dwel is None else dwel
-
-        dacc = self.desired_trajectory[:,:3] if dvel is None else dacc
-        dalfa = self.desired_trajectory[:,3:] if dvel is None else dalfa
-
-        s = self.kp*(dpos - cpos)
-        d = self.kv*(dvel - cvel)/self.dt
-        a += self.ki*(dacc - cacc)/(2*self.dt**2)
-
-        sr = self.kpr*self.orientation_error(dorn, corn, form=True)
-        dr = self.kvr*self.orientation_error(dwel, cwel, form=True)/self.dt
-        ar += self.kir*self.orientation_error(dalfa, calfa, form=True)/(2*self.dt**2)
-
-        f = 0 if dfriction is None else dfriction
-
-        Tcartesian = torch.cat((s,sr),dim=2) + \
-                     torch.cat((d,dr),dim=2) + \
-                     torch.cat((a,ar)) + \
-                     f
-
-        Tjoint = torch.clamp(torch.linalg.pinv(self.singularity_check(jacobian.t())) @ Tcartesian, min=torque_min, max=torque_max) 
-
-        return Tjoint.unsqueeze(-1)
-=======
         epos = dpos - cpos
         self.epos_prev = epos
         eorn = self.orientation_error(dorn, corn)
@@ -2054,7 +1915,6 @@ class cic(input):
         self.Tjoint_previous = Tjoint_filtered
 
         return Tjoint_filtered.unsqueeze(-1)
->>>>>>> 295079b1ef7ee43dfe067a603b62467db507a76a
 
 class compensate():
     """
