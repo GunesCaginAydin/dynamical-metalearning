@@ -27,14 +27,14 @@ body {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(var(--black));
-	font-size: 1em;
+	font-size: 1.2em;
 	line-height: 1.7;
 }
 main {
 	width: 1080px;
 	max-width: calc(100% - 2em);
 	margin: auto;
-	padding: 3em 1em;
+	padding: 3em 0em;
 }
 h1 {
 	font-family: "Roboto Slab","arial", "calibri", sans-serif;

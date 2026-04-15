@@ -1,8 +1,11 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-
 // https://astro.build/config
+// export default defineConfig({});
+
 export default defineConfig({
-  site: 'https://GunesCaginAydin.github.io/Dynamical-Metalearning',
+  site: 'https://robo-meta.github.io',
   base: '/',
+  vite: {
+  },
 })
