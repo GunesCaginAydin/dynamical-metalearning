@@ -120,11 +120,13 @@ Black-box meta-models of forward dynamics follow from the meta-learning paradigm
 Training models is possible on all datasets adhering to the (env X horizon X input dim) dimensionality format. Architecture hyperparameters as well as training and testing parameters can be adjusted.
 
 ```console
+cd sys_identification
 $ python train.py -in 7 -out 14 -cos -std --data-name 'MG1' -lr '6e-4' -trb 32 -vlb 32 -evitr 100 -ctx 20 transformer -ttrf 1 -nl 12 -nh 12 -ne 384
 
 ```
 
 ```console
+cd sys_identification
 $ python test.py -cos -std --data-name 'MG1' --test-name 'T1' --total-sim-iterations 500
 
 ```

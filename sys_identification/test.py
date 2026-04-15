@@ -15,13 +15,10 @@ torch.use_deterministic_algorithms(False)
 torch.cuda.empty_cache()
 
 args = arguments(description="FrankaSysId",params=[]).parse_arguments()
-
-savefig=True
-
 pre = preprocess(args=args, modelfolder='trial') # initialize preprocessing object for inference
 pre.resolve_datasets(eval=True, modelfolder='trial') # condition datasets for inference
-
 post = postprocess(args=args,data=pre.getcurrrentprocess()) # initialize postprocessing object for analysis
+savefig=True
 
 for i, nmodel in enumerate(pre.modellist):
     initparams = {}
@@ -177,104 +174,3 @@ for i, nmodel in enumerate(pre.modellist):
     
         post.configure_tests(pre.ytrue, pre.ysim, pre.err, pre.yctx, tm, score, data, nmodel)
         
-        
-
-        post.plotsim2sim(of='best',
-                        dim=args.out_dimension-10,
-                        title='sim2sim Prediction of the Best Environment',
-                        save=savefig)
-        post.plothorizon(of='best',
-                        iter=modelargs['seq_len_ctx'] + modelargs['seq_len_new'],
-                        ctx=modelargs['seq_len_ctx'],
-                        dim=args.out_dimension-10,
-                        title='Horizon Prediction of the Best Environment',
-                        save=savefig)
-        post.plotpredictionerror(of='best',
-                        dim=args.out_dimension-10,
-                        title='Absolute Error of the Best Environment',
-                        save=savefig)
-        
-        post.plotsim2sim(of='median',
-                        dim=args.out_dimension-10,
-                        title='sim2sim Prediction of the Median Environment',
-                        save=savefig)
-        post.plothorizon(of='median',
-                        iter=modelargs['seq_len_ctx'] + modelargs['seq_len_new'],
-                        ctx=modelargs['seq_len_ctx'],
-                        dim=args.out_dimension-10,
-                        title='Horizon Prediction of the Median Environment',
-                        save=savefig)
-        post.plotpredictionerror(of='median',
-                        dim=args.out_dimension-10,
-                        title='Absolute Error of the Median Environment',
-                        save=savefig)
-
-        post.plotsim2sim(of='worst',
-                        dim=args.out_dimension-10,
-                        title='sim2sim Prediction of the Worst Environment',
-                        save=savefig)
-        post.plothorizon(of='worst',
-                        iter=modelargs['seq_len_ctx'] + modelargs['seq_len_new'],
-                        ctx=modelargs['seq_len_ctx'],
-                        dim=args.out_dimension-10,
-                        title='Horizon Prediction of the Worst Environment',
-                        save=savefig)
-        post.plotpredictionerror(of='worst',
-                        dim=args.out_dimension-10,
-                        title='Absolute Error of the Worst Environment',
-                        save=savefig)
-        
-        post.plotmetrics_overjoints(save=savefig)
-        post.plotmetrics_overenvironments(save=savefig)
-        post.plotmetrics_overtime(save=savefig)
-        
-        post.plotvariation_overjoints(save=savefig)
-        post.plotvariation_overenvironments(save=savefig)
-
-        post.plotmetric(metric='aic',
-                        envmean=False,
-                        jointmean=True,
-                        save=savefig)
-        
-        post.plotmetric(metric='fpe',
-                        envmean=False,
-                        jointmean=True,
-                        save=savefig)
-        
-        post.plotmetric(metric='aic',
-                        envmean=True,
-                        jointmean=False,
-                        save=savefig)
-        
-        post.plotmetric(metric='fpe',
-                        envmean=True,
-                        jointmean=False,
-                        save=savefig)
-                
-        post.plotmetric(metric=None,
-                        envmean=True,
-                        jointmean=True,
-                        save=savefig)
-        
-        post.logdata(specificto='test')
-
-        pre.reset()
-        
-    post.plotvariation_tests(labels=['rng_VS','rng_FS','rng_FC'],
-                             include_legend=False,
-                             save=savefig,
-                             metric='r2')
-    post.logdata(specificto='model')
-
-torch.cuda.empty_cache()
-
-post.plotvariation_models(labels=['rng_trf','rng_dif','rg_trf','rg_dif'],
-                          legendentries=['rng_VS','rng_FS','rng_FC'],
-                          save=savefig,
-                          metric='r2',
-                          omitscores=True,
-                          limitaxes=True)
-post.logdata(specificto='all')
-
-post.plotlosses(labels=['rng_trf','rng_dif','rg_trf','rg_dif'],
-                save=savefig)
