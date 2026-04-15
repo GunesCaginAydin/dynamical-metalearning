@@ -1,2 +1,2 @@
-export const SITE_TITLE = 'Dynamical Metalearning';
-export const SITE_DESCRIPTION = 'Details on the work titled "Dynamical Metalearning: A Comparison Between Different Neural Architectures"';
+export const SITE_TITLE = 'RoboMeta: An In-Context Meta-Learning Framework';
+export const SITE_DESCRIPTION = 'Details of the work titled "Diffusion Sequence Models for Generative In-Context Meta-Learning of Robot Dynamics"';

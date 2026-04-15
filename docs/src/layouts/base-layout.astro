@@ -12,12 +12,26 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
                 <BaseHead title={title} description={description} />
 	</head>
 	<body>
-                <Header />
+                <Header class="header"/>
 
-                <main>
+                <main class="main">
                         <slot />
-                <main/>
+                </main>
 
-                <Footer />
+                <Footer class="footer" />
 	</body>
 </html>
+
+<style>
+        .header {
+                min-height: 50px;
+        }
+        .main {
+                flex: 1;
+	        max-width: calc(100% - 2em);
+                max-height: 80%
+        }
+        .footer {
+                min-height: 50px;
+        }
+</style>
