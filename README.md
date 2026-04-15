@@ -108,8 +108,8 @@ could be as follows:
 $ cd data_generation
 $ python genfranka.py -ne 8 -ni 1000 -f 0.15 -nctrl -tjt "MS" -td 'train' -nd 'MGC' -hdo '4D' -tr 'franka' -v -dg -df
 ```
-```
 or alternatively
+
 ```console
 $ gen.sh
 ```
@@ -130,8 +130,10 @@ $ python train.py -in 7 -out 14 -cos -std --data-name 'MG1' -lr '6e-4' -trb 32 -
 
 ```
 or alternatively
+
 ```console
 $ train.sh
+
 ```
 
 ```console
@@ -139,10 +141,11 @@ cd sys_identification
 $ python test.py -cos -std --data-name 'MG1' --test-name 'T1' --total-sim-iterations 500
 
 ```
-```
 or alternatively
+
 ```console
 $ test.sh
+
 ```
 
 Check train.sh and test.sh for more information and detailed examples.
